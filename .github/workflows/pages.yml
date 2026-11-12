@@ -13,7 +13,7 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -22,10 +22,30 @@ jobs:
         uses: actions/checkout@v6
         with:
           persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements-site.txt
+      - name: Install pinned document and site dependencies
+        run: |
+          set -euo pipefail
+          if [ ! -f /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf ]; then
+            sudo apt-get update
+            sudo apt-get install -y fonts-dejavu-core
+          fi
+          python -m pip install --disable-pip-version-check -r requirements-site.txt
       - name: Build research, people and bilingual resources
-        run: python3 scripts/build_site.py
-      - name: Validate pages, internal links and downloadable resources
-        run: python3 scripts/verify_site.py
+        run: python scripts/build_site.py
+      - name: Build public CV and PDF-DOCX teaching resources
+        run: python scripts/build_professional_docs.py
+      - name: Add academic identity, project register and discovery metadata
+        run: python scripts/build_v3.py
+      - name: Check accessibility structure, documents and citations
+        run: python scripts/verify_v3.py
+      - name: Validate internal links and create release checksums
+        run: python scripts/verify_site.py
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload website
@@ -35,7 +55,12 @@ jobs:
       - name: Publish website
         id: deployment
         uses: actions/deploy-pages@v4
-      - name: Verify all live files against release checksums
+      - name: Verify every live file against the release
         env:
           SITE_URL: ${{ steps.deployment.outputs.page_url }}
-        run: python3 scripts/verify_site.py --live
+        run: python scripts/verify_site.py --live
+      - name: Record verified v3 release
+        run: |
+          echo '## Academic website v3' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Public CV, bilingual PDF/DOCX resources, project register, citation exports and metadata published.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'The live-file verification above checks content hashes, not only HTTP availability. Accessibility checks are not certification.' >> "$GITHUB_STEP_SUMMARY"

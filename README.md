@@ -1,43 +1,41 @@
-# Hüseyin Ateş — Research, resources & people
+# Hüseyin Ateş — Academic Research Website
 
-Website: https://huseyinates38.github.io/
+Live site: https://huseyinates38.github.io/
 
-## Version 2 — 12 November 2026
+## Website v3
 
-A responsive academic website with 33 HTML pages (including a custom 404 page), 9 individual researcher/alumni/collaborator profiles, 3 bilingual teaching toolkits, a bilingual Feedback Design Explorer, 3 research briefs, research-access information and collaboration enquiry routes. The original 23-publication selection and four funded-project pages are retained.
+The English-language site includes 36 HTML pages (including the custom error page), bilingual teaching examples, nine individual collaborator/student profiles, four detailed project records, three selected study briefs, a research timeline, resource-use terms and an accessibility statement.
 
-The 11 downloads comprise six English/Turkish Markdown worksheets, three BibTeX citations, one explicitly fictional CSV example and one empty variable-dictionary template. Resource pages also offer a browser Print / Save as PDF button. No personal student data, API key, live chatbot, tracking script or external web font is included.
+Downloads include a two-page public academic CV in PDF and DOCX, six English/Turkish teaching guides in both formats, BibTeX/RIS citation libraries for the 23 supplied journal entries and an explicitly synthetic Python/data example. The selected bibliography is not presented as the complete career record. No unprovided portrait, experimental protocol or project outcome has been invented.
+
+## Build
+
+Use Python 3.12 and install fonts-dejavu-core on Linux. The font files are installed in the build environment; they are not published as website assets.
+
+```sh
+python -m pip install -r requirements-site.txt
+python scripts/build_site.py
+python scripts/build_professional_docs.py
+python scripts/build_v3.py
+python scripts/verify_v3.py
+python scripts/verify_site.py
+```
+
+Preview the generated `_site/index.html` locally, or serve the `_site` folder. The root HTML files are input templates; the published v3 output is generated in `_site`.
 
 ## Editing
 
-- `content/expansion.json`: people, selected research briefs and bilingual toolkit content.
-- `scripts/build_site.py`: shared page template, new homepage, Explorer and page composition.
-- `assets/v2.css`, `assets/v2.js`: visual design and browser interactions.
-- The original root HTML files retain the source records for Research, Publications, Projects, About and Contact. Their main content is cleaned and wrapped in the new common template by the builder. Root `index.html` and `team.html` are legacy records; edit the builder and JSON for the new homepage and People pages.
-- Only `_site/` is deployed. Do not switch Pages to branch/root publishing: that would serve the earlier source records rather than the new website.
+- Base expansion records: `content/expansion.json` and root HTML templates.
+- Public CV and teaching-document layouts: `scripts/build_professional_docs.py`.
+- V3 project register, timeline, academic identifiers, metadata and resource links: `scripts/build_v3.py`.
+- Content provenance and explicit limitations: `content/V3_EDITORIAL_NOTES.md`.
 
-## Build and test locally
+Rebuild from the first step after changes rather than repeatedly running the enrichment step over an already-enriched `_site` folder.
 
-Requires Python 3.10 or later; no third-party Python packages are needed.
+## Publishing and health checks
 
-```sh
-python scripts/build_site.py
-python scripts/verify_site.py
-python -m http.server --directory _site 8000
-```
+Pushes to main run `.github/workflows/pages.yml`. It builds, checks internal navigation and documents, publishes through GitHub Pages, then verifies the release manifest and SHA256 of every live file. No further Pages-setting change is required for this existing site.
 
-Then open http://localhost:8000/. The validator checks page titles, language, heading/ID structure, navigation and all local file/anchor links.
+`Weekly Website Link Health` runs every Monday and can also be started manually. Its downloadable `website-quality-reports` artifact includes structural and external-link reports. It does not modify or republish website content. HTTP access restrictions and timeouts are reported separately from potentially broken URLs and do not imply invalid publication records.
 
-## Publishing
-
-GitHub Pages uses the existing **GitHub Actions** source. A push to `main` runs `.github/workflows/pages.yml`, builds the site, validates it, deploys `_site/`, and checks every delivered file against its SHA-256 release checksum. `deployment.json` records the exact deployed commit. A failed build does not replace the previously deployed site.
-
-## Editorial boundaries
-
-Academic profile, supervision and project records come from the owner's supplied CV. The three research briefs use linked publisher/institutional records; limitations inferred editorially are labelled. Toolkits and fictional examples were newly prepared with AI-assisted drafting and are not represented as validated instruments or original experimental materials. No open licence is assigned without a separate decision by the owner. No recruitment offer, project personnel assignment or unpublished result has been invented.
-
-Photos, newly approved project roles, data releases, awards, formal vacancies and field-impact stories should be added only when the owner supplies the relevant approved information.
-
-## Türkçe bakım notu
-
-Yeni içerikleri `content/expansion.json` dosyasından güncelleyebilirsiniz. Ana sayfa ve ortak şablon `scripts/build_site.py` içindedir. Değişiklikler `main` dalına kaydedildiğinde site otomatik oluşturulur ve yayımlanır. Öğretim örnekleri araştırma verisi veya geçerliği sınanmış ölçek olarak sunulmamalıdır. İngilizce ve Türkçe kaynak sürümlerini birlikte güncelleyin.
+Automated accessibility checks are not WCAG certification. Research illustrations are conceptual, teaching resources are prototypes, and article metadata does not guarantee search-engine indexing. Custom-domain registration and Search Console ownership verification remain outside this release.

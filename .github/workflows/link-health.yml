@@ -1,0 +1,58 @@
+name: Weekly Website Link Health
+on:
+  schedule:
+    - cron: '17 7 * * 1'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/verify_v3.py'
+      - '.github/workflows/link-health.yml'
+permissions:
+  contents: read
+concurrency:
+  group: link-health
+  cancel-in-progress: true
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements-site.txt
+      - name: Install build dependencies
+        run: |
+          set -euo pipefail
+          if [ ! -f /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf ]; then
+            sudo apt-get update
+            sudo apt-get install -y fonts-dejavu-core
+          fi
+          python -m pip install --disable-pip-version-check -r requirements-site.txt
+      - name: Build and validate without publishing
+        run: |
+          python scripts/build_site.py
+          python scripts/build_professional_docs.py
+          python scripts/build_v3.py
+          python scripts/verify_v3.py
+      - name: Inspect external and DOI links
+        run: python scripts/verify_v3.py --links
+      - name: Retain quality reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-quality-reports
+          path: |
+            link-audit.json
+            _site/quality-report.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Explain link report classifications
+        run: |
+          echo '## Link-health report' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Download website-quality-reports for the URL-by-URL report. Restricted requests and timeouts are not proof of an invalid DOI. Requires-manual-review records need human inspection. This workflow does not publish or change research content.' >> "$GITHUB_STEP_SUMMARY"
