@@ -1,0 +1,88 @@
+name: Validate bilingual authoring release
+on:
+  push:
+    branches: [bilingual-en-tr-v4]
+    paths: ['update-v4/**', '.github/workflows/bilingual-authoring.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: bilingual-authoring
+  cancel-in-progress: false
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: bilingual-en-tr-v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            requirements-site.txt
+            requirements-browser.txt
+      - name: Restore checksum-verified bilingual source files
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json, lzma, base64, hashlib
+          paths = {'scripts/build_bilingual.py','content/translations-tr.json','assets/bilingual.css','assets/bilingual.js','scripts/release_bilingual.py','scripts/verify_bilingual.py','tests/bilingual_browser.py','scripts/verify_site.py'}
+          encoded = ''.join(Path(f'update-v4/part{i}.b64').read_text().strip() for i in range(1,6))
+          data = base64.b64decode(encoded, validate=True)
+          assert hashlib.sha256(data).hexdigest() == '5fc4c9689f47ce3a007a90f760743807249c065e8cb0627cdd6e48695f6e7e3e', 'Source checksum mismatch'
+          files = json.loads(lzma.decompress(data))
+          assert set(files) == paths, 'Unexpected source path'
+          for name, text in files.items():
+              p = Path(name); p.parent.mkdir(parents=True, exist_ok=True); p.write_text(text, encoding='utf-8')
+          p = Path('.github/workflows/pages.yml'); text = p.read_text()
+          text = text.replace('python scripts/release_editorial.py', 'python scripts/release_bilingual.py').replace('python scripts/verify_editorial_status.py', 'python scripts/verify_bilingual.py').replace('python tests/editorial_browser.py', 'python tests/bilingual_browser.py')
+          text = text.replace('Build current editorial release and public documents', 'Build complete English and Turkish website').replace('Validate public status, privacy, search and documents', 'Validate both languages, research statuses, links and no-photo preference')
+          text = text.replace('Academic website 3.2 — research status and collaboration', 'Academic website 4.0 — English and Turkish').replace('Corrected 3501 status, separated submitted and planned proposals, added editorial initiatives and reordered collaborators above students.', '49 English and Turkish page pairs; simplified navigation; no portrait; proposal status and collaborator ordering preserved.')
+          text = text.replace('            overflow-smoke.png', '            review-v4/')
+          p.write_text(text)
+          p = Path('.github/workflows/link-health.yml'); text = p.read_text().replace('python scripts/release_editorial.py', 'python scripts/release_bilingual.py').replace('python scripts/verify_editorial_status.py', 'python scripts/verify_bilingual.py'); p.write_text(text)
+          p = Path('README.md'); text = p.read_text() if p.exists() else ''
+          text += '\n\n## Bilingual release 4.0\n\nEnglish pages keep their original root addresses; Turkish counterparts are in `tr/`. The EN/TR header links open the same page in the other language. No portrait or personal photograph is used. Article titles and bibliographic citations remain in their original language; the public CV download remains English.\n\nBuild with `python scripts/release_bilingual.py`; validate with `python scripts/verify_bilingual.py`, `python tests/bilingual_browser.py`, and `python scripts/verify_site.py`. Turkish source translations are editable in `content/translations-tr.json`. Navigation, language links, search and page cleanup are built by `scripts/build_bilingual.py`. Run the tests after editing.\n\nThe original 3501 correction, submitted/planned proposal distinctions and collaborator-first People ordering are preserved. The one-time transport bundle is removed after extraction; normal editable UTF-8 source files are committed.\n'
+          p.write_text(text)
+          PY
+      - name: Install build and browser dependencies
+        run: |
+          if [ ! -f /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf ]; then
+            sudo apt-get update
+            sudo apt-get install -y fonts-dejavu-core
+          fi
+          python -m pip install --disable-pip-version-check -r requirements-site.txt -r requirements-browser.txt
+          python -m playwright install --with-deps chromium
+      - name: Build and validate bilingual content
+        run: |
+          python scripts/release_bilingual.py
+          python scripts/verify_bilingual.py
+          python scripts/verify_site.py
+      - name: Test all pages and real language navigation
+        run: python tests/bilingual_browser.py
+      - name: Validate final release checksums
+        run: python scripts/verify_site.py
+      - name: Retain review reports and built website
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bilingual-v4-review
+          path: |
+            browser-report.json
+            _site/
+            review-v4/
+          if-no-files-found: warn
+          retention-days: 7
+      - name: Commit validated editable sources to authoring branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm -r update-v4 .github/workflows/bilingual-authoring.yml
+          git add scripts/build_bilingual.py content/translations-tr.json assets/bilingual.css assets/bilingual.js scripts/release_bilingual.py scripts/verify_bilingual.py tests/bilingual_browser.py scripts/verify_site.py .github/workflows/pages.yml .github/workflows/link-health.yml README.md
+          git commit -m 'Add validated English and Turkish site, simplify navigation and preserve research statuses'
+          git push origin HEAD:bilingual-en-tr-v4
+          echo 'Validated editable bilingual source is ready for publication.' >> "$GITHUB_STEP_SUMMARY"
