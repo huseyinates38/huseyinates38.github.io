@@ -39,18 +39,12 @@ jobs:
           fi
           python -m pip install --disable-pip-version-check -r requirements-site.txt -r requirements-browser.txt
           python -m playwright install --with-deps chromium
-      - name: Build research, people and bilingual resources
-        run: python scripts/build_site.py
-      - name: Build public CV and PDF-DOCX teaching resources
-        run: python scripts/build_professional_docs.py
-      - name: Add academic identity and project records
-        run: python scripts/build_v3.py
-      - name: Stabilise navigation, search and resource versions
-        run: python scripts/build_v31.py
-      - name: Check structure, search targets and documents
-        run: python scripts/verify_v31.py
+      - name: Build current editorial release and public documents
+        run: python scripts/release_editorial.py
+      - name: Validate public status, privacy, search and documents
+        run: python scripts/verify_editorial_status.py
       - name: Test mobile, desktop and interactive controls in Chromium
-        run: python tests/browser_smoke.py
+        run: python tests/editorial_browser.py
       - name: Retain browser and quality reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -79,6 +73,6 @@ jobs:
         run: python scripts/verify_site.py --live
       - name: Record release
         run: |
-          echo '## Academic website 3.1 — usability and maintenance' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Local site search, accent-aware publication filtering, shareable language preferences and mobile DOI reflow.' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Academic website 3.2 — research status and collaboration' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Corrected 3501 status, separated submitted and planned proposals, added editorial initiatives and reordered collaborators above students.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Browser and live-file tests passed. These tests are not WCAG certification or academic fact verification.' >> "$GITHUB_STEP_SUMMARY"

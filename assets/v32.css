@@ -1,0 +1,12 @@
+/* Proposal statuses are expressed in text as well as colour. */
+.pipeline-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin:28px 0}
+.pipeline-card{background:#fff;border:1px solid #c8d9d4;padding:28px;display:flex;flex-direction:column;min-width:0}
+.pipeline-card h3{font-family:Georgia,serif;font-size:26px;line-height:1.3;font-weight:400;letter-spacing:-.02em;margin:12px 0}
+.pipeline-card .micro-label{margin:18px 0 0}.pipeline-card .textlink{margin-top:auto;padding-top:18px}
+.status-pill{display:inline-block;align-self:flex-start;padding:7px 11px;border:1px solid #abc5c0;background:#e9f2ee;color:#16525b;font-size:12px;font-weight:700;line-height:1.5;max-width:100%}
+.status-planned{background:#f9f1e4;border-color:#d6be9a;color:#6c491f}.status-not-funded{background:#f5eeea;border-color:#c8b1a4;color:#684435}.status-historical{background:#eef0f4;border-color:#bec6d2;color:#46566d}
+.pipeline-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;border-bottom:1px solid #c8d9d4;padding-bottom:20px}.pipeline-legend p{font-size:14px}.pipeline-legend strong{display:block;margin-bottom:6px;color:#153746}
+.proposal-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr);gap:46px}.proposal-side{padding:25px;background:#edf4ef;border:1px solid #c8d9d4}.proposal-meta{margin:0}.proposal-meta dt{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:#146671;font-weight:700;margin-top:20px}.proposal-meta dt:first-child{margin-top:0}.proposal-meta dd{margin:6px 0 0;font-size:14px;overflow-wrap:anywhere}.pagehero .status-pill{margin-top:18px}.footer-links{flex-wrap:wrap}
+@media(max-width:800px){.proposal-layout{grid-template-columns:1fr;gap:24px}.pipeline-legend{grid-template-columns:1fr;gap:0}}
+@media(max-width:620px){.pipeline-grid{grid-template-columns:1fr}.pipeline-card{padding:23px}.pipeline-card h3{font-size:24px}}
+@media print{.pipeline-card{break-inside:avoid}.status-pill{border:1px solid #555}}

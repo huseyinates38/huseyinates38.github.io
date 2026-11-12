@@ -37,11 +37,8 @@ jobs:
           python -m pip install --disable-pip-version-check -r requirements-site.txt
       - name: Build and validate without publishing
         run: |
-          python scripts/build_site.py
-          python scripts/build_professional_docs.py
-          python scripts/build_v3.py
-          python scripts/build_v31.py
-          python scripts/verify_v31.py
+          python scripts/release_editorial.py
+          python scripts/verify_editorial_status.py
       - name: Inspect external and DOI links
         run: python scripts/verify_v3.py --links
       - name: Retain quality reports
