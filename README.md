@@ -2,40 +2,51 @@
 
 Live site: https://huseyinates38.github.io/
 
-## Website v3
+## Website 3.1: usable, searchable and maintained
 
-The English-language site includes 36 HTML pages (including the custom error page), bilingual teaching examples, nine individual collaborator/student profiles, four detailed project records, three selected study briefs, a research timeline, resource-use terms and an accessibility statement.
+37 HTML pages (including search and the custom error page), 33 downloadable files, nine individual collaborator/student profiles, four project records, three research briefs, a research timeline and bilingual teaching examples.
 
-Downloads include a two-page public academic CV in PDF and DOCX, six English/Turkish teaching guides in both formats, BibTeX/RIS citation libraries for the 23 supplied journal entries and an explicitly synthetic Python/data example. The selected bibliography is not presented as the complete career record. No unprovided portrait, experimental protocol or project outcome has been invented.
+The public CV is available as PDF and DOCX. Six English/Turkish teaching guides have PDF and DOCX versions. The citation library contains 23 selected CV-supplied publications; it is not represented as the complete career record. Teaching examples remain prototypes, not validated instruments.
+
+### Maintenance release
+
+- Sitewide local search across pages, individual publication links and existing PDF/DOCX downloads.
+- Turkish-accent-insensitive publication search and AI/GenAI/VR/AR/SRL aliases.
+- Publication filters and language choices retained in shareable URL fragments, without cookies or browser storage.
+- Narrow-phone DOI reflow, keyboard-accessible project tables and descriptive download labels.
+- Consistent resource version labels and removal of obsolete external font loading.
+- Rendered Chromium regression tests before publication, followed by exact live-file checksums.
+
+No unprovided portrait, research finding, project membership or grant outcome has been invented. Custom-domain registration and Search Console ownership verification remain outside this release.
 
 ## Build
 
-Use Python 3.12 and install fonts-dejavu-core on Linux. The font files are installed in the build environment; they are not published as website assets.
+Use Python 3.12 and Linux fonts-dejavu-core. Font files are build dependencies and are not distributed as site assets.
 
 ```sh
-python -m pip install -r requirements-site.txt
+python -m pip install -r requirements-site.txt -r requirements-browser.txt
+python -m playwright install --with-deps chromium
 python scripts/build_site.py
 python scripts/build_professional_docs.py
 python scripts/build_v3.py
-python scripts/verify_v3.py
+python scripts/build_v31.py
+python scripts/verify_v31.py
+python tests/browser_smoke.py
 python scripts/verify_site.py
 ```
 
-Preview the generated `_site/index.html` locally, or serve the `_site` folder. The root HTML files are input templates; the published v3 output is generated in `_site`.
+Serve `_site` for local preview. Root HTML files are source templates, not the deployed output. Rebuild from the first step rather than repeatedly applying enrichment scripts to already-enriched output.
 
 ## Editing
 
-- Base expansion records: `content/expansion.json` and root HTML templates.
-- Public CV and teaching-document layouts: `scripts/build_professional_docs.py`.
-- V3 project register, timeline, academic identifiers, metadata and resource links: `scripts/build_v3.py`.
-- Content provenance and explicit limitations: `content/V3_EDITORIAL_NOTES.md`.
+- Base research and resource records: `content/expansion.json` and root HTML templates.
+- Documents: `scripts/build_professional_docs.py`.
+- Project register, identity and citation metadata: `scripts/build_v3.py`.
+- Search and usability refinement: `scripts/build_v31.py`, `assets/v31.js`, `assets/v31.css`.
+- Editorial checks and next-update criteria: `content/MAINTENANCE.md` and `content/V3_EDITORIAL_NOTES.md`.
 
-Rebuild from the first step after changes rather than repeatedly running the enrichment step over an already-enriched `_site` folder.
+## Publication and quality
 
-## Publishing and health checks
+Pushes to main build, validate and test the site before GitHub Pages deployment. After deployment, all live files must return HTTP 200 and match their release SHA256. The `website-browser-quality` workflow artifact retains browser and structural reports. A failing pre-deployment test leaves the previous live site intact.
 
-Pushes to main run `.github/workflows/pages.yml`. It builds, checks internal navigation and documents, publishes through GitHub Pages, then verifies the release manifest and SHA256 of every live file. No further Pages-setting change is required for this existing site.
-
-`Weekly Website Link Health` runs every Monday and can also be started manually. Its downloadable `website-quality-reports` artifact includes structural and external-link reports. It does not modify or republish website content. HTTP access restrictions and timeouts are reported separately from potentially broken URLs and do not imply invalid publication records.
-
-Automated accessibility checks are not WCAG certification. Research illustrations are conceptual, teaching resources are prototypes, and article metadata does not guarantee search-engine indexing. Custom-domain registration and Search Console ownership verification remain outside this release.
+Weekly Website Link Health continues on Mondays without changing site content. Restricted HTTP responses and timeouts are inconclusive, not proof that a publication is invalid. Browser and structural tests are not independent WCAG/PDF-UA certification or academic fact verification.

@@ -7,6 +7,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/verify_v3.py'
+      - 'scripts/verify_v31.py'
       - '.github/workflows/link-health.yml'
 permissions:
   contents: read
@@ -39,7 +40,8 @@ jobs:
           python scripts/build_site.py
           python scripts/build_professional_docs.py
           python scripts/build_v3.py
-          python scripts/verify_v3.py
+          python scripts/build_v31.py
+          python scripts/verify_v31.py
       - name: Inspect external and DOI links
         run: python scripts/verify_v3.py --links
       - name: Retain quality reports
