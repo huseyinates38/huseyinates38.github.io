@@ -1,0 +1,168 @@
+name: Publish Academic Website
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out approved website
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Validate and prepare all eleven pages
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import os
+          import shutil
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import unquote, urlsplit
+
+          pages = [
+              'index.html', 'research.html', 'publications.html',
+              'projects.html', 'team.html', 'about.html', 'contact.html',
+              'project-robot-virtual-agent.html', 'project-space-debris.html',
+              'project-vr-stem-vietnam.html', 'project-vr-circulatory-system.html',
+          ]
+          class Links(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.links = []
+                  self.ids = set()
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  if attrs.get('id'):
+                      self.ids.add(attrs['id'])
+                  for key in ('href', 'src'):
+                      if attrs.get(key):
+                          self.links.append(attrs[key])
+
+          parsed = {}
+          for name in pages:
+              path = Path(name)
+              if not path.is_file() or not path.stat().st_size:
+                  raise SystemExit('Missing or empty page: ' + name)
+              html = path.read_text(encoding='utf-8')
+              if 'href="team.html"' not in html:
+                  raise SystemExit('Research Team navigation missing: ' + name)
+              parser = Links()
+              parser.feed(html)
+              parsed[name] = parser
+
+          errors = []
+          root = Path('.').resolve()
+          for name, parser in parsed.items():
+              for link in parser.links:
+                  parts = urlsplit(link)
+                  if parts.scheme or parts.netloc:
+                      continue
+                  target = (Path(name).parent / unquote(parts.path or name)).resolve()
+                  if not target.is_relative_to(root) or not target.is_file():
+                      errors.append(name + ': missing local target ' + link)
+                      continue
+                  rel = target.relative_to(root).as_posix()
+                  if parts.fragment and rel in parsed and unquote(parts.fragment) not in parsed[rel].ids:
+                      errors.append(name + ': missing anchor ' + link)
+          if errors:
+              raise SystemExit('\n'.join(errors))
+
+          site = Path('_site')
+          site.mkdir(exist_ok=True)
+          for name in pages:
+              shutil.copy2(name, site / name)
+          shutil.copytree('assets', site / 'assets', dirs_exist_ok=True)
+          (site / '.nojekyll').touch()
+          (site / 'deployment.json').write_text(json.dumps({
+              'commit': os.environ['GITHUB_SHA'],
+              'pages': pages,
+              'page_count': len(pages),
+          }, indent=2), encoding='utf-8')
+          print('VALIDATED: all 11 HTML pages, navigation and local file/anchor links.')
+          PY
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload expanded website
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+      - name: Deploy expanded website to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Verify published pages and deployed revision
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import concurrent.futures
+          import json
+          import os
+          import time
+          from pathlib import Path
+          from urllib.request import Request, urlopen
+
+          manifest = json.loads(Path('_site/deployment.json').read_text())
+          base = os.environ['SITE_URL'].rstrip('/') + '/'
+          revision = os.environ['GITHUB_SHA']
+          def fetch(path):
+              request = Request(base + path + '?v=' + revision,
+                                headers={'Cache-Control': 'no-cache',
+                                         'User-Agent': 'Academic-Website-Deployment/1.0'})
+              with urlopen(request, timeout=20) as response:
+                  return response.status, response.read().decode('utf-8')
+
+          for attempt in range(5):
+              try:
+                  status, data = fetch('deployment.json')
+                  if status == 200 and json.loads(data).get('commit') == revision:
+                      break
+                  raise RuntimeError('Published revision does not match this release')
+              except Exception as exc:
+                  print('Revision check:', str(exc))
+                  if attempt == 4:
+                      raise
+                  time.sleep(8)
+
+          def check(page):
+              status, body = fetch(page)
+              if status != 200 or 'href="team.html"' not in body:
+                  raise RuntimeError('Live page verification failed: ' + page)
+              return page, status
+
+          with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
+              results = list(pool.map(check, manifest['pages']))
+          for page, status in results:
+              print(f'VERIFIED {status}: {base}{page}')
+          print('VERIFIED REVISION:', revision)
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as summary:
+              summary.write('## Website published and verified\n\n')
+              summary.write(f'Site: {base}\n\nCommit: `{revision}`\n\n')
+              summary.write('All 11 HTML pages returned HTTP 200 and contain Research Team navigation.\n')
+              summary.write('The live deployment manifest matches this release.\n')
+          PY
