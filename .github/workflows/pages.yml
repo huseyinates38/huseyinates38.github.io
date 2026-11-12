@@ -1,0 +1,61 @@
+name: Publish Academic Website
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout site sources
+        uses: actions/checkout@v4
+
+      - name: Reassemble and unpack the academic site
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat site-bundle/part-{1..4}.b64 > /tmp/site.b64
+          echo "09596a3e86ffebc51ee2cc47b7a335a0e2a5b81edcb0cf0d75edc8bc2f5f57a5  /tmp/site.b64" | sha256sum -c -
+          base64 --decode /tmp/site.b64 > /tmp/site.tar.xz
+          tar -xJf /tmp/site.tar.xz
+          test -s docs/index.html
+          test -s docs/publications.html
+          test -s docs/assets/styles.css
+
+      - name: Generate public academic CV
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check reportlab
+          python site_source/build_public_cv.py
+          test -s docs/assets/Huseyin_Ates_Public_Academic_CV.pdf
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload website artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
