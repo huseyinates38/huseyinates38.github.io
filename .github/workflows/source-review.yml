@@ -1,0 +1,22 @@
+name: Editorial source snapshot
+on:
+  push:
+    branches: [site-editorial-review-2026-11-12]
+    paths: ['.github/workflows/source-review.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Export tracked public website sources
+        run: git archive --format=tar -o website-sources.tar HEAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: website-source-review
+          path: website-sources.tar
+          retention-days: 1
