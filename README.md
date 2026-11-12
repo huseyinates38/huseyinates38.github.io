@@ -1,45 +1,43 @@
-# Hüseyin Ateş — Academic Research Website
+# Hüseyin Ateş — Research, resources & people
 
-English-language independent academic website for Hüseyin Ateş, PhD, Associate Professor of Science Education.
+Website: https://huseyinates38.github.io/
 
-**Target website:** https://huseyinates38.github.io/
+## Version 2 — 12 November 2026
 
-## Pages and contents
+A responsive academic website with 33 HTML pages (including a custom 404 page), 9 individual researcher/alumni/collaborator profiles, 3 bilingual teaching toolkits, a bilingual Feedback Design Explorer, 3 research briefs, research-access information and collaboration enquiry routes. The original 23-publication selection and four funded-project pages are retained.
 
-| Page | File | Contents |
-| --- | --- | --- |
-| Home | `index.html` | Academic identity, core research themes, and team overview |
-| Research | `research.html` | Human-centered AI, scientific reasoning, STEM education |
-| Publications | `publications.html` | 23 selected journal publications, DOI links and search |
-| Projects | `projects.html` | Four funded grants, summaries, and links to full descriptions |
-| Research Team | `team.html` | PI, three ongoing graduate supervisees, four master's alumni, and two selected collaborators |
-| About & CV | `about.html` | Appointments, education, awards and academic biography |
-| Contact | `contact.html` | Institutional contact and identifiers |
+The 11 downloads comprise six English/Turkish Markdown worksheets, three BibTeX citations, one explicitly fictional CSV example and one empty variable-dictionary template. Resource pages also offer a browser Print / Save as PDF button. No personal student data, API key, live chatbot, tracking script or external web font is included.
 
-### Detailed project profiles
+## Editing
 
-- `project-robot-virtual-agent.html` — TÜBİTAK 3501 (2026–2029)
-- `project-space-debris.html` — TÜBİTAK 1002-A (2026–2027)
-- `project-vr-stem-vietnam.html` — KAEÜ BAP (2026–2028)
-- `project-vr-circulatory-system.html` — KAEÜ BAP (2025–2026)
+- `content/expansion.json`: people, selected research briefs and bilingual toolkit content.
+- `scripts/build_site.py`: shared page template, new homepage, Explorer and page composition.
+- `assets/v2.css`, `assets/v2.js`: visual design and browser interactions.
+- The original root HTML files retain the source records for Research, Publications, Projects, About and Contact. Their main content is cleaned and wrapped in the new common template by the builder. Root `index.html` and `team.html` are legacy records; edit the builder and JSON for the new homepage and People pages.
+- Only `_site/` is deployed. Do not switch Pages to branch/root publishing: that would serve the earlier source records rather than the new website.
 
-## Publishing on GitHub Pages
+## Build and test locally
 
-The site is plain static HTML, CSS and JavaScript. All site pages are in the repository root; no build process or special plugin is needed.
+Requires Python 3.10 or later; no third-party Python packages are needed.
 
-**One-time repository setting:**
+```sh
+python scripts/build_site.py
+python scripts/verify_site.py
+python -m http.server --directory _site 8000
+```
 
-1. Open [Settings → Pages](https://github.com/huseyinates38/huseyinates38.github.io/settings/pages).
-2. Under "Build and deployment," choose **Deploy from a branch**.
-3. Choose **main** and **/(root)**.
-4. Click **Save** and allow GitHub to publish the site.
+Then open http://localhost:8000/. The validator checks page titles, language, heading/ID structure, navigation and all local file/anchor links.
 
-> Repository files being present does not by itself confirm that GitHub Pages is enabled. If the public website is unavailable, inspect Pages settings and the Actions/Pages deployment status.
+## Publishing
 
-## Editorial accuracy
+GitHub Pages uses the existing **GitHub Actions** source. A push to `main` runs `.github/workflows/pages.yml`, builds the site, validates it, deploys `_site/`, and checks every delivered file against its SHA-256 release checksum. `deployment.json` records the exact deployed commit. A failed build does not replace the previously deployed site.
 
-The site uses details recorded in the academic CV supplied in October–November 2026. Ongoing supervisees and graduates are grouped according to the supervision records; international collaborators are clearly distinguished from group members. No unverified project personnel assignments, portraits, grant outcomes, student contact details, or study results are included. Funding awards are distinguished from submitted proposals pending decisions.
+## Editorial boundaries
 
-All project summaries should be reviewed by the PI before being treated as a permanent public record.
+Academic profile, supervision and project records come from the owner's supplied CV. The three research briefs use linked publisher/institutional records; limitations inferred editorially are labelled. Toolkits and fictional examples were newly prepared with AI-assisted drafting and are not represented as validated instruments or original experimental materials. No open licence is assigned without a separate decision by the owner. No recruitment offer, project personnel assignment or unpublished result has been invented.
 
-_Last updated: 12 November 2026._
+Photos, newly approved project roles, data releases, awards, formal vacancies and field-impact stories should be added only when the owner supplies the relevant approved information.
+
+## Türkçe bakım notu
+
+Yeni içerikleri `content/expansion.json` dosyasından güncelleyebilirsiniz. Ana sayfa ve ortak şablon `scripts/build_site.py` içindedir. Değişiklikler `main` dalına kaydedildiğinde site otomatik oluşturulur ve yayımlanır. Öğretim örnekleri araştırma verisi veya geçerliği sınanmış ölçek olarak sunulmamalıdır. İngilizce ve Türkçe kaynak sürümlerini birlikte güncelleyin.
