@@ -1,4 +1,4 @@
-name: Publish Academic Website
+name: Publish Bilingual Academic Website
 on:
   push:
     branches: [main]
@@ -39,12 +39,14 @@ jobs:
           fi
           python -m pip install --disable-pip-version-check -r requirements-site.txt -r requirements-browser.txt
           python -m playwright install --with-deps chromium
-      - name: Build current editorial release and public documents
-        run: python scripts/release_editorial.py
+      - name: Build academic release and bilingual editions
+        run: |
+          python scripts/release_editorial.py
+          python scripts/build_bilingual.py
       - name: Validate public status, privacy, search and documents
-        run: python scripts/verify_editorial_status.py
+        run: python scripts/verify_bilingual.py
       - name: Test mobile, desktop and interactive controls in Chromium
-        run: python tests/editorial_browser.py
+        run: python tests/bilingual_browser.py
       - name: Retain browser and quality reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -73,6 +75,6 @@ jobs:
         run: python scripts/verify_site.py --live
       - name: Record release
         run: |
-          echo '## Academic website 3.2 — research status and collaboration' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Corrected 3501 status, separated submitted and planned proposals, added editorial initiatives and reordered collaborators above students.' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Academic website 4.0 — bilingual research and collaboration' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Complete English and Turkish website; added Dutch, Danish, German and US research connections, with a non-submitted TÜBİTAK–DFG concept and correct project-status boundaries.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Browser and live-file tests passed. These tests are not WCAG certification or academic fact verification.' >> "$GITHUB_STEP_SUMMARY"
