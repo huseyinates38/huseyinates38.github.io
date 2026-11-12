@@ -38,3 +38,12 @@ Private correspondence and original invitation documents are not included in the
 ## Publication and quality
 
 Pushes to main build, validate and browser-test the site before GitHub Pages deployment. Every published file is then downloaded and checked against its release SHA256. A failing pre-deployment check leaves the previous live site intact. Monday link-health checks retain reports without changing public research content. Automated checks are not WCAG/PDF-UA certification, funding verification or confirmation of journal indexing.
+
+
+## Bilingual release 4.0
+
+English pages keep their original root addresses; Turkish counterparts are in `tr/`. The EN/TR header links open the same page in the other language. No portrait or personal photograph is used. Article titles and bibliographic citations remain in their original language; the public CV download remains English.
+
+Build with `python scripts/release_bilingual.py`; validate with `python scripts/verify_bilingual.py`, `python tests/bilingual_browser.py`, and `python scripts/verify_site.py`. Turkish source translations are editable in `content/translations-tr.json`. Navigation, language links, search and page cleanup are built by `scripts/build_bilingual.py`. Run the tests after editing.
+
+The original 3501 correction, submitted/planned proposal distinctions and collaborator-first People ordering are preserved.

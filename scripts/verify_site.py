@@ -32,14 +32,14 @@ def validate():
     parsed={}; errors=[]
     for name in manifest['pages']:
         document=Document(); text=(ROOT/name).read_text(encoding='utf-8');document.feed(text);parsed[name]=document
-        if document.h1!=1 or not document.title or document.lang!='en':errors.append(name+': heading/title/language check')
+        if document.h1!=1 or not document.title or document.lang!=('tr' if name.startswith('tr/') else 'en'):errors.append(name+': heading/title/language check')
         if document.duplicates:errors.append(name+': duplicate IDs '+str(document.duplicates))
         if 'id="main-content"' not in text or 'href="team.html"' not in text or 'href="resources.html"' not in text:errors.append(name+': missing navigation or main landmark')
     for name,document in parsed.items():
         for ref in document.links:
             u=urlsplit(ref)
             if u.scheme or u.netloc:continue
-            target=(ROOT / (unquote(u.path).lstrip('/') or name)).resolve()
+            target=((ROOT / unquote(u.path).lstrip('/')) if u.path.startswith('/') else (ROOT / name).parent / unquote(u.path) if u.path else ROOT / name).resolve()
             if target.is_dir():target=target/'index.html'
             if not target.is_relative_to(ROOT.resolve()) or not target.is_file():errors.append(name+': missing '+ref);continue
             relative=target.relative_to(ROOT).as_posix()
@@ -83,7 +83,7 @@ def live():
     print('LIVE SITE:',base)
     if os.environ.get('GITHUB_STEP_SUMMARY'):
         with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf-8') as summary:
-            summary.write(f'## Website v2 published and verified\n\n{base}\n\n{expected["page_count"]} HTML pages; {len(expected["downloads"])} downloads.\n\nEvery published file returned HTTP 200 and matched its release checksum.\n\nCommit: `{revision}`\n')
+            summary.write(f'## Bilingual academic website published and verified\n\n{base}\n\n{expected["page_count"]} HTML pages; {len(expected["downloads"])} downloads.\n\nEvery published file returned HTTP 200 and matched its release checksum.\n\nCommit: `{revision}`\n')
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser();parser.add_argument('--live',action='store_true');args=parser.parse_args()
