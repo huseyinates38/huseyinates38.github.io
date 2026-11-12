@@ -1,29 +1,45 @@
-# Hüseyin Ateş — Academic Website
+# Hüseyin Ateş — Academic Research Website
 
-Independent academic website for Hüseyin Ateş, PhD, Associate Professor of Science Education at Kırşehir Ahi Evran University.
+English-language independent academic website for Hüseyin Ateş, PhD, Associate Professor of Science Education.
 
-**Website URL:** https://huseyinates38.github.io
+**Target website:** https://huseyinates38.github.io/
 
-## How to enable publication (one-time setting)
+## Pages and contents
 
-1. Open repository **Settings → Pages**: https://github.com/huseyinates38/huseyinates38.github.io/settings/pages
-2. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
-3. Select **Branch: main** and **Folder: /(root)**.
-4. Click **Save**. Once GitHub finishes publishing, use **Visit site** from the same settings page.
+| Page | File | Contents |
+| --- | --- | --- |
+| Home | `index.html` | Academic identity, core research themes, and team overview |
+| Research | `research.html` | Human-centered AI, scientific reasoning, STEM education |
+| Publications | `publications.html` | 23 selected journal publications, DOI links and search |
+| Projects | `projects.html` | Four funded grants, summaries, and links to full descriptions |
+| Research Team | `team.html` | PI, three ongoing graduate supervisees, four master's alumni, and two selected collaborators |
+| About & CV | `about.html` | Appointments, education, awards and academic biography |
+| Contact | `contact.html` | Institutional contact and identifiers |
 
-No custom GitHub Actions workflow is needed. The six HTML pages are in the repository root, with shared styling in `assets/styles.css`.
+### Detailed project profiles
 
-## Pages
+- `project-robot-virtual-agent.html` — TÜBİTAK 3501 (2026–2029)
+- `project-space-debris.html` — TÜBİTAK 1002-A (2026–2027)
+- `project-vr-stem-vietnam.html` — KAEÜ BAP (2026–2028)
+- `project-vr-circulatory-system.html` — KAEÜ BAP (2025–2026)
 
-- `index.html` — Home
-- `research.html` — Research
-- `publications.html` — Publications (23 selected CV-listed journal articles with DOI links and search/filter)
-- `projects.html` — Research projects
-- `about.html` — About & CV (includes a **Print / Save CV as PDF** button)
-- `contact.html` — Contact
+## Publishing on GitHub Pages
 
-### Academic content
+The site is plain static HTML, CSS and JavaScript. All site pages are in the repository root; no build process or special plugin is needed.
 
-The content is based on the author's supplied CV as of October/November 2026. It separates funded projects from pending proposals and does not present submitted papers as accepted publications. Please verify academic details and update as records change.
+**One-time repository setting:**
 
-Last repository restructure: 12 November 2026 — direct static hosting for reliability.
+1. Open [Settings → Pages](https://github.com/huseyinates38/huseyinates38.github.io/settings/pages).
+2. Under "Build and deployment," choose **Deploy from a branch**.
+3. Choose **main** and **/(root)**.
+4. Click **Save** and allow GitHub to publish the site.
+
+> Repository files being present does not by itself confirm that GitHub Pages is enabled. If the public website is unavailable, inspect Pages settings and the Actions/Pages deployment status.
+
+## Editorial accuracy
+
+The site uses details recorded in the academic CV supplied in October–November 2026. Ongoing supervisees and graduates are grouped according to the supervision records; international collaborators are clearly distinguished from group members. No unverified project personnel assignments, portraits, grant outcomes, student contact details, or study results are included. Funding awards are distinguished from submitted proposals pending decisions.
+
+All project summaries should be reviewed by the PI before being treated as a permanent public record.
+
+_Last updated: 12 November 2026._
