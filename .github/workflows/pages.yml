@@ -46,10 +46,13 @@ jobs:
           python scripts/build_team_directory.py
           python scripts/enhance_visuals.py
           python scripts/apply_v48.py
+          python scripts/apply_design_system.py
       - name: Validate public status, privacy, search and documents
         run: python scripts/verify_bilingual.py
       - name: Test mobile, desktop and interactive controls in Chromium
-        run: python tests/bilingual_browser.py
+        run: |
+          python tests/bilingual_browser.py
+          python tests/design_browser.py
       - name: Retain browser and quality reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -57,6 +60,8 @@ jobs:
           name: website-browser-quality
           path: |
             browser-report.json
+            design-browser-report.json
+            design-previews/
             _site/quality-report.json
             overflow-smoke.png
           if-no-files-found: warn
@@ -78,6 +83,6 @@ jobs:
         run: python scripts/verify_site.py --live
       - name: Record release
         run: |
-          echo '## Academic website 4.8 — screenshot-inspired live layout and verified research statuses' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Responsive five-card homepage and real research-group QR; two completed BAP studies, submitted 2221 and nonfunded 3501 distinguished in both languages.' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Academic website 4.9 — shared visual system, localized artwork and loaded highlight imagery' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Shared visual system on all pages, independent EN/TR hero images, five photo-backed highlights, preserved research records and responsive controls.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Browser and live-file tests passed. These tests are not WCAG certification or academic fact verification.' >> "$GITHUB_STEP_SUMMARY"

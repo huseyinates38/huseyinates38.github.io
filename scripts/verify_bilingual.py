@@ -9,7 +9,7 @@ from verify_site import validate
 def main():
   validate()
   m=json.loads((SITE/'deployment.json').read_text())
-  assert m['version']=='4.8' and m['languages']==['en','tr'],m
+  assert m['version']=='4.9' and m['languages']==['en','tr'],m
   assert m['language_pairs']==69 and m['page_count']==138,(m['language_pairs'],m['page_count'])
   paths=sorted(p.name for p in SITE.glob('*.html'))
   assert len(paths)==69
@@ -102,9 +102,9 @@ def main():
     assert homepage.select_one('a[href="https://tally.so/r/Eq51Jr"]')
     assert homepage.select_one('.showcase-join-qr img[src$="research-group-interest.png"]')
     research=Soup((SITE/locale/'research.html').read_text(encoding='utf-8'),'html.parser')
-    assert len(research.select('.visual-research-gallery-grid a'))==3
+    assert len(research.select('.research-theme-grid .entry'))==3
     projects=Soup((SITE/locale/'projects.html').read_text(encoding='utf-8'),'html.parser')
-    assert projects.select_one('.visual-project-separator')
+    assert len(projects.select('.project-summary .card-art'))>=3
   assert (SITE/'assets/visuals/research-hero.webp').stat().st_size>20000
   dfg=Soup((SITE/'tr/proposal-tubitak-dfg-reasoning.html').read_text(),'html.parser').get_text(' ',strip=True)
   assert 'başvuru yapılmadı' in dfg and 'Krell' in dfg
