@@ -1,0 +1,108 @@
+name: Collect official institution marks
+on:
+  push:
+    branches: [team-institutions-v43]
+    paths: [.github/workflows/collect-institution-logos.yml]
+permissions:
+  contents: write
+jobs:
+  collect:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install requests beautifulsoup4 pillow cairosvg
+      - name: Retrieve candidate institution logos from official websites
+        shell: python
+        run: |
+          import requests, json, re, io, concurrent.futures, hashlib
+          from pathlib import Path
+          from urllib.parse import urljoin,urlsplit
+          from bs4 import BeautifulSoup
+          from PIL import Image
+          import cairosvg
+          out=Path('assets/institutions');out.mkdir(parents=True,exist_ok=True)
+          candidates=Path('logo-review');candidates.mkdir(exist_ok=True)
+          sites={
+            'kaeu':'https://www.ahievran.edu.tr/', 'uco':'https://uco.edu.co/',
+            'wur':'https://www.wur.nl/en', 'twente':'https://www.utwente.nl/en/',
+            'maastricht':'https://www.maastrichtuniversity.nl/', 'kent':'https://www.kent.edu/',
+            'copenhagen':'https://www.ku.dk/en', 'ipn':'https://www.leibniz-ipn.de/en',
+            'macedonia':'https://www.uom.gr/en', 'crete':'https://www.uoc.gr/en/home/',
+            'surrey':'https://www.surrey.ac.uk/', 'uaeu':'https://www.uaeu.ac.ae/en/',
+            'uoc':'https://www.uoc.edu/en', 'hcmute':'https://hcmute.edu.vn/en',
+            'itu':'https://www.itu.edu.tr/', 'marmara':'https://www.marmara.edu.tr/',
+            'meb':'https://www.meb.gov.tr/', 'bogazici':'https://bogazici.edu.tr/',
+            'nevsehir':'https://www.nevsehir.edu.tr/', 'tokat':'https://www.gop.edu.tr/'
+          }
+          def task(item):
+            key,home=item;s=requests.Session();s.headers['User-Agent']='Mozilla/5.0 (institution identification for academic directory)'
+            result={'institution':key,'homepage':home,'candidates':[],'errors':[]}
+            urls=[];inline=[]
+            try:
+              r=s.get(home,timeout=22);r.raise_for_status();doc=BeautifulSoup(r.text,'html.parser')
+              for n in doc.select('img'):
+                src=n.get('src') or n.get('data-src') or ''; label=' '.join([src,n.get('alt',''),n.get('id',''),' '.join(n.get('class',[]))]).lower()
+                if not src or src.startswith('data:'):continue
+                if not re.search(r'logo|wordmark|amblem|brand|arma|logotype',label):continue
+                score=80
+                if n.find_parent(['header','nav']):score+=25
+                if re.search(r'white|beyaz|footer|negative',label):score-=22
+                if re.search(r'partner|sponsor|facebook|twitter|linkedin|instagram|youtube|google|yok|yök|tubitak|tübitak|teknofest|erasmus|iso|unilogo',label):score-=100
+                urls.append((score,urljoin(r.url,src),'logo'))
+              for n in doc.select('svg'):
+                label=' '.join([n.get('id',''),' '.join(n.get('class',[])),str(n.parent.get('class',[]))]).lower()
+                if 'logo' in label or 'wordmark' in label:
+                  n['xmlns']='http://www.w3.org/2000/svg';inline.append(str(n))
+              for n in doc.select('link[rel]'):
+                if any('icon' in rel for rel in n.get('rel',[])):
+                  urls.append((10,urljoin(r.url,n.get('href','')),'official website icon'))
+              urls.append((0,urljoin(r.url,'/favicon.ico'),'official website icon'))
+            except Exception as e:result['errors'].append(str(e))
+            seen=set()
+            for score,url,kind in sorted(urls,reverse=True):
+              if url in seen or score<0:continue
+              seen.add(url)
+              try:
+                rr=s.get(url,timeout=15);rr.raise_for_status();raw=rr.content
+                if len(raw)>4000000:continue
+                if b'<svg' in raw[:2000]:raw=cairosvg.svg2png(bytestring=raw,output_width=480,unsafe=False)
+                im=Image.open(io.BytesIO(raw)).convert('RGBA')
+                if min(im.size)<16 or max(im.size)>6000:continue
+                im.thumbnail((480,150),Image.Resampling.LANCZOS)
+                name=f'{key}-{len(result["candidates"])}.png';im.save(candidates/name,optimize=True)
+                rgb=im.convert('RGB');pixels=[p for p,a in zip(rgb.getdata(),im.getchannel('A').getdata()) if a>200]
+                light=bool(pixels and sum(min(p)>215 for p in pixels)/len(pixels)>.75)
+                result['candidates'].append({'path':name,'source':url,'type':kind,'size':list(im.size),'dark_background':light})
+                if len(result['candidates'])==3:break
+              except Exception as e:result['errors'].append(url+' '+str(e)[:90])
+            if not result['candidates']:
+              for svg in inline[:3]:
+                try:
+                  raw=cairosvg.svg2png(bytestring=svg.encode(),output_width=400)
+                  im=Image.open(io.BytesIO(raw)).convert('RGBA');im.thumbnail((480,150))
+                  name=key+'-0.png';im.save(candidates/name)
+                  result['candidates'].append({'path':name,'source':home,'type':'inline official logo','size':list(im.size),'dark_background':False});break
+                except Exception as e:result['errors'].append(str(e)[:90])
+            if result['candidates']:
+              choice=result['candidates'][0];(out/(key+'.png')).write_bytes((candidates/choice['path']).read_bytes());result['selected']=choice
+            print(key, len(result['candidates']),flush=True)
+            return key,result
+          with concurrent.futures.ThreadPoolExecutor(max_workers=10) as pool:report=dict(pool.map(task,sites.items()))
+          Path('content/institution-logo-sources.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
+          (candidates/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
+      - uses: actions/upload-artifact@v4
+        with:
+          name: institution-logo-review
+          path: logo-review
+          retention-days: 7
+      - name: Retain only public institution assets on the review branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/institutions content/institution-logo-sources.json
+          git diff --cached --quiet || git commit -m 'Add sourced institutional marks for team cards'
+          git push origin HEAD:team-institutions-v43
