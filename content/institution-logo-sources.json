@@ -5,7 +5,17 @@
     "candidates": [],
     "errors": [
       "HTTPSConnectionPool(host='www.ahievran.edu.tr', port=443): Read timed out. (read timeout=22)"
-    ]
+    ],
+    "selected": {
+      "source": "https://cdn.e-devlet.gov.tr/themes/ankara/images/logos/64webp/1077.1.8.0.webp",
+      "type": "official institution logo",
+      "path": "kaeu.png",
+      "size": [
+        64,
+        64
+      ],
+      "dark_background": false
+    }
   },
   "uco": {
     "institution": "uco",
@@ -506,12 +516,12 @@
     ],
     "errors": [],
     "selected": {
-      "path": "uaeu-0.png",
-      "source": "https://www.uaeu.ac.ae/images/global-star.png",
+      "path": "uaeu-1.png",
+      "source": "https://www.uaeu.ac.ae/assets/images/uaeu-logo.svg",
       "type": "logo",
       "size": [
-        148,
-        150
+        480,
+        84
       ],
       "dark_background": false
     },
@@ -742,12 +752,12 @@
     ],
     "errors": [],
     "selected": {
-      "path": "meb-0.png",
-      "source": "https://www.meb.gov.tr/assets/img/ataturk.png",
-      "type": "logo",
+      "source": "https://www.meb.gov.tr/assets/img/Logo.png",
+      "type": "official institution logo",
+      "path": "meb.png",
       "size": [
-        122,
-        35
+        162,
+        59
       ],
       "dark_background": false
     },
@@ -884,14 +894,14 @@
     ],
     "errors": [],
     "selected": {
-      "path": "tokat-0.png",
-      "source": "https://www.gop.edu.tr/img/radyotogulogo.png",
-      "type": "logo",
+      "source": "https://www.gop.edu.tr/img/gop_logo_70X70.png",
+      "type": "official institution logo",
+      "path": "tokat.png",
       "size": [
-        256,
-        150
+        70,
+        70
       ],
-      "dark_background": true
+      "dark_background": false
     }
   }
 }
