@@ -30,6 +30,12 @@ def main():
    assert s.select_one('#academic-record .profile-facts')
    assert not s.select_one('.pagehero .relationship-stage')
    if slug=='marc-romero-carbonell' and tr:assert 'Üretken yapay zekâ (GenAI)' in s.main.get_text()
+   if slug in { 'omid-noroozi', 'mohammadreza-farrokhnia', 'kazem-banihashem', 'guido-makransky', 'georgios-lampropoulos', 'ahmet-sami-konca', 'juan-david-murillo-egurrola', 'naomi-winstone' }:
+    assert len(s.select('p[data-profile-contribution]'))==1
+    assert not any('Ongoing academic work' in x.get_text(' ',strip=True) or 'Devam eden akademik çalışmalar' in x.get_text(' ',strip=True) for x in s.select('#ongoing-research h2')),slug
+  marc_topic=team.select_one('[data-person="marc-romero-carbonell"] .person-topic')
+  assert marc_topic
+  assert marc_topic.get_text(' ',strip=True)==('Üretken yapay zekâyla öğrenme üzerine tematik koleksiyon önerisi' if tr else 'Proposed thematic collection on learning with GenAI')
   bui=read(pre+'person-bui-van-hong.html')
   assert BUI[int(tr)] in bui.main.get_text()
   assert bui.select_one('#ongoing-research a[href="project-vr-stem-vietnam.html"]')

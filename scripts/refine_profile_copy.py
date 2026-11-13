@@ -52,6 +52,89 @@ COPY = {
                    'Marc Romero Carbonell ile görüşmeler, International Journal of Educational Technology in Higher Education için hazırlanan koleksiyonun kapsamına ve uluslararası konuk editör ekibine odaklanmaktadır. Koleksiyonda üretken yapay zekâyla öğrenme, öğrencilerin ihtiyaç duyduğu yeterlikler ve öğretim ile değerlendirmenin yeniden tasarlanması ele alınmaktadır.')}
 }
 
+# Eight additional collaborator profiles follow the same concise, evidence-based layout.
+# Statements below consolidate existing public descriptions; no new research roles
+# or funding awards are asserted.
+COPY.update({
+ 'omid-noroozi': {
+  'role': ('Research collaborator', 'Araştırma ortağı'),
+  'focus': ('Feedback, scientific argument revision and learner control',
+            'Geri bildirim, bilimsel argüman revizyonu ve öğrenen kontrolü'),
+  'stage': ('Joint manuscript development', 'Ortak makale hazırlığı'),
+  'intro': ('Develops an empirical research manuscript with Hüseyin Ateş and MohammadReza Farrokhnia on feedback and revision of scientific arguments.',
+            'Hüseyin Ateş ve MohammadReza Farrokhnia ile geri bildirim ve bilimsel argüman revizyonu üzerine ampirik bir araştırma makalesi hazırlamaktadır.'),
+  'contribution': ('The collaboration examines feedback processes, learner control and the conceptual framework for revising scientific arguments. Manuscript development and interpretation are continuing. Discussions about possible researcher visits are separate from the manuscript collaboration.',
+                   'İş birliğinde geri bildirim süreçleri, öğrenen kontrolü ve bilimsel argümanların yeniden düzenlenmesine ilişkin kavramsal çerçeve ele alınmaktadır. Makalenin geliştirilmesi ve yorumlanmasına yönelik çalışmalar sürmektedir. Olası araştırmacı ziyaretlerine ilişkin görüşmeler, makale iş birliğinden ayrı yürütülmektedir.')},
+ 'mohammadreza-farrokhnia': {
+  'role': ('Research collaborator', 'Araştırma ortağı'),
+  'focus': ('Human–AI feedback and scientific argumentation',
+            'İnsan–yapay zekâ geri bildirimi ve bilimsel argümantasyon'),
+  'stage': ('Joint manuscript development; COST application decision pending',
+            'Ortak makale hazırlığı; COST başvuru kararı bekleniyor'),
+  'intro': ('Works with Hüseyin Ateş and Omid Noroozi on a manuscript concerning human–AI feedback and scientific reasoning.',
+            'Hüseyin Ateş ve Omid Noroozi ile insan–yapay zekâ geri bildirimi ve bilimsel akıl yürütme üzerine bir makale hazırlamaktadır.'),
+  'contribution': ('His collaborative work includes conceptual framing, methodological interpretation and manuscript revision. He also participated as a secondary proposer in the submitted SciEpi-Feedback COST network application, for which a funding decision is pending.',
+                   'İş birliği; makalenin kavramsal çerçevesini, yöntemsel yorumunu ve revizyonunu kapsamaktadır. Farrokhnia ayrıca sunulan SciEpi-Feedback COST ağ başvurusuna ikincil önerici olarak katılmıştır. Başvuru için destek kararı beklenmektedir.')},
+ 'kazem-banihashem': {
+  'role': ('Research collaborator', 'Araştırma ortağı'),
+  'focus': ('Retrieval-grounded generative AI, adaptive feedback and argument revision',
+            'Kaynak temelli üretken yapay zekâ, uyarlanabilir geri bildirim ve argüman revizyonu'),
+  'stage': ('Manuscript revision', 'Makale revizyonu'),
+  'intro': ('Collaborates on manuscript development and methodological review concerning generative-AI feedback and scientific argumentation.',
+            'Üretken yapay zekâ geri bildirimi ve bilimsel argümantasyon üzerine makale geliştirme ve yöntemsel değerlendirme çalışmalarına katkı sunmaktadır.'),
+  'contribution': ('The joint work addresses retrieval-grounded generative AI, adaptive rule-based feedback and scientific argument revision. His contributions include discussion of the manuscript’s methodological positioning, scientific argument and revisions.',
+                   'Ortak çalışma, kaynak temelli üretken yapay zekâ, uyarlanabilir kural temelli geri bildirim ve bilimsel argüman revizyonunu ele almaktadır. Katkıları, makalenin yöntemsel konumlandırılmasını, bilimsel gerekçelendirmesini ve revizyonunu değerlendirmeyi kapsamaktadır.')},
+ 'guido-makransky': {
+  'role': ('Research collaboration discussions', 'Araştırma iş birliği görüşmeleri'),
+  'focus': ('Immersive science learning and reflective generative-AI scaffolding',
+            'Sürükleyici fen öğrenimi ve yansıtıcı üretken yapay zekâ desteği'),
+  'stage': ('Research design discussions', 'Araştırma tasarımı görüşmeleri'),
+  'intro': ('Discusses the design of research on immersive science learning and reflective generative-AI support with Hüseyin Ateş.',
+            'Hüseyin Ateş ile sürükleyici fen öğrenimi ve yansıtıcı üretken yapay zekâ desteğine ilişkin araştırma tasarımını görüşmektedir.'),
+  'contribution': ('Current discussions concern a potential manuscript on immersive learning and a possible small pilot comparing reflective scaffolding and the gradual reduction of AI support. The pilot remains a research-design proposal; no implementation or funding is reported.',
+                   'Görüşmeler, sürükleyici öğrenme üzerine olası bir makaleyi ve yansıtıcı destekleme ile yapay zekâ desteğinin kademeli azaltılmasını karşılaştırabilecek küçük ölçekli bir pilot tasarımı kapsamaktadır. Pilot çalışma henüz tasarım aşamasındadır; uygulamaya geçildiği veya destek alındığı belirtilmemektedir.')},
+ 'georgios-lampropoulos': {
+  'role': ('Research collaborator', 'Araştırma ortağı'),
+  'focus': ('Flipped learning and evidence-based scientific reasoning',
+            'Ters yüz öğrenme ve kanıta dayalı bilimsel akıl yürütme'),
+  'stage': ('Ongoing manuscript collaboration', 'Devam eden makale iş birliği'),
+  'intro': ('Co-authored a published study on science teachers’ flipped-learning readiness with Hüseyin Ateş and Juan Garzón.',
+            'Hüseyin Ateş ve Juan Garzón ile fen öğretmenlerinin ters yüz öğrenmeye hazır bulunuşluğu üzerine yayımlanmış bir çalışmanın ortak yazarıdır.'),
+  'contribution': ('The collaboration now also includes developing a manuscript on evidence-based reasoning before AI-provided answers. The earlier peer-reviewed publication and the manuscript in preparation are separate research outputs.',
+                   'Devam eden iş birliği, yapay zekânın sunduğu yanıtlardan önce kanıta dayalı akıl yürütmeyi ele alan bir makalenin geliştirilmesini de kapsamaktadır. Daha önce yayımlanan ortak çalışma ile hazırlık aşamasındaki makale ayrı araştırma çıktılarıdır.')},
+ 'ahmet-sami-konca': {
+  'role': ('Research collaborator', 'Araştırma ortağı'),
+  'focus': ('Scientific agency in preschool STEM and independent instructional design',
+            'Okul öncesi STEM’de bilimsel özne olma ve bağımsız öğretim tasarımı'),
+  'stage': ('Joint research; AÜB application decision pending',
+            'Ortak araştırma; AÜB başvuru kararı bekleniyor'),
+  'intro': ('Co-authored a published study with Hüseyin Ateş on scientific agency in preschool STEM education.',
+            'Hüseyin Ateş ile okul öncesi STEM eğitiminde bilimsel özne olma üzerine yayımlanmış bir çalışmanın ortak yazarıdır.'),
+  'contribution': ('Their ongoing collaboration includes the submitted AÜB International BAP proposal examining generative-AI guidance for prospective preschool teachers’ independent STEM instructional design. The proposal is awaiting a funding decision and is separate from their published research.',
+                   'Süren iş birliği, okul öncesi öğretmen adaylarının bağımsız STEM öğretim tasarımında üretken yapay zekâ rehberliğini inceleyen, sunulmuş AÜB Uluslararası BAP önerisini kapsamaktadır. Öneri için destek kararı beklenmektedir; bu çalışma yayımlanan ortak araştırmadan ayrıdır.')},
+ 'juan-david-murillo-egurrola': {
+  'role': ('Study coordinator', 'Çalışma koordinatörü'),
+  'focus': ('Generative-AI literacy and responsible academic use',
+            'Üretken yapay zekâ okuryazarlığı ve sorumlu akademik kullanım'),
+  'stage': ('Instrument adaptation and pilot preparation',
+            'Ölçme aracı uyarlama ve pilot uygulama hazırlığı'),
+  'intro': ('Coordinates the Türkiye–Colombia comparative study of generative-AI literacy with Hüseyin Ateş and Juan Garzón.',
+            'Hüseyin Ateş ve Juan Garzón ile yürütülen Türkiye–Kolombiya üretken yapay zekâ okuryazarlığı karşılaştırma çalışmasını koordine etmektedir.'),
+  'contribution': ('The collaboration covers the research framework, questionnaire refinement, translation reconciliation, discipline-based sampling and preparation for cognitive interviews and piloting. Fieldwork arrangements are still being coordinated; comparative findings are not yet available.',
+                   'Çalışmada araştırma çerçevesi, anketin geliştirilmesi, çeviri uzlaştırması, disiplin temelli örnekleme ve bilişsel görüşme ile pilot uygulama hazırlıkları yürütülmektedir. Saha çalışmasının koordinasyonu sürmekte olup henüz karşılaştırmalı bulgular bulunmamaktadır.')},
+ 'naomi-winstone': {
+  'role': ('Research collaborator and proposed academic host',
+           'Araştırma ortağı ve önerilen akademik ev sahibi'),
+  'focus': ('Feedback processes, evaluative judgement and learner agency',
+            'Geri bildirim süreçleri, değerlendirme yargısı ve öğrencinin etkin özne olması'),
+  'stage': ('Manuscript development; TÜBİTAK 2219 decision pending',
+            'Makale hazırlığı; TÜBİTAK 2219 kararı bekleniyor'),
+  'intro': ('Collaborates with Hüseyin Ateş on the conceptual framing and interpretation of a generative-AI research manuscript.',
+            'Hüseyin Ateş ile üretken yapay zekâ üzerine bir araştırma makalesinin kavramsal çerçevesini ve yorumlanmasını geliştirmektedir.'),
+  'contribution': ('She has also provided a formal invitation to act as academic host for the submitted TÜBİTAK 2219 proposal at the University of Surrey. That proposal examines scheduled fading of AI feedback and independent scientific argumentation. The proposed May 2027–May 2028 visit remains conditional on funding and institutional arrangements, separately from the manuscript collaboration.',
+                   'Ayrıca Surrey Üniversitesinde TÜBİTAK 2219 başvurusu kapsamında akademik ev sahipliği için resmî davet sağlamıştır. Önerilen araştırma, yapay zekâ geri bildiriminin kademeli azaltılmasını ve bağımsız bilimsel argümantasyonu incelemektedir. Mayıs 2027–Mayıs 2028 için planlanan ziyaret, makale iş birliğinden ayrı olup destek kararına ve kurumsal düzenlemelere bağlıdır.')}
+})
+
 def set_text(node, value):
  if node is not None:
   node.clear(); node.append(value)
@@ -150,6 +233,8 @@ def team(s,tr):
    set_text(card.select_one('.micro-label'),'Akademik araştırma ortağı' if tr else 'Academic collaborator')
    set_text(card.select_one('.relationship-stage'),BUI[int(tr)])
   if slug in COPY:set_text(card.select_one('.relationship-stage'),COPY[slug]['stage'][int(tr)])
+  if slug=='marc-romero-carbonell' and tr:
+   set_text(card.select_one('.person-topic'),'Üretken yapay zekâyla öğrenme üzerine tematik koleksiyon önerisi')
  for p in s.select('main p'):
   if 'Roles follow the supplied team roster.' in p.get_text():
    set_text(p,'AÜB application-team roles are identified separately. The application is awaiting a funding decision.')
