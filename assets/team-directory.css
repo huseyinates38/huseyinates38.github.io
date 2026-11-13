@@ -14,3 +14,5 @@
 .research-join-qr:hover{box-shadow:0 8px 24px #103e4c23}.research-join-qr img{display:block;width:100%;max-width:220px;height:auto;aspect-ratio:1;object-fit:contain}
 .research-join-qr span{font-size:12px;font-weight:600;padding-bottom:5px}
 @media(max-width:660px){.research-join{grid-template-columns:1fr;padding:20px}.research-join-qr{max-width:220px}}
+
+.institution-text-mark{background:#f0f5f3;color:#163e4c;font:700 25px/1 'DM Sans',Arial,sans-serif;letter-spacing:-.04em}

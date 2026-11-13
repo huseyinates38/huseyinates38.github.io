@@ -76,6 +76,6 @@ jobs:
         run: python scripts/verify_site.py --live
       - name: Record release
         run: |
-          echo '## Academic website 4.5 — people, institutions and research network' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Corrected 226K999 title, restored Ipek dual role, updated Serbay school, and added bilingual interest form with QR. Non-public manuscript tracking remains private.' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Academic website 4.6 — editorial Turkish, affiliation corrections and ICCAI conference' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Georgios affiliations corrected; contact warning removed; conference acceptance and pending 2224-A application separated; Turkish-language editorial review. All research and document records remain private where appropriate.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Browser and live-file tests passed. These tests are not WCAG certification or academic fact verification.' >> "$GITHUB_STEP_SUMMARY"

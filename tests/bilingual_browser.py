@@ -10,7 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]; SITE=ROOT/'_site'
 
 def main():
   offline='--offline' in sys.argv
-  report={'release':'4.5','widths':[360,768,1440],'pages':0,'layout_checks':0,'interactions':[],'errors':[]}
+  report={'release':'4.6','widths':[360,768,1440],'pages':0,'layout_checks':0,'interactions':[],'errors':[]}
   class Quiet(http.server.SimpleHTTPRequestHandler):
     def log_message(self,*args):pass
   server=None
@@ -22,8 +22,9 @@ def main():
     with sync_playwright() as pw:
       browser=pw.chromium.launch(executable_path=shutil.which('chromium') or shutil.which('google-chrome'),args=['--no-sandbox'])
       ctx=browser.new_context(viewport={'width':1280,'height':900},reduced_motion='reduce')
-      page=ctx.new_page();page.on('pageerror',lambda e:report['errors'].append(str(e)))
+      page=ctx.new_page();current=[None];page.on('pageerror',lambda e:report['errors'].append((current[0],str(e))))
       def load(name):
+        current[0]=name
         if not offline:
           page.goto(base+name,wait_until='domcontentloaded');return
         source=SITE/name; soup=Soup(source.read_text(encoding='utf-8'),'html.parser');scripts=[]
@@ -39,7 +40,7 @@ def main():
         for code in scripts:page.add_script_tag(content=code)
       pages=sorted(p.relative_to(SITE).as_posix() for p in SITE.rglob('*.html'))
       report['pages']=len(pages)
-      assert len(pages)==136,len(pages)
+      assert len(pages)==138,len(pages)
       for width in [360,768,1440]:
         page.set_viewport_size({'width':width,'height':900})
         for file in pages:
@@ -57,9 +58,9 @@ def main():
       load('index.html'); assert page.locator('a[data-site-lang="tr"]').get_attribute('href')=='tr/index.html'
       if not offline:page.locator('a[data-site-lang="tr"]').click()
       else:load('tr/index.html')
-      assert 'Yapay zekâyla öğrenmek' in page.locator('h1').inner_text()
+      assert 'Yapay zekâ destekli öğrenme' in page.locator('h1').inner_text()
       page.locator('.menu-button').click();assert page.locator('#main-navigation').is_visible();page.keyboard.press('Escape');assert page.locator('.menu-button').get_attribute('aria-expanded')=='false'
-      report['interactions'].append('English to Turkish switching, translated homepage, mobile menu')
+      report['interactions'].append('English to Turkish switching, academic-language homepage, mobile menu')
       load('tr/team.html')
       assert page.locator('text=Moritz Krell').count()>0
       assert page.locator('a[data-site-lang="en"]').get_attribute('href')=='../team.html'

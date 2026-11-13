@@ -9,10 +9,10 @@ from verify_site import validate
 def main():
   validate()
   m=json.loads((SITE/'deployment.json').read_text())
-  assert m['version']=='4.5' and m['languages']==['en','tr'],m
-  assert m['language_pairs']==68 and m['page_count']==136,(m['language_pairs'],m['page_count'])
+  assert m['version']=='4.6' and m['languages']==['en','tr'],m
+  assert m['language_pairs']==69 and m['page_count']==138,(m['language_pairs'],m['page_count'])
   paths=sorted(p.name for p in SITE.glob('*.html'))
-  assert len(paths)==68
+  assert len(paths)==69
   for name in paths:
     en=Soup((SITE/name).read_text(encoding='utf-8'),'html.parser')
     tr=Soup((SITE/'tr'/name).read_text(encoding='utf-8'),'html.parser')
@@ -65,12 +65,12 @@ def main():
     assert (SITE/'tr'/('person-'+name+'.html')).is_file()
   team=Soup((SITE/'tr/team.html').read_text(),'html.parser')
   assert 'Fen Bilgisi Eğitimi Doçenti' not in team.get_text(' ',strip=True)
-  assert team.select_one('#collaborators h2').get_text(' ',strip=True)=='Devam Eden Araştırma İş Birlikleri'
+  assert team.select_one('#collaborators h2').get_text(' ',strip=True)=='Devam eden araştırma iş birlikleri'
   assert 'Naomi Winstone' in team.get_text(' ',strip=True)
   for slug in ('naomi-winstone','elena-novak','guido-makransky','moritz-krell','georgios-lampropoulos','bui-van-hong'):
     for local in ('','tr/'):
       source=(SITE/local/('person-'+slug+'.html')).read_text()
-      assert 'ongoing-research' in source or 'Süren akademik bağlantı' in source or 'Ongoing academic connection' in source,slug
+      assert 'ongoing-research' in source or 'Süren akademik bağlantı' in source or 'Devam eden araştırma iş birliği' in source or 'Ongoing academic connection' in source,slug
   assert (SITE/'downloads/research-network-tr.pdf').is_file()
   assert (SITE/'downloads/research-network-en.pdf').is_file()
   sections=[n.get('id') for n in team.select('main > section[id]')]
@@ -95,6 +95,29 @@ def main():
   assert (SITE/'assets/qr/research-group-interest.png').stat().st_size>1000
   dfg=Soup((SITE/'tr/proposal-tubitak-dfg-reasoning.html').read_text(),'html.parser').get_text(' ',strip=True)
   assert 'başvuru yapılmadı' in dfg and 'Krell' in dfg
+  # English/Turkish institutional affiliations: do not infer outdated University of Crete links.
+  for locale in ('','tr/'):
+    georgios=Soup((SITE/locale/'person-georgios-lampropoulos.html').read_text(encoding='utf-8'),'html.parser').get_text(' ',strip=True)
+    assert 'University of Nicosia' in georgios and 'University of Macedonia' in georgios,locale
+    assert 'University of Crete' not in georgios and 'Girit Üniversitesi' not in georgios,locale
+    join=Soup((SITE/locale/'join.html').read_text(encoding='utf-8'),'html.parser').get_text(' ',strip=True)
+    assert 'Before sending.' not in join and 'Göndermeden önce' not in join,locale
+    assert 'Bu sitede başvuru formu yoktur.' not in join,locale
+    conf=Soup((SITE/locale/'conference-iccai-2027.html').read_text(encoding='utf-8'),'html.parser').get_text(' ',strip=True)
+    assert 'YS1001' in conf and '2224-A' in conf and 'ICCAI 2027' in conf,locale
+    assert ('Sözlü sunum için kabul edildi' if locale else 'Accepted for oral presentation') in conf,locale
+    about=Soup((SITE/locale/'about.html').read_text(encoding='utf-8'),'html.parser')
+    assert about.find('a',href='conference-iccai-2027.html'),locale
+    proposals=Soup((SITE/locale/'proposals.html').read_text(encoding='utf-8'),'html.parser')
+    assert len(proposals.select('article.pipeline-card'))==7,locale
+  # Full Turkish editorial pass: check all public HTML headings, not only team profiles.
+  for f in (SITE/'tr').glob('*.html'):
+    doc=Soup(f.read_text(encoding='utf-8'),'html.parser')
+    if not doc.main:continue
+    assert 'Göndermeden önce.' not in doc.main.get_text(' ',strip=True),f.name
+    for heading in doc.main.select('h1,h2,h3'):
+      txt=heading.get_text(' ',strip=True)
+      assert not txt.endswith(' .'),(f.name,txt)
   protected=['mail.google.com','teams.microsoft.com/meet','Invitation Letter.docx','IMG_3348','IMG_8514','professional_outdoor_business_portrait','/mnt/data/','ghp_']
   for f in SITE.rglob('*'):
     if f.suffix.lower() in ('.html','.json','.js','.md','.txt','.csv','.xml'):

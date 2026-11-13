@@ -278,6 +278,19 @@
         "Ministry of National Education emblem",
         "Millî Eğitim Bakanlığı amblemi"
       ]
+    },
+    "nicosia": {
+      "names": [
+        "University of Nicosia",
+        "Lefkoşa Üniversitesi (University of Nicosia)"
+      ],
+      "country": "CY",
+      "url": "https://www.unic.ac.cy/",
+      "text_mark": "UNIC",
+      "logo_label": [
+        "University of Nicosia",
+        "Lefkoşa Üniversitesi"
+      ]
     }
   },
   "affiliations": {
@@ -303,8 +316,8 @@
       "ipn"
     ],
     "georgios-lampropoulos": [
-      "macedonia",
-      "crete"
+      "nicosia",
+      "macedonia"
     ],
     "naomi-winstone": [
       "surrey"

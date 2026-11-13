@@ -32,10 +32,14 @@ def affiliations(keys,lang,alumni=False):
  parts=[]
  for key in keys:
   ins=DATA['institutions'][key];logo=ins.get('logo',key);path=SITE/'assets/institutions'/f'{logo}.png'
-  if not path.is_file():raise FileNotFoundError('Reviewed institutional mark missing: '+str(path))
   label=pick(ins['names'],lang);alt=pick(ins.get('logo_label',[label+' logo',label+' logosu']),lang)
   prefix='../' if lang=='tr' else ''
-  image=f'<span class="institution-mark'+(' dark' if ins.get('dark') else '')+f'"><img src="{prefix}assets/institutions/{logo}.png" alt="{e(alt)}" width="120" height="54" loading="lazy" decoding="async"/></span>'
+  if ins.get('text_mark') and not path.is_file():
+   # Clearly typeset institution name instead of inventing a purported official logo.
+   image='<span class="institution-mark institution-text-mark" aria-label="'+e(label)+'">'+e(ins['text_mark'])+'</span>'
+  else:
+   if not path.is_file():raise FileNotFoundError('Reviewed institutional mark missing: '+str(path))
+   image=f'<span class="institution-mark'+(' dark' if ins.get('dark') else '')+f'"><img src="{prefix}assets/institutions/{logo}.png" alt="{e(alt)}" width="120" height="54" loading="lazy" decoding="async"/></span>'
   context=pick(('Degree institution','Mezun olunan kurum'),lang) if alumni else pick(('Institution','Kurum'),lang)
   parts.append(f'<div class="affiliation-item">{image}<div><span class="affiliation-kind">{context}</span><a href="{e(ins["url"])}" class="institution-name">{e(label)}</a>{country(ins["country"],lang)}</div></div>')
  return '<div class="affiliation-list">'+''.join(parts)+'</div>'
@@ -79,8 +83,16 @@ def enhance_profiles(docs,lang):
   s=docs[name];asset(s,lang)
   container=s.select_one('.pagehero .container');container.append(fragment(affiliations(keys,lang,slug in ['kubra-solmaz','rabia-ates','fatma-gazioglu'])))
   if slug=='georgios-lampropoulos':
-   eyebrow=container.select_one('.eyebrow');eyebrow.string=pick(('Research collaborator · Postdoctoral researcher','Araştırma ortağı · Doktora sonrası araştırmacı'),lang)
-   s.main.append(fragment(section('<h2>'+pick(('Principal academic affiliations','Başlıca akademik görevler'),lang)+'</h2><p>'+pick(('Postdoctoral research at the Department of Applied Informatics, University of Macedonia, and the Department of Preschool Education, University of Crete, Greece. ','Yunanistan’da Makedonya Üniversitesi Uygulamalı Bilişim Bölümü ve Girit Üniversitesi Okul Öncesi Eğitimi Bölümünde doktora sonrası araştırma görevleri. '),lang)+'</p>')))
+   # Remove outdated source narrative that still mentions University of Crete.
+   for prior_note in list(s.main.find_all('p')):
+    narrative=prior_note.get_text(' ',strip=True)
+    if ('University of Crete' in narrative or 'Girit Üniversitesi' in narrative):prior_note.decompose()
+   eyebrow=container.select_one('.eyebrow');eyebrow.string=pick(('Research collaborator · Academic affiliations','Araştırma ortağı · Akademik kurumlar'),lang)
+   georgios_affiliations=(
+    '<ul><li><strong>Department of Education, University of Nicosia</strong> · 2417 Nicosia, Cyprus</li><li><strong>Department of Applied Informatics, School of Information Sciences, University of Macedonia</strong> · 54636 Thessaloniki, Greece</li></ul>',
+    '<ul><li><strong>University of Nicosia, Department of Education</strong> · Lefkoşa 2417, Kıbrıs</li><li><strong>University of Macedonia, School of Information Sciences, Department of Applied Informatics</strong> · Selanik 54636, Yunanistan</li></ul>'
+   )
+   s.main.append(fragment(section('<h2>'+pick(('Academic affiliations','Akademik kurumlar'),lang)+'</h2>'+pick(georgios_affiliations,lang))))
    for ld in s.select('script[type="application/ld+json"]'):
     try:
      obj=json.loads(ld.string or '{}')
@@ -101,7 +113,7 @@ def research_interest(lang,compact=False):
  label=pick(('Open the research-group interest form','Araştırma grubu katılım formunu aç'),lang)
  note=pick(('The form opens on Tally. Sending an expression of interest does not guarantee research-group membership, funding or admission.','Form Tally üzerinden açılır. İlgi bildirmek araştırma grubu üyeliği, burs veya kesin kabul anlamına gelmez.'),lang)
  qralt=pick(('QR code to open the research-group interest form','Araştırma grubu katılım formunu açan QR kod'),lang)
- return section('<div class="research-join"><div><p class="eyebrow">'+pick(('Research group · Open enquiry','Araştırma grubu · Katılım formu'),lang)+'</p><h2>'+lead+'</h2><p>'+body+'</p><p>'+link(label,FORM_URL,'btn')+'</p><p class="join-form-url"><a href="'+FORM_URL+'" target="_blank" rel="noopener noreferrer">'+FORM_URL+'</a></p><p class="v3-small">'+note+'</p></div><a class="research-join-qr" href="'+FORM_URL+'" target="_blank" rel="noopener noreferrer" aria-label="'+qralt+'"><img src="'+prefix+'assets/qr/research-group-interest.png" alt="'+qralt+'" width="220" height="220" loading="lazy" decoding="async"/><span>'+pick(('Scan or click','Tara veya tıkla'),lang)+'</span></a></div>','white','research-join')
+ return section('<div class="research-join"><div><p class="eyebrow">'+pick(('Research group · Open enquiry','Araştırma grubu · Katılım formu'),lang)+'</p><h2>'+lead+'</h2><p>'+body+'</p><p>'+link(label,FORM_URL,'btn')+'</p><p class="join-form-url"><a href="'+FORM_URL+'" target="_blank" rel="noopener noreferrer">'+FORM_URL+'</a></p><p class="v3-small">'+note+'</p></div><a class="research-join-qr" href="'+FORM_URL+'" target="_blank" rel="noopener noreferrer" aria-label="'+qralt+'"><img src="'+prefix+'assets/qr/research-group-interest.png" alt="'+qralt+'" width="220" height="220" loading="lazy" decoding="async"/><span>'+pick(('Scan or click','Tara veya tıkla'),lang)+'</span></a></div>','research-interest','white')
 
 def network_intro(lang,full=False):
  url='research-network.html';prefix='../' if lang=='tr' else ''
@@ -262,13 +274,24 @@ def main():
   for span in s.select('li span'):
    if 'Tuğçe Ünsal' in span.get_text() and 'Nisa Gül' in span.get_text():span.string=pick(('Tuğçe Ünsal and Nisa Gül (expected 2027); İrem Sude Köksal and Furkan Ensar Ateş (expected 2028).','Tuğçe Ünsal ve Nisa Gül (beklenen bitiş: 2027); İrem Sude Köksal ve Furkan Ensar Ateş (beklenen bitiş: 2028).'),lang)
   s=docs['join.html']
-  for ptag in s.main.find_all('p'):
-   text=ptag.get_text(' ',strip=True)
-   if 'No application form is hosted here.' in text:
-    ptag.string='For research-group enquiries, use the external interest form below. Email links remain available for direct correspondence. Please do not send identifiable student data.'
-   elif 'Bu sitede başvuru formu yoktur.' in text:
-    ptag.string='Araştırma grubuna yönelik talepler için aşağıdaki dış bağlantılı ilgi formunu kullanabilirsiniz. E-posta üzerinden doğrudan iletişim seçeneği de mevcuttur. Kimliği belirlenebilir öğrenci verilerini göndermeyiniz.'
+  for aside in list(s.main.select('aside.callout')):
+   note=aside.get_text(' ',strip=True)
+   if any(term in note for term in ('Before sending.', 'Göndermeden önce.', 'No application form is hosted here.', 'Bu sitede başvuru formu yoktur.', 'For research-group enquiries', 'Araştırma grubuna yönelik talepler')):
+    block=aside.find_parent('section')
+    if block and len(block.select('aside'))==1:block.decompose()
+    else:aside.decompose()
   s.main.append(fragment(research_interest(lang)))
+  # Conference acceptance is distinct from the TÜBİTAK 2224-A participation-support application.
+  conf_title=pick(('ICCAI 2027 — accepted conference contribution','ICCAI 2027 — kabul edilen konferans bildirisi'),lang)
+  conf_eyebrow=pick(('Conference contribution and participation-support application','Konferans bildirisi ve katılım desteği başvurusu'),lang)
+  paper_title='Calibrated Epistemic-Move Detection and Just-in-Time Scaffolding with Retrieval-Augmented Language Models: An Intelligent Agent for Science Teacher Education'
+  conf_body='<section class="pagehero"><div class="container"><p class="eyebrow">'+conf_eyebrow+'</p><h1>'+conf_title+'</h1><p class="lead">'+pick(('The conference organisers confirmed acceptance of paper YS1001 for oral presentation at ICCAI 2027.','ICCAI 2027 düzenleme kurulu, YS1001 kodlu bildirinin sözlü sunum için kabul edildiğini bildirdi.'),lang)+'</p></div></section>'
+  conf_body+=section('<div class="profile-summary"><div><h2>'+pick(('Accepted contribution','Kabul edilen bildiri'),lang)+'</h2><p lang="en"><em>'+paper_title+'</em></p><p>'+pick(('Paper ID: YS1001. The 13th International Conference on Computing and Artificial Intelligence (ICCAI 2027) is scheduled for 23–26 April 2027 in Seoul, South Korea. Acceptance for inclusion in the proceedings is stated in the organiser’s letter; this does not mean that the paper has already been published.','Bildiri kodu: YS1001. 13. International Conference on Computing and Artificial Intelligence (ICCAI 2027), 23–26 Nisan 2027 tarihlerinde Güney Kore’nin Seul kentinde düzenlenecek. Düzenleme kurulunun kabul yazısında bildiri kitabında yayımlanması da öngörülüyor; bildiri henüz yayımlanmış bir çalışma olarak listelenmiyor.'),lang)+'</p>'+link(pick(('Conference website','Konferansın resmî sitesi'),lang),'https://www.iccai.net/')+'</div><aside class="project-side"><p class="micro-label">'+pick(('Conference status','Konferans durumu'),lang)+'</p><p>'+pick(('Accepted for oral presentation · scheduled for 2027','Sözlü sunum için kabul edildi · 2027 için planlandı'),lang)+'</p></aside></div>')
+  conf_body+=section('<h2>'+pick(('TÜBİTAK 2224-A participation-support application','TÜBİTAK 2224-A katılım desteği başvurusu'),lang)+'</h2><p>'+pick(('An application for international scientific-event participation support was submitted for this conference under the TÜBİTAK 2224-A programme, as reported by the applicant. An award decision has not been confirmed; the activity is not presented as funded.','Bu konferansa katılım için TÜBİTAK 2224-A Yurt Dışı Bilimsel Etkinliklere Katılımı Destekleme Programı kapsamında başvuru yapıldı. Destek sonucu henüz doğrulanmadı; başvuru, kazanılmış burs veya fon olarak gösterilmiyor.'),lang)+'</p>'+link(pick(('TÜBİTAK 2224-A programme','TÜBİTAK 2224-A programı'),lang),'https://tubitak.gov.tr/tr/destekler/bilimsel-etkinlik/etkinliklere-katilma-destekleri/2224-yurt-disi-bilimsel-etkinliklere-katilimi-destekleme-programi'),'conference-funding','muted')
+  docs['conference-iccai-2027.html']=shell(template,'conference-iccai-2027.html',lang,conf_body)
+  activity_link=link(pick(('ICCAI 2027 conference contribution and 2224-A application','ICCAI 2027 bildirisi ve 2224-A başvurusu'),lang),'conference-iccai-2027.html')
+  docs['about.html'].main.append(fragment(section('<h2>'+pick(('Academic events and conference contributions','Bilimsel etkinlikler ve konferans bildirileri'),lang)+'</h2><p>'+pick(('The conference contribution and participation-support application are recorded separately from research grants.','Kabul edilen konferans bildirileri ve katılım desteği başvuruları, araştırma projeleriyle karıştırılmadan sunulmaktadır.'),lang)+'</p>'+activity_link,'academic-events','muted')))
+  docs['proposals.html'].main.append(fragment(section('<h2>'+pick(('International conference participation support','Uluslararası bilimsel etkinlik katılım desteği'),lang)+'</h2><p>'+pick(('TÜBİTAK 2224-A is an event-participation support application and is not included in the seven research-proposal records above.','TÜBİTAK 2224-A, bilimsel etkinliğe katılım desteği başvurusudur; yukarıda yer alan yedi araştırma önerisi kaydına dâhil değildir.'),lang)+'</p>'+activity_link,'conference-support')))
   # Proposed team membership stays attached to the submitted AÜB application.
   s=docs['proposal-turkiye-uae-stem.html'];s.main.append(fragment(section('<h2>'+pick(('Proposed research team','Önerilen araştırma ekibi'),lang)+'</h2><p>'+pick(('Team listed in the supplied application: Hüseyin Ateş (coordinator), Kibar Gül (NEVÜ), Naciye Somuncu Demir (TOGÜ), Ahmet Sami Konca (UAEU), and independent researcher Yeşim Taktat Ateş. The application status is unchanged.','Paylaşılan başvurudaki ekip: Hüseyin Ateş (yürütücü), Kibar Gül (NEVÜ), Naciye Somuncu Demir (TOGÜ), Ahmet Sami Konca (UAEU) ve bağımsız araştırmacı Yeşim Taktat Ateş. Başvurunun değerlendirme durumu değişmemiştir.'),lang)+'</p>'+link(pick(('People and affiliations','Ekip ve kurumlar'),lang),'team.html#project-researchers'),'proposal-team')))
   # Scientific funding decision for 1002-A project, without asserting a signed contract.
@@ -277,11 +300,14 @@ def main():
   s=docs['project-vr-stem-vietnam.html'];s.main.append(fragment(section('<h2>'+pick(('Research connection in Vietnam','Vietnam’daki araştırma bağlantısı'),lang)+'</h2>'+link('Bui Van Hong · HCM-UTE','person-bui-van-hong.html')+'<p>'+pick(('This project remains completed; the collaboration profile does not reopen the project.','Proje tamamlanmış durumdadır; araştırmacı profili eklenmesi projenin yeniden başladığı anlamına gelmez.'),lang)+'</p>')))
   docs['research.html'].main.append(fragment(section('<h2>'+pick(('International research network','Uluslararası araştırma ağı'),lang)+'</h2>'+link(pick(('22 countries · 43 institutions','22 ülke · 43 kurum'),lang),'research-network.html'))))
   fix_1002_titles(docs,lang)
+  if lang=='tr':
+   from turkish_editorial import polish
+   polish(docs)
   build_index(docs,lang)
   for name,s in docs.items():(folder/name).write_text(str(s))
   localized[lang]=docs
  manifest=json.loads((SITE/'deployment.json').read_text());manifest.pop('files',None)
- manifest.update(version='4.5',language_pairs=len(localized['en']),page_count=len(localized['en'])*2,pages=sorted(p.relative_to(SITE).as_posix() for p in SITE.rglob('*.html')),downloads=sorted(p.name for p in (SITE/'downloads').iterdir() if p.is_file()),updated='2026-11-13')
+ manifest.update(version='4.6',language_pairs=len(localized['en']),page_count=len(localized['en'])*2,pages=sorted(p.relative_to(SITE).as_posix() for p in SITE.rglob('*.html')),downloads=sorted(p.name for p in (SITE/'downloads').iterdir() if p.is_file()),updated='2026-11-13')
  (SITE/'deployment.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
  urls=[]
  for name in sorted(localized['en']):
@@ -290,7 +316,7 @@ def main():
    alts=''.join(f'<xhtml:link rel="alternate" hreflang="{code}" href="{BASE}{prefix}{name}"/>' for code,prefix in [('en',''),('tr','tr/'),('x-default','')])
    urls.append(f'<url><loc>{BASE}'+('tr/' if lang=='tr' else '')+name+'</loc>'+alts+'<lastmod>2026-11-13</lastmod></url>')
  (SITE/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'+''.join(urls)+'</urlset>')
- (SITE/'quality-report.json').write_text(json.dumps({'release':'4.5','language_pairs':len(localized['en']),'people_profiles':num,'countries_in_source_posters':22,'institutions_in_source_posters':43,'photos_added':0,'limits':'Countries identify institutional location; logos are not endorsements. Proposal and completed-project statuses are preserved.'},indent=2))
+ (SITE/'quality-report.json').write_text(json.dumps({'release':'4.6','language_pairs':len(localized['en']),'people_profiles':num,'countries_in_source_posters':22,'institutions_in_source_posters':43,'photos_added':0,'limits':'Countries identify institutional location; logos are not endorsements. Proposal and completed-project statuses are preserved.'},indent=2))
  print('TEAM DIRECTORY BUILT',num,'profiles;',manifest['page_count'],'pages')
 
 if __name__=='__main__':main()

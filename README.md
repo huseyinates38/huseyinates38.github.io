@@ -2,7 +2,7 @@
 
 Website: https://huseyinates38.github.io/
 
-## Editorial release 4.4 — bilingual research team and affiliation directory
+## Editorial release 4.6 — bilingual academic website
 
 Research collaborators and editorial connections appear above current graduate researchers and alumni. The current record separates two other supported projects and one completed BAP project, seven submitted/planned/non-funded proposal records, an ongoing Türkiye–Colombia study and two distinct editorial initiatives.
 
@@ -51,3 +51,10 @@ Pushes to main build, validate and browser-test the site before GitHub Pages dep
 - Dr. Serbay Durmaz affiliated with Adana Yüreğir Karacaoğlan Ortaokulu.
 - A clickable research group form (https://tally.so/r/Eq51Jr) with QR added to People and Join pages.
 
+
+## 4.6 bilingual editorial and affiliation update
+
+- Georgios Lampropoulos: two affiliations are shown exactly as supplied — Department of Education, University of Nicosia, Cyprus, and Department of Applied Informatics, University of Macedonia, Greece. Previous reference to the University of Crete was withdrawn. A neutral UNIC text mark is used in place of an unverified official logo.
+- Removed the pre-send disclaimer from the Join pages while retaining the working Tally interest-form link and QR.
+- Added the accepted ICCAI 2027 oral conference contribution (paper YS1001) and separately noted the submitted, as-yet-undecided TÜBİTAK 2224-A conference participation-support application. This is not represented as a funded project, completed presentation or already published paper.
+- Applied academic Turkish editing to all translated page types, reducing literal translation patterns and repeated editorial caveats. Original English research titles and citations remain unchanged.
