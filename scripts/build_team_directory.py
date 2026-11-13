@@ -1,0 +1,191 @@
+#!/usr/bin/env python3
+"""Extend the existing bilingual site with approved affiliations and research-network records."""
+from pathlib import Path
+from html import escape as e
+import copy,json,shutil,re,base64,lzma,hashlib
+from bs4 import BeautifulSoup as Soup
+from build_bilingual import metadata,build_index
+ROOT=Path(__file__).resolve().parents[1];SITE=ROOT/'_site';BASE='https://huseyinates38.github.io/'
+DATA=json.loads((ROOT/'content/team-directory.json').read_text())
+NEW={p['slug']:p for p in DATA['new_people']}
+AFF={**DATA['affiliations'],**{k:v['institutions'] for k,v in NEW.items()}}
+LABELS={
+ 'collaborators':('International research collaborators','Uluslararası Araştırma Ortakları'),
+ 'project-researchers':('Project researchers','Proje Araştırmacıları'),
+ 'project-contributors':('Research practitioners & advisers','Araştırmacılar ve Danışmanlar'),
+ 'editorial-collaborators':('Editorial collaboration','Editoryal İş Birliği'),
+ 'graduate-researchers':('Graduate researchers','Lisansüstü Araştırmacılar'),
+ 'alumni':('Research alumni','Mezun Araştırmacılar')}
+
+def pick(value,lang):return value[lang=='tr']
+def fragment(html):return Soup(html,'html.parser')
+def sethtml(node,html):node.clear();node.append(fragment(html))
+def country(code,lang):
+ return '<span class="country-tag"><span aria-hidden="true">'+''.join(chr(127397+ord(c)) for c in code)+'</span> '+e(pick(DATA['countries'][code],lang))+'</span>'
+def affiliations(keys,lang,alumni=False):
+ if not keys:return '<div class="affiliation-list"><p class="independent-label">'+pick(('Independent researcher · no institutional affiliation','Bağımsız araştırmacı · kurumsal bağlılığı yok'),lang)+'</p></div>'
+ parts=[]
+ for key in keys:
+  ins=DATA['institutions'][key];logo=ins.get('logo',key);path=SITE/'assets/institutions'/f'{logo}.png'
+  if not path.is_file():raise FileNotFoundError('Reviewed institutional mark missing: '+str(path))
+  label=pick(ins['names'],lang);alt=pick(ins.get('logo_label',[label+' logo',label+' logosu']),lang)
+  prefix='../' if lang=='tr' else ''
+  image=f'<span class="institution-mark'+(' dark' if ins.get('dark') else '')+f'"><img src="{prefix}assets/institutions/{logo}.png" alt="{e(alt)}" width="120" height="54" loading="lazy" decoding="async"/></span>'
+  context=pick(('Degree institution','Mezun olunan kurum'),lang) if alumni else pick(('Institution','Kurum'),lang)
+  parts.append(f'<div class="affiliation-item">{image}<div><span class="affiliation-kind">{context}</span><a href="{e(ins["url"])}" class="institution-name">{e(label)}</a>{country(ins["country"],lang)}</div></div>')
+ return '<div class="affiliation-list">'+''.join(parts)+'</div>'
+def section(body,id_='',tone='white'):
+ return f'<section class="section {tone}"'+(f' id="{id_}"' if id_ else '')+'><div class="container">'+body+'</div></section>'
+def link(label,url,cls='textlink'):return f'<a class="{cls}" href="{e(url)}">{e(label)} <span aria-hidden="true">↗</span></a>'
+def asset(s,lang):
+ prefix='../' if lang=='tr' else ''
+ if not s.select_one('link[href$="team-directory.css"]'):s.head.append(s.new_tag('link',attrs={'rel':'stylesheet','href':prefix+'assets/team-directory.css'}))
+ if not s.select_one('script[src$="team-directory.js"]'):s.body.append(s.new_tag('script',attrs={'src':prefix+'assets/team-directory.js','defer':''}))
+def shell(template,name,lang,body):
+ s=copy.deepcopy(template);sethtml(s.main,body);s.html['lang']=lang
+ for a in s.select('.site-language a'):
+  dest=a.get('lang')
+  a['href']=('tr/'+name if lang=='en' else name) if dest=='tr' else (name if lang=='en' else '../'+name)
+ for n in s.select('script[type="application/ld+json"]'):n.decompose()
+ asset(s,lang);metadata(s,name,lang)
+ return s
+
+def new_card(p,lang):
+ title=(pick(p.get('titles',['','']),lang)+' '+p['name']).strip()
+ return fragment('<article class="person-card"><div class="person-top"><div><p class="micro-label">'+e(pick(p['role'],lang))+'</p><h3>'+e(title)+'</h3></div></div><p class="person-topic">'+e(pick(p['topic'],lang))+'</p>'+affiliations(p['institutions'],lang)+link(pick(('View profile','Profili incele'),lang),'person-'+p['slug']+'.html')+'</article>').article
+
+def new_profile(p,lang,template):
+ name='person-'+p['slug']+'.html';title=(pick(p.get('titles',['','']),lang)+' '+p['name']).strip()
+ body='<section class="pagehero"><div class="container"><p class="eyebrow">'+e(pick(p['role'],lang))+'</p><h1>'+e(title)+'</h1><p class="lead">'+e(pick(p['topic'],lang))+'</p></div></section>'
+ body+=section('<div class="profile-summary"><div><h2>'+pick(('Academic connection','Akademik ilişki'),lang)+'</h2><p class="lead">'+e(pick(p['description'],lang))+'</p>'+''.join(link(pick(x[:2],lang),x[2]) for x in p.get('links',[]))+'</div><aside>'+affiliations(p['institutions'],lang)+'</aside></div>')
+ body+=section(link(pick(('Back to the research team','Araştırma ekibine dön'),lang),'team.html','btn alt'))
+ return shell(template,name,lang,body)
+
+def enhance_profiles(docs,lang):
+ for slug,keys in AFF.items():
+  name='person-'+slug+'.html'
+  if name not in docs or slug in NEW:continue
+  s=docs[name];asset(s,lang)
+  container=s.select_one('.pagehero .container');container.append(fragment(affiliations(keys,lang,slug in ['kubra-solmaz','rabia-ates','fatma-gazioglu'])))
+  if slug=='georgios-lampropoulos':
+   eyebrow=container.select_one('.eyebrow');eyebrow.string=pick(('Research collaborator · Postdoctoral researcher','Araştırma ortağı · Doktora sonrası araştırmacı'),lang)
+   s.main.append(fragment(section('<h2>'+pick(('Principal academic affiliations','Başlıca akademik görevler'),lang)+'</h2><p>'+pick(('Postdoctoral research at the Department of Applied Informatics, University of Macedonia, and the Department of Preschool Education, University of Crete, Greece. These principal affiliations are recorded in the CV shared by Georgios Lampropoulos in July 2026.','Yunanistan’da Makedonya Üniversitesi Uygulamalı Bilişim Bölümü ve Girit Üniversitesi Okul Öncesi Eğitimi Bölümünde doktora sonrası araştırma görevleri. Bu başlıca kurum bilgileri Georgios Lampropoulos’un Temmuz 2026’da paylaştığı özgeçmişte yer alıyor.'),lang)+'</p>')))
+   for ld in s.select('script[type="application/ld+json"]'):
+    try:
+     obj=json.loads(ld.string or '{}')
+     if obj.get('@type')=='Person':obj['affiliation']=[{'@type':'CollegeOrUniversity','name':DATA['institutions'][k]['names'][0]} for k in keys];ld.string=json.dumps(obj,ensure_ascii=False)
+    except ValueError:pass
+  metadata(s,name,lang)
+
+def network_intro(lang,full=False):
+ url='research-network.html';prefix='../' if lang=='tr' else ''
+ heading=pick(('A network of research connections','Araştırma bağlantılarından oluşan bir ağ'),lang)
+ text=pick(('The supplied 2026–2028 network posters cover 22 countries and 43 institutions, across COST proposals, publication collaborations, projects and exploratory discussions. These are individual academic connections, not a claim that all institutions are formal or funded partners.','Paylaşılan 2026–2028 ağ afişleri; COST başvuruları, yayın iş birlikleri, projeler ve görüşmeler kapsamında 22 ülke ve 43 kurumu kapsıyor. Bunlar bireysel akademik bağlantılardır; tüm kurumların resmî veya fonlanan proje ortağı olduğu anlamına gelmez.'),lang)
+ stats='<div class="network-stats"><div><strong>22</strong><span>'+pick(('countries','ülke'),lang)+'</span></div><div><strong>43</strong><span>'+pick(('institutions','kurum'),lang)+'</span></div><div><strong>2026–2028</strong><span>'+pick(('poster reference period','afişin referans dönemi'),lang)+'</span></div></div>'
+ img=f'<a href="{prefix}assets/network/research-network-{lang}.svg" class="network-preview" target="_blank" rel="noopener"><img src="{prefix}assets/network/research-network-{lang}.svg" alt="'+pick(('Research-network poster with 22 countries and 43 institutions; the complete readable list follows on the network page.','22 ülke ve 43 kurumu gösteren araştırma ağı afişi; okunabilir kurum listesi ağ sayfasında yer alır.'),lang)+'" width="1440" height="1017" loading="lazy" decoding="async"/><span>'+pick(('Open the poster at full size ↗','Afişi tam boyutta aç ↗'),lang)+'</span></a>'
+ if not full:return section('<div class="network-callout"><div><p class="eyebrow">'+pick(('International academic network','Uluslararası akademik ağ'),lang)+'</p><h2>'+heading+'</h2>'+stats+'<p>'+text+'</p>'+link(pick(('Explore the collaboration network','İş birliği ağını incele'),lang),url,'btn')+'</div>'+img+'</div>','research-network','muted')
+ return '<section class="pagehero"><div class="container"><p class="eyebrow">'+pick(('Research group / International connections','Çalışma grubu / Uluslararası bağlantılar'),lang)+'</p><h1>'+pick(('International research<br/><em>connections.</em>','Uluslararası araştırma<br/><em>bağlantıları.</em>'),lang)+'</h1><p class="lead">'+text+'</p>'+stats+'</div></section>'+section(img+'<div class="buttonrow">'+link(pick(('English poster · PDF','İngilizce afiş · PDF'),lang),prefix+'downloads/research-network-en.pdf','btn alt')+link(pick(('Turkish poster · PDF','Türkçe afiş · PDF'),lang),prefix+'downloads/research-network-tr.pdf','btn alt')+'</div><p class="v3-small">'+pick(('Web-optimised renderings of the two supplied posters. The poster period is not the grant period of every activity. Current funding and completion statuses remain on the project pages.','Paylaşılan iki afişin web için optimize edilmiş gösterimleri. Afişteki dönem, her faaliyetin destek süresi değildir. Güncel destek ve tamamlanma durumları ilgili proje sayfalarında korunur.'),lang)+'</p>')
+
+def network_page(template,lang):
+ parts=[]
+ for code,names in DATA['network']:
+  display=names
+  if lang=='en' and code=='TR':display=['Kırşehir Ahi Evran University','Atatürk University','Nevşehir Hacı Bektaş Veli University','Tokat Gaziosmanpaşa University','Istanbul Technical University (ITU)','Boğaziçi University','Marmara University','Istanbul Okan University']
+  parts.append('<article class="network-country"><h3>'+country(code,lang)+'</h3><ul>'+''.join('<li>'+e(n)+'</li>' for n in display)+'</ul></article>')
+ legend='<div class="network-legend">'+''.join('<span>'+e(pick(x,lang))+'</span>' for x in [('COST proposal','COST başvurusu'),('Publication collaborations','Yayın iş birlikleri'),('Projects / proposals','Projeler / başvurular'),('Proposal / discussion','Başvuru / görüşme')])+'</div>'
+ search='<label for="network-query">'+pick(('Find a country or institution','Ülke veya kurum ara'),lang)+'</label><input id="network-query" type="search" placeholder="'+pick(('Country or institution name','Ülke veya kurum adı'),lang)+'"/><p id="network-count" aria-live="polite"></p>'
+ body=network_intro(lang,True)+section('<h2>'+pick(('Country & institution directory','Ülke ve kurum dizini'),lang)+'</h2>'+legend+'<p>'+pick(('Names and the 22/43 totals follow the supplied posters. Additional affiliations on individual profiles do not change this poster snapshot.','Kurum adları ve 22/43 toplamları paylaşılan afişleri izler. Kişisel profillerdeki ek kurumlar, bu afiş kaydının toplamlarını değiştirmez.'),lang)+'</p><div class="directory-tools">'+search+'</div><div class="network-country-grid">'+''.join(parts)+'</div>','network-directory','muted')
+ body+=section('<h2>'+pick(('Start a conversation','Birlikte çalışma için iletişim'),lang)+'</h2><p>'+pick(('The form linked in the supplied poster is hosted by Tally. Opening it leaves this website; information is submitted only when you choose to send the form.','Paylaşılan afişteki form Tally üzerinde barındırılıyor. Bağlantı bu siteden ayrılır; bilgiler ancak formu göndermeyi seçtiğinizde iletilir.'),lang)+'</p><div class="buttonrow">'+link(pick(('Research-group interest form','Çalışma grubu ilgi formu'),lang),'https://tally.so/r/Eq51Jr','btn')+link(pick(('Research team','Araştırma ekibi'),lang),'team.html','btn alt')+'</div>')
+ return shell(template,'research-network.html',lang,body)
+
+def team_page(docs,lang):
+ s=docs['team.html'];asset(s,lang);cards={};groups={k:[] for k in LABELS}
+ for gid in ['collaborators','editorial-collaborators','graduate-researchers','alumni']:
+  for card in s.select('#'+gid+' article.person-card'):
+   a=card.select_one('a[href^="person-"]');slug=a['href'][7:-5]
+   if slug in NEW:continue
+   card=copy.deepcopy(card)
+   for n in card.select('.person-monogram'):n.decompose()
+   role=card.select_one('.micro-label');role.string=role.get_text(' ',strip=True).split(' · ')[0]
+   if slug=='georgios-lampropoulos':role.string=pick(('Research collaborator · Postdoctoral researcher','Araştırma ortağı · Doktora sonrası araştırmacı'),lang)
+   card.select_one('.textlink').insert_before(fragment(affiliations(AFF[slug],lang,gid=='alumni')))
+   card['data-person']=slug;cards[slug]=card;groups[gid].append(slug)
+ for p in NEW.values():
+  card=new_card(p,lang);card['data-person']=p['slug'];cards[p['slug']]=card;groups[p['group']].append(p['slug'])
+ leader=copy.deepcopy(s.select_one('#leadership'))
+ leader.select_one('.team-leader').append(fragment(affiliations(['kaeu'],lang)))
+ for el in leader.select('.leader-badge'):el.decompose()
+ nav='<nav class="subnav" aria-label="'+pick(('People sections','Ekip bölümleri'),lang)+'">'+''.join(link(pick(label,lang),'#'+gid) for gid,label in LABELS.items())+link(pick(('International network','Uluslararası ağ'),lang),'research-network.html')+'</nav>'
+ body='<section class="pagehero"><div class="container"><p class="eyebrow">'+pick(('People / Research connections','Ekip / Araştırma bağlantıları'),lang)+'</p><h1>'+pick(('Research grows through <em>people.</em>','Araştırma <em>insanlarla</em> gelişir.'),lang)+'</h1><p class="lead">'+pick(('Research collaborators, project researchers and advisers, followed by graduate researchers and alumni.','Araştırma ortakları, proje araştırmacıları ve danışmanlar; ardından lisansüstü araştırmacılar ve mezunlar.'),lang)+'</p>'+nav+'</div></section>'+str(leader)
+ body+=section('<div class="directory-tools"><label for="people-query">'+pick(('Find a researcher, institution or country','Araştırmacı, kurum veya ülke ara'),lang)+'</label><input id="people-query" type="search"/><button type="button" id="people-reset">'+pick(('Clear search','Aramayı temizle'),lang)+'</button><p id="people-count" aria-live="polite"></p></div><p class="v3-small">'+pick(('Countries refer to the location of the stated institution, not nationality. Institutional marks identify affiliations; they do not imply institutional endorsement or funding.','Ülke bilgileri kişinin vatandaşlığını değil, belirtilen kurumun bulunduğu ülkeyi gösterir. Kurum logoları aidiyeti tanıtır; kurumsal onay veya proje desteği anlamına gelmez.'),lang)+'</p>','directory-search')
+ for i,(gid,title) in enumerate(LABELS.items()):
+  intro=''
+  if gid=='project-researchers':intro='<p>'+pick(('Roles follow the supplied team roster. AÜB application-team roles are labelled separately; inclusion is not a statement of a funding award.','Görevler paylaşılan ekip listesine göre sunulur. AÜB başvuru ekibindeki roller ayrıca etiketlenmiştir; listelenmek destek kararı alındığı anlamına gelmez.'),lang)+'</p>'
+  if gid=='alumni':intro='<p>'+pick(('Completed graduate supervision. İpek Öz also contributes as a researcher and is listed above.','Tamamlanan lisansüstü danışmanlıklar. İpek Öz araştırmacı olarak da katkı sunuyor ve üst bölümde listeleniyor.'),lang)+' '+link(pick(('İpek Öz’s profile','İpek Öz’ün profili'),lang),'person-ipek-oz.html')+'</p>'
+  block='<h2>'+pick(title,lang)+'</h2>'+intro+'<div class="people-grid">'+''.join(str(cards[slug]) for slug in groups[gid])+'</div>'
+  body+=section(block,gid,'muted' if i%2==0 else 'white')
+ body+=network_intro(lang)+section(link(pick(('Explore working together','Birlikte çalışma olanaklarını incele'),lang),'join.html','btn'))
+ sethtml(s.main,body);metadata(s,'team.html',lang)
+ return len(cards)
+
+def sync_cv():
+ import build_professional_docs as d
+ en=copy.deepcopy(d.CV)
+ en[0]=[(k,t) for k,t in en[0] if 'TÜBİTAK 3501:' not in t]
+ en.append([tuple(x) for x in json.loads((ROOT/'content/editorial-update.json').read_text())['cv_proposals_page']])
+ for page in en:
+  for i,(k,t) in enumerate(page):
+   if t.startswith('Ongoing PhD:'):page[i]=(k,'Ongoing PhD: Abdulkadir Aydın (expected 2028). Ongoing MSc: Tuğçe Ünsal and Nisa Gül (expected 2027); İrem Sude Köksal and Furkan Ensar Ateş (expected 2028).')
+   elif 'This public selection excludes manuscripts under review and proposals awaiting decisions.' in t:page[i]=(k,'Unpublished manuscripts are omitted. Submitted, planned and unsuccessful applications are listed separately, not as funding awards.')
+   elif 'Public academic CV ·' in t:page[i]=(k,t.replace('12 November 2026','13 November 2026'))
+ tr=json.loads((ROOT/'content/cv-tr.json').read_text())
+ for page in tr:
+  for row in page:
+   if 'Tuğçe Ünsal' in row[1] and 'Nisa Gül' in row[1]:row[1]+=' İrem Sude Köksal ve Furkan Ensar Ateş: devam eden yüksek lisans, beklenen bitiş 2028.'
+ d.fonts();d.export_document('Huseyin_Ates_Public_Academic_CV',en,'Hüseyin Ateş — Public Academic CV',lang='en')
+ d.export_document('Huseyin_Ates_Akademik_Ozgecmis_TR',tr,'Hüseyin Ateş — Akademik Özgeçmiş',lang='tr')
+
+def main():
+ target=SITE/'assets/institutions';target.mkdir(parents=True,exist_ok=True)
+ for p in (ROOT/'assets/institutions').glob('*.png'):shutil.copy2(p,target/p.name)
+ for name in ['team-directory.css','team-directory.js']:shutil.copy2(ROOT/'assets'/name,SITE/'assets'/name)
+ packed=''.join(p.read_text().strip() for p in sorted((ROOT/'content').glob('network-posters-*.b64')))
+ assert hashlib.sha256(packed.encode()).hexdigest()=='66bf789cb01045a9afb1d6d191de0c809863db3d0b25b8760b3ae76434389dcc','Poster transfer checksum mismatch'
+ posters=json.loads(lzma.decompress(base64.b64decode(packed)))
+ (SITE/'assets/network').mkdir(exist_ok=True)
+ import cairosvg
+ for name,svg in posters.items():
+  (SITE/'assets/network'/name).write_text(svg)
+  cairosvg.svg2pdf(bytestring=svg.encode(),write_to=str(SITE/'downloads'/name.replace('.svg','.pdf')))
+ sync_cv()
+ localized={}
+ for lang in ['en','tr']:
+  folder=SITE/('tr' if lang=='tr' else '')
+  docs={p.name:Soup(p.read_text(),'html.parser') for p in folder.glob('*.html')}
+  template=copy.deepcopy(docs['person-georgios-lampropoulos.html'])
+  for slug,p in NEW.items():docs['person-'+slug+'.html']=new_profile(p,lang,template)
+  enhance_profiles(docs,lang);num=team_page(docs,lang)
+  docs['research-network.html']=network_page(template,lang)
+  s=docs['about.html']
+  for span in s.select('li span'):
+   if 'Tuğçe Ünsal' in span.get_text() and 'Nisa Gül' in span.get_text():span.string=pick(('Tuğçe Ünsal and Nisa Gül (expected 2027); İrem Sude Köksal and Furkan Ensar Ateş (expected 2028).','Tuğçe Ünsal ve Nisa Gül (beklenen bitiş: 2027); İrem Sude Köksal ve Furkan Ensar Ateş (beklenen bitiş: 2028).'),lang)
+  s=docs['proposal-turkiye-uae-stem.html'];s.main.append(fragment(section('<h2>'+pick(('Proposed research team','Önerilen araştırma ekibi'),lang)+'</h2><p>'+pick(('Team listed in the supplied application: Hüseyin Ateş (coordinator), Kibar Gül (NEVÜ), Naciye Somuncu Demir (TOGÜ), Ahmet Sami Konca (UAEU), and independent researcher Yeşim Taktat Ateş. The application status is unchanged.','Paylaşılan başvurudaki ekip: Hüseyin Ateş (yürütücü), Kibar Gül (NEVÜ), Naciye Somuncu Demir (TOGÜ), Ahmet Sami Konca (UAEU) ve bağımsız araştırmacı Yeşim Taktat Ateş. Başvurunun değerlendirme durumu değişmemiştir.'),lang)+'</p>'+link(pick(('People and affiliations','Ekip ve kurumlar'),lang),'team.html#project-researchers'),'proposal-team')))
+  s=docs['project-vr-stem-vietnam.html'];s.main.append(fragment(section('<h2>'+pick(('Research connection in Vietnam','Vietnam’daki araştırma bağlantısı'),lang)+'</h2>'+link('Bui Van Hong · HCM-UTE','person-bui-van-hong.html')+'<p>'+pick(('This project remains completed; the collaboration profile does not reopen the project.','Proje tamamlanmış durumdadır; araştırmacı profili eklenmesi projenin yeniden başladığı anlamına gelmez.'),lang)+'</p>')))
+  docs['research.html'].main.append(fragment(section('<h2>'+pick(('International research network','Uluslararası araştırma ağı'),lang)+'</h2>'+link(pick(('22 countries · 43 institutions','22 ülke · 43 kurum'),lang),'research-network.html'))))
+  build_index(docs,lang)
+  for name,s in docs.items():(folder/name).write_text(str(s))
+  localized[lang]=docs
+ manifest=json.loads((SITE/'deployment.json').read_text());manifest.pop('files',None)
+ manifest.update(version='4.3',language_pairs=len(localized['en']),page_count=len(localized['en'])*2,pages=sorted(p.relative_to(SITE).as_posix() for p in SITE.rglob('*.html')),downloads=sorted(p.name for p in (SITE/'downloads').iterdir() if p.is_file()),updated='2026-11-13')
+ (SITE/'deployment.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
+ urls=[]
+ for name in sorted(localized['en']):
+  if name in ['404.html','search.html']:continue
+  for lang in ['en','tr']:
+   alts=''.join(f'<xhtml:link rel="alternate" hreflang="{code}" href="{BASE}{prefix}{name}"/>' for code,prefix in [('en',''),('tr','tr/'),('x-default','')])
+   urls.append(f'<url><loc>{BASE}'+('tr/' if lang=='tr' else '')+name+'</loc>'+alts+'<lastmod>2026-11-13</lastmod></url>')
+ (SITE/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'+''.join(urls)+'</urlset>')
+ (SITE/'quality-report.json').write_text(json.dumps({'release':'4.3','language_pairs':len(localized['en']),'people_profiles':num,'countries_in_source_posters':22,'institutions_in_source_posters':43,'photos_added':0,'limits':'Countries identify institutional location; logos are not endorsements. Proposal and completed-project statuses are preserved.'},indent=2))
+ print('TEAM DIRECTORY BUILT',num,'profiles;',manifest['page_count'],'pages')
+
+if __name__=='__main__':main()
