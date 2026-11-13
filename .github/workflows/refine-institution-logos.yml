@@ -1,0 +1,86 @@
+name: Refine institution marks
+on:
+  push:
+    branches: [team-institutions-v43]
+    paths: [.github/workflows/refine-institution-logos.yml]
+permissions:
+  contents: write
+jobs:
+  refine:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install requests beautifulsoup4 pillow cairosvg
+      - name: Apply reviewed marks and retrieve missing official assets
+        shell: python
+        run: |
+          import requests,json,io,concurrent.futures,re
+          from pathlib import Path
+          from urllib.parse import urljoin
+          from PIL import Image
+          from bs4 import BeautifulSoup
+          import cairosvg
+          out=Path('assets/institutions');review=Path('logo-refinement');review.mkdir(exist_ok=True)
+          report=json.loads(Path('content/institution-logo-sources.json').read_text())
+          choices={'copenhagen':1,'macedonia':1,'uaeu':1,'itu':1,'nevsehir':1,'hcmute':0}
+          direct={
+            'ipn':'https://www.leibniz-ipn.de/static/media/Logo_en.84480541.svg',
+            'kent':'https://www-s3-live.kent.edu/s3fs-root/s3fs-public/kent-state-university-vertical-logo.jpg',
+            'meb':'https://fatihprojesi.meb.gov.tr/en/img/cons/meb_logo.png'
+          }
+          def download(key,url):
+            r=requests.get(url,timeout=30,headers={'User-Agent':'Mozilla/5.0'});r.raise_for_status();raw=r.content
+            if b'<svg' in raw[:2000]:raw=cairosvg.svg2png(bytestring=raw,output_width=480)
+            im=Image.open(io.BytesIO(raw)).convert('RGBA');im.thumbnail((480,180),Image.Resampling.LANCZOS)
+            im.save(out/(key+'.png'),optimize=True)
+            return {'source':url,'type':'official institution logo','path':key+'.png','size':list(im.size),'dark_background':key in ['surrey','twente']}
+          for key,index in choices.items():direct[key]=report[key]['candidates'][index]['source']
+          for key,url in direct.items():
+            try:report[key]['selected']=download(key,url)
+            except Exception as e:report[key]['refine_error']=str(e)
+          pages={
+            'kaeu':['https://unis.ahievran.edu.tr/','https://www.ahievran.edu.tr/','https://www.turkiye.gov.tr/kirsehir-ahi-evran-universitesi','https://egitim.ahievran.edu.tr/'],
+            'tokat':['https://www.gop.edu.tr/kurumsalkimlik.aspx?d=tr-TR','https://www.gop.edu.tr/'],
+            'meb':['https://www.meb.gov.tr/','https://yegitek.meb.gov.tr/kurumsalkimlik/index.html']
+          }
+          found={}
+          def inspect(item):
+            key,urls=item;items=[]
+            for home in urls:
+              try:
+                r=requests.get(home,timeout=20,headers={'User-Agent':'Mozilla/5.0'});r.raise_for_status();s=BeautifulSoup(r.text,'html.parser')
+                for im in s.select('img'):
+                  u=im.get('src') or im.get('data-src');label=' '.join([u or '',im.get('alt',''),' '.join(im.get('class',[]))])
+                  if u:items.append({'url':urljoin(r.url,u),'label':label})
+                for el in s.select('a[href]'):
+                  u=el.get('href','')
+                  if re.search(r'logo|amblem|png|svg|\.jpg',u,re.I):items.append({'url':urljoin(r.url,u),'label':el.get_text(' ',strip=True)})
+                for u in re.findall(r'url\([\"\x27]?([^\)\"\x27]+)',r.text):
+                  if re.search('logo|amblem|arma',u,re.I):items.append({'url':urljoin(r.url,u),'label':'CSS image'})
+              except Exception as e:items.append({'error':home+' '+str(e)[:100]})
+            return key,items
+          with concurrent.futures.ThreadPoolExecutor(max_workers=3) as p:found=dict(p.map(inspect,pages.items()))
+          (review/'image-candidates.json').write_text(json.dumps(found,ensure_ascii=False,indent=2))
+          for key,items in found.items():
+            index=0
+            for item in items:
+              if 'url' not in item or not re.search('logo|amblem|kurum|arma|header|png|svg|jpg',item.get('label',''),re.I):continue
+              if any(x in item.get('label','').lower() for x in ['ataturk','radio','radyo','slide','personel','haber','tse']):continue
+              if index>=12:break
+              try:
+                temp=key+'-candidate-'+str(index);c=download(temp,item['url']);(review/(temp+'.png')).write_bytes((out/(temp+'.png')).read_bytes());(out/(temp+'.png')).unlink();item['candidate']=temp+'.png';index+=1
+              except Exception:pass
+          (review/'image-candidates.json').write_text(json.dumps(found,ensure_ascii=False,indent=2))
+          Path('content/institution-logo-sources.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
+          (review/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
+          for p in out.glob('*.png'):(review/p.name).write_bytes(p.read_bytes())
+      - uses: actions/upload-artifact@v4
+        with: {name: institution-logo-refinement, path: logo-refinement, retention-days: 7}
+      - run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/institutions content/institution-logo-sources.json
+          git diff --cached --quiet || git commit -m 'Replace reviewed institutional logo choices'
+          git push origin HEAD:team-institutions-v43
