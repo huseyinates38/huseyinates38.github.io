@@ -1,0 +1,39 @@
+name: Import concise profile descriptions
+on:
+  push:
+    branches: [profile-compact-v53]
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: profile-compact-v53
+      - name: Import checksum-verified editorial files
+        env:
+          ASSET_URL: 'https://sdmntpreastus3.oaiusercontent.com/files/00000000-b37c-8212-8602-49c0dfa18a8d/raw?se=2026-11-13T17%3A55%3A49Z&sp=r&sv=2026-06-06&sr=b&scid=b6ac0d40-b7dc-5047-9461-ba2d1a42e44d&skoid=40ce4b34-a373-4a62-b0bf-44befe221915&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-12T23%3A44%3A40Z&ske=2026-11-13T23%3A44%3A40Z&sks=b&skv=2026-06-06&sig=8/fb%2BbDgQLXrkj3TqAHqwUi1r%2BI3z61hGRlI4QkK3wU%3D'
+        run: |
+          python - <<'PY'
+          import os,io,hashlib,zipfile,urllib.request,pathlib
+          raw=urllib.request.urlopen(os.environ['ASSET_URL'],timeout=45).read()
+          assert hashlib.sha256(raw).hexdigest()=="48e7818e950bb323fa69c7f715cb9dbb98b2f837dfbbecd40b9420721144b782"
+          z=zipfile.ZipFile(io.BytesIO(raw))
+          allowed={"scripts/refine_profile_copy.py","scripts/verify_profile_refinement.py"}
+          assert len(z.infolist())==2 and set(z.namelist())==allowed
+          for member in z.infolist():
+              p=pathlib.PurePosixPath(member.filename)
+              assert '..' not in p.parts and not p.is_absolute()
+              z.extract(member,'.')
+          print("Imported two verified editorial source files.")
+          PY
+      - name: Commit tested profile refinements
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add scripts/refine_profile_copy.py scripts/verify_profile_refinement.py
+          git commit -m 'Consolidate eight collaborator profiles and correct Marc card in Turkish'
+          git push origin HEAD:profile-compact-v53
+          echo "IMPORTED_COMMIT=$(git rev-parse HEAD)"
+          echo "IMPORTED_TREE=$(git rev-parse HEAD^{tree})"
