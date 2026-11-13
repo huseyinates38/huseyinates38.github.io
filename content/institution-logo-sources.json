@@ -224,12 +224,12 @@
     ],
     "errors": [],
     "selected": {
-      "path": "kent-0.png",
-      "source": "https://www-s3-live.kent.edu/s3fs-root/s3fs-public/Kent-state-today-logo-horizontal-crop.jpg",
-      "type": "logo",
+      "source": "https://www-s3-live.kent.edu/s3fs-root/s3fs-public/kent-state-university-vertical-logo.jpg",
+      "type": "official institution logo",
+      "path": "kent.png",
       "size": [
-        480,
-        66
+        329,
+        180
       ],
       "dark_background": false
     }
@@ -271,12 +271,12 @@
     ],
     "errors": [],
     "selected": {
-      "path": "copenhagen-0.png",
-      "source": "https://www.ku.dk/_assets/12a46eea25fd08a7277319b85c785b6b/Icons/favicon.ico",
-      "type": "official website icon",
+      "source": "https://www.ku.dk/_assets/12a46eea25fd08a7277319b85c785b6b/Icons/favicon.1794409610.svg",
+      "type": "official institution logo",
+      "path": "copenhagen.png",
       "size": [
-        48,
-        48
+        180,
+        180
       ],
       "dark_background": false
     }
@@ -318,12 +318,12 @@
     ],
     "errors": [],
     "selected": {
-      "path": "ipn-0.png",
-      "source": "https://www.leibniz-ipn.de/static/media/podcast-solid.8ff3b877.svg",
-      "type": "logo",
+      "source": "https://www.leibniz-ipn.de/static/media/Logo_en.84480541.svg",
+      "type": "official institution logo",
+      "path": "ipn.png",
       "size": [
-        131,
-        150
+        480,
+        132
       ],
       "dark_background": false
     }
@@ -365,12 +365,12 @@
     ],
     "errors": [],
     "selected": {
-      "path": "macedonia-0.png",
-      "source": "https://www.uom.gr/site/images/static/hahe_logo_en.png",
-      "type": "logo",
+      "source": "https://www.uom.gr/site/images/logo.png",
+      "type": "official institution logo",
+      "path": "macedonia.png",
       "size": [
-        150,
-        150
+        172,
+        172
       ],
       "dark_background": false
     }
@@ -514,7 +514,8 @@
         150
       ],
       "dark_background": false
-    }
+    },
+    "refine_error": "cannot identify image file <_io.BytesIO object at 0x7f452d37e160>"
   },
   "uoc": {
     "institution": "uoc",
@@ -600,12 +601,12 @@
     ],
     "errors": [],
     "selected": {
-      "path": "hcmute-0.png",
       "source": "https://hcmute.edu.vn/logo/square-logo.png",
-      "type": "logo",
+      "type": "official institution logo",
+      "path": "hcmute.png",
       "size": [
-        150,
-        150
+        180,
+        180
       ],
       "dark_background": false
     }
@@ -647,14 +648,14 @@
     ],
     "errors": [],
     "selected": {
-      "path": "itu-0.png",
-      "source": "https://www.itu.edu.tr/Sitefinity/WebsiteTemplates/ITUTemplate/App_Themes/ITUTemplate/lib/img/itu-logo-white.png",
-      "type": "logo",
+      "source": "https://www.itu.edu.tr/lib/img/itu-logo-big.png",
+      "type": "official institution logo",
+      "path": "itu.png",
       "size": [
-        267,
-        150
+        320,
+        180
       ],
-      "dark_background": true
+      "dark_background": false
     }
   },
   "marmara": {
@@ -749,7 +750,8 @@
         35
       ],
       "dark_background": false
-    }
+    },
+    "refine_error": "cannot identify image file <_io.BytesIO object at 0x7f452e02a660>"
   },
   "bogazici": {
     "institution": "bogazici",
@@ -835,12 +837,12 @@
     ],
     "errors": [],
     "selected": {
-      "path": "nevsehir-0.png",
-      "source": "https://www.nevsehir.edu.tr/assets/themes/hvumain/img/rimerlogo.png",
-      "type": "logo",
+      "source": "https://www.nevsehir.edu.tr/assets/themes/hvumain/img/mobillogo.png",
+      "type": "official institution logo",
+      "path": "nevsehir.png",
       "size": [
-        150,
-        150
+        182,
+        180
       ],
       "dark_background": false
     }
