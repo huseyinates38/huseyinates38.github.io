@@ -1,0 +1,895 @@
+{
+  "kaeu": {
+    "institution": "kaeu",
+    "homepage": "https://www.ahievran.edu.tr/",
+    "candidates": [],
+    "errors": [
+      "HTTPSConnectionPool(host='www.ahievran.edu.tr', port=443): Read timed out. (read timeout=22)"
+    ]
+  },
+  "uco": {
+    "institution": "uco",
+    "homepage": "https://uco.edu.co/",
+    "candidates": [
+      {
+        "path": "uco-0.png",
+        "source": "https://uco.edu.co/wp-content/uploads/2024/12/Logo_Mesa-de-trabajo-1-1.png",
+        "type": "logo",
+        "size": [
+          387,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "uco-1.png",
+        "source": "https://uco.edu.co/wp-content/uploads/2024/12/cropped-Favicon-UCO-1-32x32.png",
+        "type": "official website icon",
+        "size": [
+          32,
+          32
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "uco-2.png",
+        "source": "https://uco.edu.co/wp-content/uploads/2024/12/cropped-Favicon-UCO-1-192x192.png",
+        "type": "official website icon",
+        "size": [
+          150,
+          150
+        ],
+        "dark_background": false
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "uco-0.png",
+      "source": "https://uco.edu.co/wp-content/uploads/2024/12/Logo_Mesa-de-trabajo-1-1.png",
+      "type": "logo",
+      "size": [
+        387,
+        150
+      ],
+      "dark_background": false
+    }
+  },
+  "wur": {
+    "institution": "wur",
+    "homepage": "https://www.wur.nl/en",
+    "candidates": [
+      {
+        "path": "wur-0.png",
+        "source": "https://www.wur.nl/wurds/favicon/WUR_favicon_48x48px_2025.ico",
+        "type": "official website icon",
+        "size": [
+          150,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "wur-1.png",
+        "source": "https://www.wur.nl/wurds/favicon/WUR_favicon_32x32px_2025.ico",
+        "type": "official website icon",
+        "size": [
+          100,
+          100
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "wur-2.png",
+        "source": "https://www.wur.nl/wurds/favicon/WUR_favicon_180x180px_2025.png",
+        "type": "official website icon",
+        "size": [
+          150,
+          150
+        ],
+        "dark_background": true
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "wur-0.png",
+      "source": "https://www.wur.nl/wurds/favicon/WUR_favicon_48x48px_2025.ico",
+      "type": "official website icon",
+      "size": [
+        150,
+        150
+      ],
+      "dark_background": false
+    }
+  },
+  "twente": {
+    "institution": "twente",
+    "homepage": "https://www.utwente.nl/en/",
+    "candidates": [
+      {
+        "path": "twente-0.png",
+        "source": "https://utwente.becdn.net/.utdesign/img/ut-logo-sta-white-en.svg",
+        "type": "logo",
+        "size": [
+          407,
+          150
+        ],
+        "dark_background": true
+      },
+      {
+        "path": "twente-1.png",
+        "source": "https://utwente.becdn.net/.utdesign/img/favicons/safari-pinned-tab.svg",
+        "type": "official website icon",
+        "size": [
+          150,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "twente-2.png",
+        "source": "https://utwente.becdn.net/.utdesign/img/favicons/favicon.svg",
+        "type": "official website icon",
+        "size": [
+          150,
+          150
+        ],
+        "dark_background": false
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "twente-0.png",
+      "source": "https://utwente.becdn.net/.utdesign/img/ut-logo-sta-white-en.svg",
+      "type": "logo",
+      "size": [
+        407,
+        150
+      ],
+      "dark_background": true
+    }
+  },
+  "maastricht": {
+    "institution": "maastricht",
+    "homepage": "https://www.maastrichtuniversity.nl/",
+    "candidates": [
+      {
+        "path": "maastricht-0.png",
+        "source": "https://www.maastrichtuniversity.nl/sites/default/files/styles/780x520/public/2024-11/Logo%20UM.jpg?h=3b26e124&itok=eyIPLQlb",
+        "type": "logo",
+        "size": [
+          225,
+          150
+        ],
+        "dark_background": true
+      },
+      {
+        "path": "maastricht-1.png",
+        "source": "https://www.maastrichtuniversity.nl/themes/custom/um_corporate/favicon.ico",
+        "type": "official website icon",
+        "size": [
+          48,
+          48
+        ],
+        "dark_background": false
+      }
+    ],
+    "errors": [
+      "https://www.maastrichtuniversity.nl/favicon.ico 404 Client Error: Not Found for url: https://www.maastrichtuniversity.nl/favicon.ico"
+    ],
+    "selected": {
+      "path": "maastricht-0.png",
+      "source": "https://www.maastrichtuniversity.nl/sites/default/files/styles/780x520/public/2024-11/Logo%20UM.jpg?h=3b26e124&itok=eyIPLQlb",
+      "type": "logo",
+      "size": [
+        225,
+        150
+      ],
+      "dark_background": true
+    }
+  },
+  "kent": {
+    "institution": "kent",
+    "homepage": "https://www.kent.edu/",
+    "candidates": [
+      {
+        "path": "kent-0.png",
+        "source": "https://www-s3-live.kent.edu/s3fs-root/s3fs-public/Kent-state-today-logo-horizontal-crop.jpg",
+        "type": "logo",
+        "size": [
+          480,
+          66
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "kent-1.png",
+        "source": "https://www-s3-live.kent.edu/s3fs-root/s3fs-public/Kent-State-Today-stacked-crop_0.png",
+        "type": "logo",
+        "size": [
+          188,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "kent-2.png",
+        "source": "https://www.kent.edu/themes/custom/ksu_kent_zurb_2018/favicon.ico",
+        "type": "official website icon",
+        "size": [
+          32,
+          32
+        ],
+        "dark_background": false
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "kent-0.png",
+      "source": "https://www-s3-live.kent.edu/s3fs-root/s3fs-public/Kent-state-today-logo-horizontal-crop.jpg",
+      "type": "logo",
+      "size": [
+        480,
+        66
+      ],
+      "dark_background": false
+    }
+  },
+  "copenhagen": {
+    "institution": "copenhagen",
+    "homepage": "https://www.ku.dk/en",
+    "candidates": [
+      {
+        "path": "copenhagen-0.png",
+        "source": "https://www.ku.dk/_assets/12a46eea25fd08a7277319b85c785b6b/Icons/favicon.ico",
+        "type": "official website icon",
+        "size": [
+          48,
+          48
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "copenhagen-1.png",
+        "source": "https://www.ku.dk/_assets/12a46eea25fd08a7277319b85c785b6b/Icons/favicon.1794409610.svg",
+        "type": "official website icon",
+        "size": [
+          150,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "copenhagen-2.png",
+        "source": "https://www.ku.dk/_assets/12a46eea25fd08a7277319b85c785b6b/Icons/favicon-96x96.1794409610.png",
+        "type": "official website icon",
+        "size": [
+          96,
+          96
+        ],
+        "dark_background": false
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "copenhagen-0.png",
+      "source": "https://www.ku.dk/_assets/12a46eea25fd08a7277319b85c785b6b/Icons/favicon.ico",
+      "type": "official website icon",
+      "size": [
+        48,
+        48
+      ],
+      "dark_background": false
+    }
+  },
+  "ipn": {
+    "institution": "ipn",
+    "homepage": "https://www.leibniz-ipn.de/en",
+    "candidates": [
+      {
+        "path": "ipn-0.png",
+        "source": "https://www.leibniz-ipn.de/static/media/podcast-solid.8ff3b877.svg",
+        "type": "logo",
+        "size": [
+          131,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "ipn-1.png",
+        "source": "https://www.leibniz-ipn.de/static/media/mastodon.84e3b228.svg",
+        "type": "logo",
+        "size": [
+          131,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "ipn-2.png",
+        "source": "https://www.leibniz-ipn.de/static/media/audit_logo.5ae37205.svg",
+        "type": "logo",
+        "size": [
+          150,
+          150
+        ],
+        "dark_background": false
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "ipn-0.png",
+      "source": "https://www.leibniz-ipn.de/static/media/podcast-solid.8ff3b877.svg",
+      "type": "logo",
+      "size": [
+        131,
+        150
+      ],
+      "dark_background": false
+    }
+  },
+  "macedonia": {
+    "institution": "macedonia",
+    "homepage": "https://www.uom.gr/en",
+    "candidates": [
+      {
+        "path": "macedonia-0.png",
+        "source": "https://www.uom.gr/site/images/static/hahe_logo_en.png",
+        "type": "logo",
+        "size": [
+          150,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "macedonia-1.png",
+        "source": "https://www.uom.gr/site/images/logo.png",
+        "type": "logo",
+        "size": [
+          150,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "macedonia-2.png",
+        "source": "https://www.uom.gr/site/images/logo-small-en.png",
+        "type": "logo",
+        "size": [
+          65,
+          40
+        ],
+        "dark_background": false
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "macedonia-0.png",
+      "source": "https://www.uom.gr/site/images/static/hahe_logo_en.png",
+      "type": "logo",
+      "size": [
+        150,
+        150
+      ],
+      "dark_background": false
+    }
+  },
+  "crete": {
+    "institution": "crete",
+    "homepage": "https://www.uoc.gr/en/home/",
+    "candidates": [
+      {
+        "path": "crete-0.png",
+        "source": "https://www.uoc.gr/wp-content/uploads/2024/05/logo4-1.png",
+        "type": "logo",
+        "size": [
+          259,
+          87
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "crete-1.png",
+        "source": "https://www.uoc.gr/wp-content/uploads/2024/08/X_logo_2023_white-e1725001249968.png",
+        "type": "logo",
+        "size": [
+          16,
+          16
+        ],
+        "dark_background": true
+      },
+      {
+        "path": "crete-2.png",
+        "source": "https://www.uoc.gr/wp-content/uploads/2024/11/ΜΟΔΙΠ_ΠΚ_LOGO_EN.png",
+        "type": "logo",
+        "size": [
+          385,
+          150
+        ],
+        "dark_background": false
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "crete-0.png",
+      "source": "https://www.uoc.gr/wp-content/uploads/2024/05/logo4-1.png",
+      "type": "logo",
+      "size": [
+        259,
+        87
+      ],
+      "dark_background": false
+    }
+  },
+  "surrey": {
+    "institution": "surrey",
+    "homepage": "https://www.surrey.ac.uk/",
+    "candidates": [
+      {
+        "path": "surrey-0.png",
+        "source": "https://www.surrey.ac.uk/themes/custom/surrey_2024/dist/images/uos-logo.svg",
+        "type": "logo",
+        "size": [
+          480,
+          126
+        ],
+        "dark_background": true
+      },
+      {
+        "path": "surrey-1.png",
+        "source": "https://www.surrey.ac.uk/themes/custom/surrey_2024/dist/images/uos-logo-mobile.svg",
+        "type": "logo",
+        "size": [
+          134,
+          150
+        ],
+        "dark_background": true
+      },
+      {
+        "path": "surrey-2.png",
+        "source": "https://www.surrey.ac.uk/favicon.svg?v=v3",
+        "type": "official website icon",
+        "size": [
+          150,
+          150
+        ],
+        "dark_background": false
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "surrey-0.png",
+      "source": "https://www.surrey.ac.uk/themes/custom/surrey_2024/dist/images/uos-logo.svg",
+      "type": "logo",
+      "size": [
+        480,
+        126
+      ],
+      "dark_background": true
+    }
+  },
+  "uaeu": {
+    "institution": "uaeu",
+    "homepage": "https://www.uaeu.ac.ae/en/",
+    "candidates": [
+      {
+        "path": "uaeu-0.png",
+        "source": "https://www.uaeu.ac.ae/images/global-star.png",
+        "type": "logo",
+        "size": [
+          148,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "uaeu-1.png",
+        "source": "https://www.uaeu.ac.ae/assets/images/uaeu-logo.svg",
+        "type": "logo",
+        "size": [
+          480,
+          84
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "uaeu-2.png",
+        "source": "https://www.uaeu.ac.ae/favicon.ico",
+        "type": "official website icon",
+        "size": [
+          32,
+          32
+        ],
+        "dark_background": false
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "uaeu-0.png",
+      "source": "https://www.uaeu.ac.ae/images/global-star.png",
+      "type": "logo",
+      "size": [
+        148,
+        150
+      ],
+      "dark_background": false
+    }
+  },
+  "uoc": {
+    "institution": "uoc",
+    "homepage": "https://www.uoc.edu/en",
+    "candidates": [
+      {
+        "path": "uoc-0.png",
+        "source": "https://www.uoc.edu/content/experience-fragments/uoc-common/ww/en/site/header/header-v2/_jcr_content/root/container/container_copy/uocheader/image.coreimg.png/1770128039685/logo.png",
+        "type": "logo",
+        "size": [
+          200,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "uoc-1.png",
+        "source": "https://www.uoc.edu/content/dam/uoc-common/footer-v2/logo_OpenEU_full.svg",
+        "type": "logo",
+        "size": [
+          138,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "uoc-2.png",
+        "source": "https://www.uoc.edu/content/dam/uoc-common/footer-v2/footer_logo-vives.svg",
+        "type": "logo",
+        "size": [
+          480,
+          105
+        ],
+        "dark_background": false
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "uoc-0.png",
+      "source": "https://www.uoc.edu/content/experience-fragments/uoc-common/ww/en/site/header/header-v2/_jcr_content/root/container/container_copy/uocheader/image.coreimg.png/1770128039685/logo.png",
+      "type": "logo",
+      "size": [
+        200,
+        150
+      ],
+      "dark_background": false
+    }
+  },
+  "hcmute": {
+    "institution": "hcmute",
+    "homepage": "https://hcmute.edu.vn/en",
+    "candidates": [
+      {
+        "path": "hcmute-0.png",
+        "source": "https://hcmute.edu.vn/logo/square-logo.png",
+        "type": "logo",
+        "size": [
+          150,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "hcmute-1.png",
+        "source": "https://hcmute.edu.vn/logo/rectangle-logo.png",
+        "type": "logo",
+        "size": [
+          480,
+          95
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "hcmute-2.png",
+        "source": "https://hcmute.edu.vn/_next/image?url=https%3A%2F%2Fwww.hcmute.edu.vn%2Fhcmute-website-bucket%2Fuploads%2Fmain%2Fimage%2F2026%2F09%2F8f34c2dd-0582-472b-821a-d72d7a71fdcd_Top-50.jpg&w=3840&q=75",
+        "type": "logo",
+        "size": [
+          225,
+          150
+        ],
+        "dark_background": false
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "hcmute-0.png",
+      "source": "https://hcmute.edu.vn/logo/square-logo.png",
+      "type": "logo",
+      "size": [
+        150,
+        150
+      ],
+      "dark_background": false
+    }
+  },
+  "itu": {
+    "institution": "itu",
+    "homepage": "https://www.itu.edu.tr/",
+    "candidates": [
+      {
+        "path": "itu-0.png",
+        "source": "https://www.itu.edu.tr/Sitefinity/WebsiteTemplates/ITUTemplate/App_Themes/ITUTemplate/lib/img/itu-logo-white.png",
+        "type": "logo",
+        "size": [
+          267,
+          150
+        ],
+        "dark_background": true
+      },
+      {
+        "path": "itu-1.png",
+        "source": "https://www.itu.edu.tr/lib/img/itu-logo-big.png",
+        "type": "logo",
+        "size": [
+          267,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "itu-2.png",
+        "source": "https://www.itu.edu.tr/images/librariesprovider2/derecelendirme/urap_logo.png",
+        "type": "logo",
+        "size": [
+          471,
+          150
+        ],
+        "dark_background": false
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "itu-0.png",
+      "source": "https://www.itu.edu.tr/Sitefinity/WebsiteTemplates/ITUTemplate/App_Themes/ITUTemplate/lib/img/itu-logo-white.png",
+      "type": "logo",
+      "size": [
+        267,
+        150
+      ],
+      "dark_background": true
+    }
+  },
+  "marmara": {
+    "institution": "marmara",
+    "homepage": "https://www.marmara.edu.tr/",
+    "candidates": [
+      {
+        "path": "marmara-0.png",
+        "source": "https://www.marmara.edu.tr/_assets/marmara/custom/images/marmara_universitesi_logo.png?v=1.1",
+        "type": "logo",
+        "size": [
+          368,
+          115
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "marmara-1.png",
+        "source": "https://www.marmara.edu.tr/dosya/www/slide/2026/10/2026-2027-acilis-toreni-marmara-univ_1791900093.jpeg",
+        "type": "logo",
+        "size": [
+          307,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "marmara-2.png",
+        "source": "https://www.marmara.edu.tr/dosya/www/slide/2026/09/marmara-ailesine-hos-geldiniz_1790434805.jpeg",
+        "type": "logo",
+        "size": [
+          307,
+          150
+        ],
+        "dark_background": true
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "marmara-0.png",
+      "source": "https://www.marmara.edu.tr/_assets/marmara/custom/images/marmara_universitesi_logo.png?v=1.1",
+      "type": "logo",
+      "size": [
+        368,
+        115
+      ],
+      "dark_background": false
+    }
+  },
+  "meb": {
+    "institution": "meb",
+    "homepage": "https://www.meb.gov.tr/",
+    "candidates": [
+      {
+        "path": "meb-0.png",
+        "source": "https://www.meb.gov.tr/assets/img/ataturk.png",
+        "type": "logo",
+        "size": [
+          122,
+          35
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "meb-1.png",
+        "source": "https://www.meb.gov.tr/assets/img/turkiye.svg",
+        "type": "logo",
+        "size": [
+          480,
+          100
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "meb-2.png",
+        "source": "https://www.meb.gov.tr/assets/img/tselogo.png",
+        "type": "logo",
+        "size": [
+          91,
+          57
+        ],
+        "dark_background": false
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "meb-0.png",
+      "source": "https://www.meb.gov.tr/assets/img/ataturk.png",
+      "type": "logo",
+      "size": [
+        122,
+        35
+      ],
+      "dark_background": false
+    }
+  },
+  "bogazici": {
+    "institution": "bogazici",
+    "homepage": "https://bogazici.edu.tr/",
+    "candidates": [
+      {
+        "path": "bogazici-0.png",
+        "source": "https://mediastore.cc.bogazici.edu.tr/web/upload/site/1-bogazici-universitesi-logo-1-20250117000844.png",
+        "type": "logo",
+        "size": [
+          150,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "bogazici-1.png",
+        "source": "https://mediastore.cc.bogazici.edu.tr/web/upload/site/1-bogazici-universitesi-weblogo-1-20250117000844.png",
+        "type": "logo",
+        "size": [
+          339,
+          150
+        ],
+        "dark_background": true
+      },
+      {
+        "path": "bogazici-2.png",
+        "source": "https://mediastore.cc.bogazici.edu.tr/web/upload/logolar/9-arastirma-20250502-173321_90x60.png",
+        "type": "logo",
+        "size": [
+          375,
+          150
+        ],
+        "dark_background": true
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "bogazici-0.png",
+      "source": "https://mediastore.cc.bogazici.edu.tr/web/upload/site/1-bogazici-universitesi-logo-1-20250117000844.png",
+      "type": "logo",
+      "size": [
+        150,
+        150
+      ],
+      "dark_background": false
+    }
+  },
+  "nevsehir": {
+    "institution": "nevsehir",
+    "homepage": "https://www.nevsehir.edu.tr/",
+    "candidates": [
+      {
+        "path": "nevsehir-0.png",
+        "source": "https://www.nevsehir.edu.tr/assets/themes/hvumain/img/rimerlogo.png",
+        "type": "logo",
+        "size": [
+          150,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "nevsehir-1.png",
+        "source": "https://www.nevsehir.edu.tr/assets/themes/hvumain/img/mobillogo.png",
+        "type": "logo",
+        "size": [
+          152,
+          150
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "nevsehir-2.png",
+        "source": "https://www.nevsehir.edu.tr/assets/themes/hvumain/images/Logo_Nevsehir.svg",
+        "type": "logo",
+        "size": [
+          480,
+          95
+        ],
+        "dark_background": false
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "nevsehir-0.png",
+      "source": "https://www.nevsehir.edu.tr/assets/themes/hvumain/img/rimerlogo.png",
+      "type": "logo",
+      "size": [
+        150,
+        150
+      ],
+      "dark_background": false
+    }
+  },
+  "tokat": {
+    "institution": "tokat",
+    "homepage": "https://www.gop.edu.tr/",
+    "candidates": [
+      {
+        "path": "tokat-0.png",
+        "source": "https://www.gop.edu.tr/img/radyotogulogo.png",
+        "type": "logo",
+        "size": [
+          256,
+          150
+        ],
+        "dark_background": true
+      },
+      {
+        "path": "tokat-1.png",
+        "source": "https://www.gop.edu.tr/depo/menuler/birim_32/haberler_195/9894432/resim_icerik/3541852/WhatsApp Image 2026-10-28 at 09.43.58.jpeg",
+        "type": "logo",
+        "size": [
+          140,
+          85
+        ],
+        "dark_background": false
+      },
+      {
+        "path": "tokat-2.png",
+        "source": "https://www.gop.edu.tr/Depo/Icons/birim_ico/favicon.ico",
+        "type": "official website icon",
+        "size": [
+          32,
+          32
+        ],
+        "dark_background": false
+      }
+    ],
+    "errors": [],
+    "selected": {
+      "path": "tokat-0.png",
+      "source": "https://www.gop.edu.tr/img/radyotogulogo.png",
+      "type": "logo",
+      "size": [
+        256,
+        150
+      ],
+      "dark_background": true
+    }
+  }
+}
