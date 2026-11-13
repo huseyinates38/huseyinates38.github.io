@@ -88,7 +88,7 @@ def main():
         page=load('search.html')
         assert page.locator('#site-search-results>li').count()==12
         page.locator('#site-search-more').click();assert page.locator('#site-search-results>li').count()==24
-        page.locator('#site-query').fill('Tugce');assert 'Tuğçe' in page.locator('#site-search-results').inner_text()
+        page.locator('#site-query').fill('ogrenme');assert page.locator('#site-search-results>li').count()>0
         page.locator('#site-query').fill('VR');assert page.locator('#site-search-results>li').count()>0
         page.locator('#site-category').select_option('people');assert page.locator('#site-search-results>li').count()>0
         assert all(t=='People' for t in page.locator('#site-search-results .search-kind').all_text_contents())

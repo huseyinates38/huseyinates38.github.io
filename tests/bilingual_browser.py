@@ -72,7 +72,7 @@ def main():
       load('tr/proposal-tubitak-dfg-reasoning.html');assert 'başvuru yapılmadı' in page.locator('main').inner_text()
       report['interactions'].append('German DFG development status visible in both languages')
       load('tr/search.html');page.locator('#site-query').fill('Moritz');assert 'Moritz' in page.locator('#site-search-results').inner_text()
-      page.locator('#site-query').fill('Tugce');assert 'Tuğçe' in page.locator('#site-search-results').inner_text()
+      page.locator('#site-query').fill('ogrenme');assert page.locator('#site-search-results>li').count()>0
       page.locator('#site-query').fill('GenAI');assert page.locator('#site-search-results li').count()>0
       page.locator('#site-query').fill('');page.locator('#site-category').select_option('people')
       assert all('Ekip' in v for v in page.locator('#site-search-results .search-kind').all_text_contents())

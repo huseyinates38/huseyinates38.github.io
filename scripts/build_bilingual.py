@@ -149,7 +149,7 @@ ATTR_TR={
  'Search this website':'Sitede ara','Further information':'Diğer bilgiler','Website information':'Site bilgileri',
  'Research sections':'Araştırma bölümleri','People sections':'Ekip bölümleri','Search results':'Arama sonuçları',
  'Search publications':'Yayınlarda ara','Search titles, authors or journals':'Başlık, yazar veya dergi ara',
- 'Filter by publication year':'Yayın yılına göre filtrele','Feedback, VR, Tuğçe, academic CV…':'Geri bildirim, sanal gerçeklik, Tuğçe, özgeçmiş…'
+ 'Filter by publication year':'Yayın yılına göre filtrele','Research, publications, projects, resources…':'Araştırma, yayınlar, projeler, kaynaklar…'
 }
 def localized_attrs(s,lang):
  if lang!='tr':return
@@ -265,14 +265,18 @@ def normalized(text):
 def build_index(docs,lang):
  index=[]
  for name,s in docs.items():
-  if name in ['404.html','search.html']:continue
+  if name in ['404.html','search.html','person-tugce-unsal.html']:continue
   m=copy.deepcopy(s.main)
   for n in m.select('script,style,button,select'):n.decompose()
   title=m.find('h1').get_text(' ',strip=True)
   intro=m.select_one('.lead') or m.find('p')
   summary=intro.get_text(' ',strip=True) if intro else ''
   cat=category(name)
-  index.append({'title':title,'url':name,'summary':summary,'category':cat,'label':CATEGORIES[lang][cat],'key':normalized(title+' '+m.get_text(' ',strip=True))})
+  # The search page should not display a student's name as a preset suggestion
+  # or directory item. The academic team page and supervision records are unchanged.
+  summary=summary.replace('Tuğçe Ünsal','')
+  searchable_text=m.get_text(' ',strip=True).replace('Tuğçe Ünsal','')
+  index.append({'title':title,'url':name,'summary':summary,'category':cat,'label':CATEGORIES[lang][cat],'key':normalized(title+' '+searchable_text)})
  # Keep all downloadable files discoverable, with explicit document languages.
  for p in sorted((SITE/'downloads').iterdir()):
   if not p.is_file():continue

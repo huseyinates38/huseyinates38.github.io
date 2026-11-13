@@ -678,7 +678,6 @@
   "Resources &amp; methods": "Kaynaklar ve yöntemler",
   "Profile &amp; site information": "Profil ve site bilgileri",
   "Clear search": "Aramayı temizle",
-  "Search in English or with Turkish names. Turkish characters are optional. Try “Ates”, “Tugce”, “VR” or “feedback”. Search runs in your browser, with no external search provider, cookies or account. Filters are saved only in the shareable address fragment.": "Türkçe veya İngilizce arayabilirsiniz. Türkçe karakterler zorunlu değildir. “Ates”, “Tugce”, “sanal gerçeklik” veya “geri bildirim” deneyin. Arama; dış hizmet, çerez veya hesap olmadan tarayıcınızda çalışır. Filtreler yalnızca paylaşılabilir adreste korunur.",
   "Show more results": "Daha fazla sonuç",
   "Browse all pages": "Tüm sayfalar",
   "This directory also works without JavaScript.": "Bu dizin JavaScript olmadan da çalışır.",
@@ -899,5 +898,6 @@
   "Visiting-researcher application in scientific reasoning, feedback and human–AI learning": "Bilimsel akıl yürütme, geri bildirim ve insan–yapay zekâ etkileşiminde öğrenme üzerine konuk araştırmacı başvurusu",
   "Hüseyin Ateş · host researcher / applicant": "Hüseyin Ateş · ev sahibi araştırmacı / başvuru sahibi",
   "The TÜBİTAK 2221 application has been submitted. The funding decision and visit arrangements are pending.": "TÜBİTAK 2221 başvurusu sunuldu. Destek kararı ve ziyaret düzenlemeleri bekleniyor.",
-  "<a href=\"proposal-visiting-researchers-2221.html\">TÜBİTAK 2221 Visiting-Researcher Application</a>": "<a href=\"proposal-visiting-researchers-2221.html\">TÜBİTAK 2221 Konuk Araştırmacı Başvurusu</a>"
+  "<a href=\"proposal-visiting-researchers-2221.html\">TÜBİTAK 2221 Visiting-Researcher Application</a>": "<a href=\"proposal-visiting-researchers-2221.html\">TÜBİTAK 2221 Konuk Araştırmacı Başvurusu</a>",
+  "Search research, projects, publications and resources in English or Turkish. Turkish characters are optional. Examples: “feedback”, “VR” or “STEM”. Search runs in your browser without an external search provider, cookies or an account. Filters are saved only in the shareable address fragment.": "Araştırma, proje, yayın ve kaynaklarda Türkçe veya İngilizce arama yapabilirsiniz. Türkçe karakterler zorunlu değildir. Örneğin “geri bildirim”, “sanal gerçeklik” veya “STEM” yazabilirsiniz. Arama, dış arama hizmeti, çerez veya hesap gerektirmeden tarayıcınızda çalışır. Filtreler yalnızca paylaşılabilir adres bölümünde saklanır."
 }

@@ -140,6 +140,11 @@ def main():
     s=Soup((SITE/loc/'search.html').read_text(),'html.parser')
     records=json.loads(s.find(id='site-search-data').string)
     assert len(records)>60 and len(records)==len({item['url'] for item in records})
+    q=s.select_one('#site-query');help_text=s.select_one('#site-search-help').get_text(' ',strip=True)
+    assert q and 'Tuğçe' not in q.get('placeholder','') and 'Tugce' not in q.get('placeholder','')
+    assert 'Tuğçe' not in help_text and 'Tugce' not in help_text
+    # No personal name should be a default search suggestion, directory item or indexed result.
+    assert 'Tuğçe' not in str(s) and 'Tugce' not in str(s)
     assert any('moritz-krell' in item['url'] for item in records)
     assert any('tubitak-dfg' in item['url'] for item in records)
     assert all((SITE/loc/item['url']).is_file() for item in records if item['url'].endswith('.html'))
