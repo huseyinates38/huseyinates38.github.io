@@ -1,0 +1,52 @@
+name: Apply reviewed institution marks
+on:
+  push:
+    branches: [team-institutions-v43]
+    paths: [.github/workflows/apply-reviewed-marks.yml]
+permissions:
+  contents: write
+  actions: read
+jobs:
+  marks:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 43387289472
+          name: institution-logo-review
+          path: reviewed
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install requests pillow
+      - name: Apply reviewed assets
+        shell: python
+        run: |
+          import requests,json,io,shutil
+          from pathlib import Path
+          from PIL import Image
+          out=Path('assets/institutions');report=json.loads(Path('content/institution-logo-sources.json').read_text())
+          shutil.copyfile('reviewed/uaeu-1.png',out/'uaeu.png')
+          report['uaeu']['selected']=json.loads(Path('reviewed/report.json').read_text())['uaeu']['candidates'][1]
+          sources={'kaeu':'https://cdn.e-devlet.gov.tr/themes/ankara/images/logos/64webp/1077.1.8.0.webp','meb':'https://www.meb.gov.tr/assets/img/Logo.png','tokat':'https://www.gop.edu.tr/img/gop_logo_70X70.png'}
+          for key,url in sources.items():
+            r=requests.get(url,timeout=45,headers={'User-Agent':'Mozilla/5.0'});r.raise_for_status()
+            im=Image.open(io.BytesIO(r.content)).convert('RGBA');im.thumbnail((480,180),Image.Resampling.LANCZOS);im.save(out/(key+'.png'),optimize=True)
+            report[key]['selected']={'source':url,'type':'official institution logo','path':key+'.png','size':list(im.size),'dark_background':False}
+            print(key,im.size)
+          Path('content/institution-logo-sources.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reviewed-final-marks
+          path: |
+            assets/institutions
+            content/institution-logo-sources.json
+          retention-days: 7
+      - run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/institutions content/institution-logo-sources.json
+          git diff --cached --quiet || git commit -m 'Finalize reviewed institution logo assets'
+          git pull --rebase origin team-institutions-v43
+          git push origin HEAD:team-institutions-v43
