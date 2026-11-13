@@ -1,0 +1,45 @@
+name: Finalize institution marks
+on:
+  push:
+    branches: [team-institutions-v43]
+    paths: [.github/workflows/finalize-institution-marks.yml]
+permissions:
+  contents: write
+jobs:
+  marks:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install requests pillow cairosvg
+      - name: Save identified official logos
+        shell: python
+        run: |
+          import requests,json,io
+          from pathlib import Path
+          from PIL import Image
+          import cairosvg
+          out=Path('assets/institutions')
+          report=json.loads(Path('content/institution-logo-sources.json').read_text())
+          sources={'kaeu':'https://cdn.e-devlet.gov.tr/themes/ankara/images/logos/64webp/1077.1.8.0.webp','meb':'https://www.meb.gov.tr/assets/img/Logo.png','uaeu':'https://www.uaeu.ac.ae/assets/images/uaeu-logo.svg','tokat':'https://www.gop.edu.tr/img/gop_logo_70X70.png'}
+          for key,url in sources.items():
+            r=requests.get(url,timeout=45,headers={'User-Agent':'Mozilla/5.0'});r.raise_for_status();raw=r.content
+            if b'<svg' in raw:raw=cairosvg.svg2png(bytestring=raw,output_width=480)
+            im=Image.open(io.BytesIO(raw)).convert('RGBA');im.thumbnail((480,180),Image.Resampling.LANCZOS);im.save(out/(key+'.png'),optimize=True)
+            report[key]['selected']={'source':url,'type':'official institution logo','path':key+'.png','size':list(im.size),'dark_background':False}
+            print(key,im.size)
+          Path('content/institution-logo-sources.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
+      - uses: actions/upload-artifact@v4
+        with:
+          name: finalized-institution-marks
+          path: |
+            assets/institutions
+            content/institution-logo-sources.json
+          retention-days: 7
+      - run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/institutions content/institution-logo-sources.json
+          git diff --cached --quiet || git commit -m 'Finalize all twenty institution marks using identified official assets'
+          git push origin HEAD:team-institutions-v43
