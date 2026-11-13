@@ -212,6 +212,7 @@ def refine(s,name,tr):
   pairs(s,[('Explorer içindeki kurgusal bitki karşılaştırmasında','Keşif aracındaki kurgusal bitki karşılaştırmasında')])
  if name=='project-ai-literacy-colombia.html':
   section=s.select('main > section')[-1]
+  remove(section.select('.callout'))
   for p in list(section.select('p')):
    if p.get('class')!=['lead']:p.decompose()
   set_text(section.select_one('p.lead'),

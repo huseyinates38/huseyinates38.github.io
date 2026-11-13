@@ -61,6 +61,7 @@ def main():
   assert ('geçerliği' if tr else 'validated instruments') in resource.main.get_text().lower()
   colombia=read(pre+'project-ai-literacy-colombia.html').select('main > section')[-1]
   assert len(colombia.select('p'))==1
+  assert not colombia.select('.callout'), 'Unequal Colombia status disclaimer: '+pre
   assert ('pilot uygulama hazırlıkları' if tr else 'pilot preparation') in colombia.get_text()
   if tr:assert 'Explorer içindeki' not in read(pre+'resource-argumentation.html').main.get_text()
   report['languages'].append('tr' if tr else 'en')
