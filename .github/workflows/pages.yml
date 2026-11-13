@@ -75,6 +75,6 @@ jobs:
         run: python scripts/verify_site.py --live
       - name: Record release
         run: |
-          echo '## Academic website 4.0 — bilingual research and collaboration' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Complete English and Turkish website; added Dutch, Danish, German and US research connections, with a non-submitted TÜBİTAK–DFG concept and correct project-status boundaries.' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Academic website 4.1 — editorial corrections and Turkish CV' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Corrected unsuccessful 3501 status, reconciled seven proposal entries, refined collaborator privacy, and added Turkish academic CV in PDF/DOCX.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Browser and live-file tests passed. These tests are not WCAG certification or academic fact verification.' >> "$GITHUB_STEP_SUMMARY"

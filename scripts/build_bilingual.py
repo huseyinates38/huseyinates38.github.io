@@ -30,7 +30,7 @@ def clean(s,name):
   hero.append(frag(links([('Projects & proposals','projects.html'),('Editorial initiatives','editorial.html'),('Methods & access','open-research.html')])) )
  if name=='projects.html':
   n=s.select_one('#proposal-pipeline .container')
-  if n:set_html(n,'<h2>Submitted &amp; planned <em>applications.</em></h2><p class="lead">Four submitted proposals, a planned visiting-researcher application and the non-funded 3501 proposal are listed separately from supported projects.</p>'+links([('View all six proposals','proposals.html')]))
+  if n:set_html(n,'<h2>Submitted, planned &amp; <em>unsuccessful applications.</em></h2><p class="lead">Four submitted applications, two planned research activities and one unsuccessful TÜBİTAK 3501 application appear in the separate proposal register.</p>'+links([('Full proposal register','proposals.html')]))
  if name=='team.html':
   for n in s.select('.team-intro'):n.decompose()
   n=s.select_one('.pagehero p.lead')
@@ -50,7 +50,7 @@ def clean(s,name):
   for p in list(s.main.find_all('p')):
    if p.get_text(strip=True).startswith('This is an editorial research brief,'):p.decompose()
  if name=='site-notes.html':
-  set_html(s.main,'''<section class="pagehero"><div class="container"><p class="eyebrow">About this website</p><h1>Sources, privacy &amp;<br/><em>editorial practice.</em></h1><p class="lead">How research records, teaching resources and language versions are presented.</p></div></section>'''+section('Research records','<p>Academic profile and project records are supplied by Hüseyin Ateş. Published research links to the original publication. Supported projects, submitted applications, planned work and non-funded proposals remain separate.</p><p>Research briefs are editorial summaries, not complete abstracts or substitutes for the original methods and results. Article titles and bibliographic citations retain their original language in both site versions.</p>')+section('Teaching resources','<p>The teaching guides, worksheets and fictional examples were prepared for this website with AI-assisted drafting. They are teaching prototypes, not published study instruments or validated scales. Review their scientific accuracy and suitability before use.</p>'+links([('Use & attribution','resource-use.html'),('Teaching resources','resources.html')]),'muted')+section('Privacy &amp; external services','<p>This website has no analytics script, tracking cookie, application form, live AI service or student-response upload. Search and interactive examples run locally in your browser. No search queries or responses are stored by the site.</p><p>The hosting provider may process technical access information. External links and email are subject to the terms of their respective services. Private correspondence and draft application documents are not published.</p>')+section('Languages, access &amp; corrections','<p>Choose English or Türkçe in the header to open the same page in the other language. Each language has its own address, and internal navigation stays in the selected language. Existing English addresses remain available.</p><p>Resource downloads are labelled by language. The public academic CV is available in English; the academic profile is available in both languages.</p>'+links([('Accessibility','accessibility.html'),('Contact for corrections','contact.html')]),'muted'))
+  set_html(s.main,'''<section class="pagehero"><div class="container"><p class="eyebrow">About this website</p><h1>Sources, privacy &amp;<br/><em>editorial practice.</em></h1><p class="lead">How research records, teaching resources and language versions are presented.</p></div></section>'''+section('Research records','<p>Academic profile and project records are supplied by Hüseyin Ateş. Published research links to the original publication. Supported projects, submitted applications, planned work and non-funded proposals remain separate.</p><p>Research briefs are editorial summaries, not complete abstracts or substitutes for the original methods and results. Article titles and bibliographic citations retain their original language in both site versions.</p>')+section('Teaching resources','<p>The teaching guides, worksheets and fictional examples were prepared for this website with AI-assisted drafting. They are teaching prototypes, not published study instruments or validated scales. Review their scientific accuracy and suitability before use.</p>'+links([('Use & attribution','resource-use.html'),('Teaching resources','resources.html')]),'muted')+section('Privacy &amp; external services','<p>This website has no analytics script, tracking cookie, application form, live AI service or student-response upload. Search and interactive examples run locally in your browser. No search queries or responses are stored by the site.</p><p>The hosting provider may process technical access information. External links and email are subject to the terms of their respective services. Private correspondence and draft application documents are not published.</p>')+section('Languages, access &amp; corrections','<p>Choose English or Türkçe in the header to open the same page in the other language. Each language has its own address, and internal navigation stays in the selected language. Existing English addresses remain available.</p><p>Resource downloads are labelled by language. The public academic CV is available in both English and Turkish in PDF and editable DOCX formats.</p>'+links([('Accessibility','accessibility.html'),('Contact for corrections','contact.html')]),'muted'))
  # Remove transient release dates/status rhetoric where it duplicates a visible status badge.
  for p in list(s.main.select('p')):
   t=p.get_text(' ',strip=True)
@@ -203,6 +203,30 @@ def locale_links(s,name,lang,names):
  for n in s.select('script#site-search-data'):
   n.string='[]' # replaced with the final, cleaned and translated index below
 
+def public_cv_links(s,name,lang):
+ """Add both CV language choices. Original publication titles remain unchanged."""
+ if name!='about.html':
+  return
+ panel=s.select_one('main .v3-box .v3-links')
+ if not panel:
+  raise RuntimeError('Academic CV links panel missing on about page')
+ targets=[('PDF','.pdf'),('DOCX','.docx')]
+ for display,ext in reversed(targets):
+  file='Huseyin_Ates_Akademik_Ozgecmis_TR'+ext
+  href=('../' if lang=='tr' else '')+'downloads/'+file
+  label=('Akademik özgeçmiş · Türkçe PDF' if display=='PDF' else 'Düzenlenebilir özgeçmiş · Türkçe DOCX')
+  if lang=='en':label=('Turkish academic CV · PDF' if display=='PDF' else 'Turkish academic CV · DOCX')
+  a=s.new_tag('a',attrs={'href':href,'download':file,'hreflang':'tr','lang':'tr','aria-label':label})
+  a.string=label
+  panel.insert(0,a)
+ # The footer retains an English-CV link; the Turkish content also has a local CV entry.
+ if lang=='tr':
+  footer=s.select_one('.footer-links')
+  if footer:
+   f=s.new_tag('a',attrs={'href':'../downloads/Huseyin_Ates_Akademik_Ozgecmis_TR.pdf','hreflang':'tr'})
+   f.string='Akademik özgeçmiş · Türkçe PDF'
+   footer.insert(0,f)
+
 def metadata(s,name,lang):
  title=s.main.find('h1').get_text(' ',strip=True)
  if name=='index.html':title='Hüseyin Ateş · Research & Science Education' if lang=='en' else 'Hüseyin Ateş · Araştırma ve Fen Eğitimi'
@@ -253,7 +277,7 @@ def build_index(docs,lang):
  for p in sorted((SITE/'downloads').iterdir()):
   if not p.is_file():continue
   name=p.name
-  term='English' if '-en.' in name or name.startswith('Huseyin_Ates_') else 'Türkçe' if '-tr.' in name else 'EN / TR'
+  term='Türkçe' if '-tr.' in name or '_TR.' in name else 'English' if '-en.' in name or name.startswith('Huseyin_Ates_') else 'EN / TR'
   if lang=='tr':term=term.replace('English','İngilizce')
   prefix='İndirilebilir dosya' if lang=='tr' else 'Downloadable file'
   index.append({'title':name,'url':('../' if lang=='tr' else '')+'downloads/'+name,'summary':term+' · '+p.suffix[1:].upper(),'category':'resources','label':prefix,'key':normalized(name+' '+term+' '+('özgeçmiş cv' if 'CV' in name else 'kaynak resource öğretim teaching'))})
@@ -268,13 +292,15 @@ def build_index(docs,lang):
 
 
 def main():
+ from build_cv_tr import main as build_tr_cv
+ build_tr_cv()
  mapping=json.loads((ROOT/'content/translations-tr.json').read_text(encoding='utf-8'))
  docs=prepared();localized={'en':{},'tr':{}}
  for name,source in docs.items():
   for lang in ['en','tr']:
    s=choose_language(copy.deepcopy(source),lang)
    if lang=='tr':translate(s,mapping)
-   localized_attrs(s,lang);locale_links(s,name,lang,set(docs));metadata(s,name,lang)
+   localized_attrs(s,lang);locale_links(s,name,lang,set(docs));public_cv_links(s,name,lang);metadata(s,name,lang)
    # Public PDFs retain their source language, clearly labelled rather than falsely translated.
    for a in s.select('a[href*="Huseyin_Ates_Public_Academic_CV"]'):
     a['hreflang']='en'
@@ -286,7 +312,7 @@ def main():
   for name,s in localized[lang].items():(out/name).write_text(str(s),encoding='utf-8')
  for name in ['bilingual.css','bilingual.js']:(SITE/'assets'/name).write_bytes((ROOT/'assets'/name).read_bytes())
  manifest=json.loads((SITE/'deployment.json').read_text());manifest.pop('files',None)
- manifest.update(version='4.0',languages=['en','tr'],language_pairs=len(docs),page_count=len(docs)*2,pages=sorted(p.relative_to(SITE).as_posix() for p in SITE.rglob('*.html')))
+ manifest.update(version='4.1',languages=['en','tr'],language_pairs=len(docs),page_count=len(docs)*2,pages=sorted(p.relative_to(SITE).as_posix() for p in SITE.rglob('*.html')))
  (SITE/'deployment.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
  urls=[]
  for name in sorted(docs):
@@ -297,7 +323,7 @@ def main():
    urls.append('<url><loc>'+url+'</loc>'+alternate+'<lastmod>'+DATE+'</lastmod></url>')
  (SITE/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'+''.join(urls)+'</urlset>')
  (SITE/'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: '+BASE+'sitemap.xml\n')
- (SITE/'quality-report.json').write_text(json.dumps({'release':'4.0','languages':['en','tr'],'language_pairs':len(docs),'translation_units':len(mapping),'portrait_files_added':0,'content_statuses':'Existing supported / submitted / planned / non-funded distinctions preserved.','downloads':'Preserved; document languages explicitly labelled.','limits':'Automated testing is not independent WCAG certification or research fact verification.'},indent=2))
+ (SITE/'quality-report.json').write_text(json.dumps({'release':'4.1','languages':['en','tr'],'language_pairs':len(docs),'translation_units':len(mapping),'portrait_files_added':0,'content_statuses':'Existing supported / submitted / planned / non-funded distinctions preserved.','downloads':'Preserved; original English and new Turkish public CV available in PDF and DOCX.','limits':'Automated testing is not independent WCAG certification or research fact verification.'},indent=2))
  print(f'Built {len(docs)} EN/TR page pairs. Existing publication citations and downloads retained; no portrait included.')
 
 if __name__=='__main__':

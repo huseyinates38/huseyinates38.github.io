@@ -9,7 +9,7 @@ from verify_site import validate
 def main():
   validate()
   m=json.loads((SITE/'deployment.json').read_text())
-  assert m['version']=='4.0' and m['languages']==['en','tr'],m
+  assert m['version']=='4.1' and m['languages']==['en','tr'],m
   assert m['language_pairs']==56 and m['page_count']==112,(m['language_pairs'],m['page_count'])
   paths=sorted(p.name for p in SITE.glob('*.html'))
   assert len(paths)==56
@@ -30,6 +30,21 @@ def main():
   assert len(p)==7 and sum(x['state']=='submitted' for x in p)==4
   assert sum(x['state']=='planned' for x in p)==2 and sum(x['state']=='not-funded' for x in p)==1
   assert not any(x['slug']=='tubitak-dfg-reasoning' and x['state']!='planned' for x in p)
+  assert next(x for x in p if x['slug']=='robot-virtual-agent')['status']=='Not funded · application unsuccessful'
+  assert (SITE/'downloads/Huseyin_Ates_Akademik_Ozgecmis_TR.pdf').stat().st_size>20000
+  assert (SITE/'downloads/Huseyin_Ates_Akademik_Ozgecmis_TR.docx').stat().st_size>10000
+  tr_about=Soup((SITE/'tr/about.html').read_text(),'html.parser')
+  assert tr_about.find('a',href='../downloads/Huseyin_Ates_Akademik_Ozgecmis_TR.pdf')
+  assert tr_about.find('a',href='../downloads/Huseyin_Ates_Public_Academic_CV.pdf')
+  for loc in ('','tr/'):
+    count=Soup((SITE/loc/'proposals.html').read_text(),'html.parser')
+    assert len(count.select('article.pipeline-card'))==7
+    status=Soup((SITE/loc/'project-robot-virtual-agent.html').read_text(),'html.parser').get_text(' ',strip=True)
+    assert ('Not funded · application unsuccessful' if loc=='' else 'Desteklenmedi · başvuru kabul edilmedi') in status
+  for person in ('omid-noroozi','kazem-banihashem','elena-novak'):
+    for loc in ('','tr/'):
+      text=Soup((SITE/loc/('person-'+person+'.html')).read_text(),'html.parser').get_text(' ',strip=True)
+      assert not any(x in text for x in ['declined a separate COST invitation','did not join the SciEpi-Feedback COST proposal','initial dates were unavailable','farklı bir COST davetini kabul etmedi','kurumsal kısıtlar nedeniyle SciEpi-Feedback','ilk tarihler uygun değildi'])
   pr=Soup((SITE/'projects.html').read_text(),'html.parser')
   assert len(pr.select('#funded-projects .project-summary'))==3
   assert '3501' not in pr.select_one('#funded-projects').get_text()

@@ -102,7 +102,7 @@ def projects_index():
     body=hero('Research / Projects & proposals','Research at<br><em>different stages.</em>','Supported projects, ongoing collaborative research and prospective applications are separated by status.',links([('Supported projects','#funded-projects'),('Ongoing collaboration','#ongoing-collaboration'),('Proposal pipeline','proposals.html'),('Editorial initiatives','editorial.html')]))
     body+=section('Three supported <em>projects</em>.','<p>These supported-project records are separate from the applications and research plans below.</p>'+controls+'<div class="project-overview-grid">'+''.join(str(c) for c in cards)+'</div>','white','funded-projects')
     body+=section('Ongoing <em>collaborative research</em>.',badge('Study development · not an external grant award','ongoing')+'<div class="feature"><div><h3>Türkiye–Colombia GenAI literacy study</h3><p class="lead">A cross-context collaboration with Juan Garzón and coordinator Juan David Murillo Egurrola, with contributions from Hüseyin Ateş and doctoral researcher Abdulkadir Aydın.</p><p>Instrument adaptation and pilot preparation are ongoing. Study participation is distinguished from a funding award.</p>'+link('Study scope and contributions','project-ai-literacy-colombia.html')+'</div><aside class="panel"><small>Evidence before claims</small><h3>Methodology, adaptation & preparation</h3><p>Published outputs will be linked when available. No unreported results or completed fieldwork are inferred.</p>'+link('Research collaborators','team.html#collaborators')+'</aside></div>','muted','ongoing-collaboration')
-    body+=section('Submitted & planned <em>applications</em>.','<p class="lead">Four submitted proposals, a visiting-researcher application stream, a developing Türkiye–Germany research concept, and a non-funded proposal are visible in a separate register.</p>'+proposal_cards()+links([('Full proposal register','proposals.html')]),'white','proposal-pipeline')
+    body+=section('Submitted & planned <em>applications</em>.','<p class="lead">Four submitted applications, two planned research activities and one unsuccessful TÜBİTAK 3501 application appear in a separate register.</p>'+proposal_cards()+links([('Full proposal register','proposals.html')]),'white','proposal-pipeline')
     body+=section('Editorial & international <em>connections</em>.','<p>The proposed ETHE thematic collection and earlier Sustainable Environment advisory activity are presented separately from grant-funded research.</p>'+links([('Editorial initiatives','editorial.html'),('Research collaborators','team.html#collaborators'),('Public academic CV','downloads/Huseyin_Ates_Public_Academic_CV.pdf')]),'muted','international-collaborations')
     render('projects.html','Projects & proposals',body,'Three supported projects, an ongoing Türkiye–Colombia collaboration and seven submitted or planned research proposals, with explicit status labels.')
 
@@ -134,7 +134,7 @@ def enrich_navigation():
         (SITE/p.name).write_text(str(s),encoding='utf-8')
     # Keep a concise public correction on the site notes, not a dump of private evidence.
     s=Soup((SITE/'site-notes.html').read_text(),'html.parser')
-    s.main.append(frag(section('Project-status update · 12 November 2026','<p>The robot–virtual-agent proposal under TÜBİTAK 3501 has been removed from the supported-project register and from funded research in the public CV. It is now described as a proposal without a funding award. Submitted proposals, planned visits and collection proposals have their own explicit labels.</p><p>Research and editorial collaborators appear above graduate researchers. Private correspondence, invitation letters and draft research instruments are not published.</p>')))
+    s.main.append(frag(section('Project-status update · 12 November 2026','<p>The TÜBİTAK 3501 robot–virtual-agent application was not funded. It appears only in the proposal register and not among supported projects. Submitted applications, planned activities and editorial collection proposals have distinct labels.</p><p>Research and editorial collaborators appear above graduate researchers. Private correspondence, invitation letters and draft research instruments are not published.</p>')))
     (SITE/'site-notes.html').write_text(str(s),encoding='utf-8')
 
 
@@ -146,6 +146,6 @@ def main():
     (SITE/'deployment.json').write_text(json.dumps(manifest,indent=2))
     urls=''.join('<url><loc>'+BASE+n+'</loc><lastmod>'+DATE+'</lastmod></url>' for n in manifest['pages'] if n not in ['404.html','search.html'])
     (SITE/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+urls+'</urlset>')
-    print('Research-status update: 3 supported records, 6 proposals, 1 ongoing international study and 2 editorial initiatives.')
+    print('Research-status update: 3 supported records, 7 proposal entries, 1 ongoing international study and 2 editorial initiatives.')
 
 if __name__=='__main__':main()

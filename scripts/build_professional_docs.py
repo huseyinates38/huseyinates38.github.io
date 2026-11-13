@@ -95,9 +95,9 @@ def new_doc(title,lang):
     d.core_properties.title=title;d.core_properties.author='Hüseyin Ateş'
     d.core_properties.subject='Public academic resource; 12 November 2026'
     d.core_properties.language='tr-TR' if lang=='tr' else 'en-GB'
-    header=sec.header.paragraphs[0]; header.text='HÜSEYİN ATEŞ  /  RESEARCH & LEARNING'
+    header=sec.header.paragraphs[0]; header.text='HÜSEYİN ATEŞ  /  ARAŞTIRMA VE ÖĞRENME' if lang=='tr' else 'HÜSEYİN ATEŞ  /  RESEARCH & LEARNING'
     header.style=d.styles['Caption']; header.runs[0].font.size=Pt(8)
-    footer=sec.footer.paragraphs[0];footer.text='huseyinates38.github.io   |   12 Nov 2026   |   '
+    footer=sec.footer.paragraphs[0];footer.text='huseyinates38.github.io   |   '+('13 Kasım 2026' if lang=='tr' else '12 Nov 2026')+'   |   '
     field=OxmlElement('w:fldSimple');field.set(qn('w:instr'),'PAGE');footer._p.append(field)
     footer.runs[0].font.size=Pt(8)
     return d
@@ -110,6 +110,13 @@ def pdf_footer(canvas,doc):
     canvas.drawString(45,27,'huseyinates38.github.io  |  12 November 2026')
     canvas.drawRightString(A4[0]-45,27,str(doc.page));canvas.restoreState()
 
+
+def pdf_footer_tr(canvas,doc):
+    canvas.saveState();canvas.setStrokeColor(HexColor('#D4E0DE'))
+    canvas.line(45,40,A4[0]-45,40);canvas.setFont('SiteSans',7.5)
+    canvas.setFillColor(HexColor('#536A72'))
+    canvas.drawString(45,27,'huseyinates38.github.io  |  13 Kasım 2026')
+    canvas.drawRightString(A4[0]-45,27,str(doc.page));canvas.restoreState()
 
 def export_document(stem,pages,title,lang='en'):
     """Each content page maps to a fixed page break in both formats."""
@@ -134,7 +141,7 @@ def export_document(stem,pages,title,lang='en'):
             story.append(Paragraph(escape(text),styles[typ]))
     d.save(OUT/(stem+'.docx'))
     pdf=SimpleDocTemplate(str(OUT/(stem+'.pdf')),pagesize=A4,leftMargin=45,rightMargin=45,topMargin=42,bottomMargin=52,title=title,author='Hüseyin Ateş')
-    pdf.build(story,onFirstPage=pdf_footer,onLaterPages=pdf_footer)
+    pdf.build(story,onFirstPage=pdf_footer_tr if lang=='tr' else pdf_footer,onLaterPages=pdf_footer_tr if lang=='tr' else pdf_footer)
 
 
 def resource(stem):
