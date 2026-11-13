@@ -58,3 +58,9 @@ Pushes to main build, validate and browser-test the site before GitHub Pages dep
 - Removed the pre-send disclaimer from the Join pages while retaining the working Tally interest-form link and QR.
 - Added the accepted ICCAI 2027 oral conference contribution (paper YS1001) and separately noted the submitted, as-yet-undecided TÜBİTAK 2224-A conference participation-support application. This is not represented as a funded project, completed presentation or already published paper.
 - Applied academic Turkish editing to all translated page types, reducing literal translation patterns and repeated editorial caveats. Original English research titles and citations remain unchanged.
+
+## Visual presentation — November 2026, release 4.7
+
+The homepage now includes an original **conceptual** illustration, linked thematic research graphics, confirmed conference/grant/resource highlights, and a visible entry point to the existing interactive feedback comparison. Research pages contain linked vector illustrations. All content is bilingual. No personal photographs, fabricated study instruments, unverified project outcomes or live-news feed are included.
+
+The GitHub Pages workflow runs `scripts/enhance_visuals.py` **after** bilingual and team-directory generation. The illustrations are owned by this repository under `assets/visuals/`; the hero imagery is conceptual and not a photograph of an empirical research project.

@@ -44,6 +44,7 @@ jobs:
           python scripts/release_editorial.py
           python scripts/build_bilingual.py
           python scripts/build_team_directory.py
+          python scripts/enhance_visuals.py
       - name: Validate public status, privacy, search and documents
         run: python scripts/verify_bilingual.py
       - name: Test mobile, desktop and interactive controls in Chromium
@@ -76,6 +77,6 @@ jobs:
         run: python scripts/verify_site.py --live
       - name: Record release
         run: |
-          echo '## Academic website 4.6 — editorial Turkish, affiliation corrections and ICCAI conference' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Georgios affiliations corrected; contact warning removed; conference acceptance and pending 2224-A application separated; Turkish-language editorial review. All research and document records remain private where appropriate.' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Academic website 4.7 — original illustrations and curated research highlights' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Visual research themes, verified milestones and the existing research-group link added in English and Turkish. Conceptual illustrations are not represented as project photographs or empirical results.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Browser and live-file tests passed. These tests are not WCAG certification or academic fact verification.' >> "$GITHUB_STEP_SUMMARY"

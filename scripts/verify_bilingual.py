@@ -9,7 +9,7 @@ from verify_site import validate
 def main():
   validate()
   m=json.loads((SITE/'deployment.json').read_text())
-  assert m['version']=='4.6' and m['languages']==['en','tr'],m
+  assert m['version']=='4.7' and m['languages']==['en','tr'],m
   assert m['language_pairs']==69 and m['page_count']==138,(m['language_pairs'],m['page_count'])
   paths=sorted(p.name for p in SITE.glob('*.html'))
   assert len(paths)==69
@@ -93,6 +93,18 @@ def main():
     serbay=Soup((SITE/prefix/'person-serbay-durmaz.html').read_text(encoding='utf-8'),'html.parser').get_text(' ',strip=True)
     assert ('Karacaoğlan Ortaokulu' if prefix else 'Karacaoğlan Secondary School') in serbay
   assert (SITE/'assets/qr/research-group-interest.png').stat().st_size>1000
+  # Verify that editorial visuals exist in both language editions and remain explicitly conceptual.
+  for locale in ('','tr/'):
+    homepage=Soup((SITE/locale/'index.html').read_text(encoding='utf-8'),'html.parser')
+    assert homepage.select_one('.visual-hero-figure img[src$="assets/visuals/research-hero.webp"]')
+    assert len(homepage.select('.visual-topic'))==3 and len(homepage.select('.visual-update'))==3
+    assert homepage.select_one('a[href="https://tally.so/r/Eq51Jr"]')
+    assert 'Temsili illüstrasyon' in homepage.get_text(' ',strip=True) if locale else 'Conceptual illustration' in homepage.get_text(' ',strip=True)
+    research=Soup((SITE/locale/'research.html').read_text(encoding='utf-8'),'html.parser')
+    assert len(research.select('.visual-research-gallery-grid a'))==3
+    projects=Soup((SITE/locale/'projects.html').read_text(encoding='utf-8'),'html.parser')
+    assert projects.select_one('.visual-project-separator')
+  assert (SITE/'assets/visuals/research-hero.webp').stat().st_size>20000
   dfg=Soup((SITE/'tr/proposal-tubitak-dfg-reasoning.html').read_text(),'html.parser').get_text(' ',strip=True)
   assert 'başvuru yapılmadı' in dfg and 'Krell' in dfg
   # English/Turkish institutional affiliations: do not infer outdated University of Crete links.

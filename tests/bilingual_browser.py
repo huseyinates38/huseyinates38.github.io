@@ -10,7 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]; SITE=ROOT/'_site'
 
 def main():
   offline='--offline' in sys.argv
-  report={'release':'4.6','widths':[360,768,1440],'pages':0,'layout_checks':0,'interactions':[],'errors':[]}
+  report={'release':'4.7','widths':[360,768,1440],'pages':0,'layout_checks':0,'interactions':[],'errors':[]}
   class Quiet(http.server.SimpleHTTPRequestHandler):
     def log_message(self,*args):pass
   server=None
