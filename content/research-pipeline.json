@@ -1,5 +1,5 @@
 {
-  "status_date": "2026-11-12",
+  "status_date": "2026-11-13",
   "proposals": [
     {
       "slug": "feedback-fading",
@@ -156,16 +156,16 @@
       "page": "project-robot-virtual-agent.html",
       "title": "Physical Robot vs. Virtual Agent",
       "full_title": "Comparing a Physical Humanoid Social Robot and a Screen-Based Virtual Agent in AI-Supported Self-Regulated Environmental Learning: A Mixed-Methods Study with an Active Control Condition among Middle School Students",
-      "programme": "TÜBİTAK 3501 · proposal pipeline",
-      "status": "Not funded · application unsuccessful",
-      "state": "not-funded",
-      "lead": "Hüseyin Ateş · proposal lead",
-      "period": "Proposed research; no awarded project period",
+      "programme": "TÜBİTAK 3501 · resubmitted proposal",
+      "status": "Submitted · decision pending",
+      "state": "submitted",
+      "lead": "Hüseyin Ateş · applicant / research lead",
+      "period": "Resubmitted proposal · funding decision pending",
       "setting": "Middle-school environmental learning · proposed study",
-      "summary": "A research proposal comparing a physical humanoid social robot and a screen-based virtual agent in AI-supported self-regulated environmental learning.",
+      "summary": "The TÜBİTAK 3501 research proposal comparing a physical humanoid social robot and a screen-based virtual agent in AI-supported self-regulated environmental learning has been resubmitted. The funding decision is pending.",
       "scope": "The proposal describes a mixed-methods comparison with an active control condition among middle school students. The research question concerns the educational role of physical and screen-based agents, rather than a reported intervention result.",
-      "relationship": "The TÜBİTAK 3501 application was submitted and was not funded. The research concept is retained in the proposal register, not in the funded-project section.",
-      "limits": "The original application was unsuccessful. No awarded grant, active evaluation, confirmed resubmission, staffed project or study outcome is claimed.",
+      "relationship": "The 3501 proposal has been submitted again for consideration. It remains in the applications register while the new funding decision is pending.",
+      "limits": "A renewed application has been submitted; no funding award has yet been announced. The proposed study is not listed among funded or completed research.",
       "links": [
         [
           "Educational technology research",

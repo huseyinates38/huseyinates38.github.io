@@ -27,10 +27,10 @@ def main():
     assert not en.select('img[src*="portrait"],img[src*="IMG_"],img[src*="photo"]'),name
     assert not tr.select('img[src*="portrait"],img[src*="IMG_"],img[src*="photo"]'),name
   p=json.loads((ROOT/'content/research-pipeline.json').read_text())['proposals']
-  assert len(p)==7 and sum(x['state']=='submitted' for x in p)==5
-  assert sum(x['state']=='planned' for x in p)==1 and sum(x['state']=='not-funded' for x in p)==1
+  assert len(p)==7 and sum(x['state']=='submitted' for x in p)==6
+  assert sum(x['state']=='planned' for x in p)==1 and sum(x['state']=='not-funded' for x in p)==0
   assert not any(x['slug']=='tubitak-dfg-reasoning' and x['state']!='planned' for x in p)
-  assert next(x for x in p if x['slug']=='robot-virtual-agent')['status']=='Not funded · application unsuccessful'
+  assert next(x for x in p if x['slug']=='robot-virtual-agent')['status']=='Submitted · decision pending'
   assert (SITE/'downloads/Huseyin_Ates_Akademik_Ozgecmis_TR.pdf').stat().st_size>20000
   assert (SITE/'downloads/Huseyin_Ates_Akademik_Ozgecmis_TR.docx').stat().st_size>10000
   tr_about=Soup((SITE/'tr/about.html').read_text(),'html.parser')
@@ -40,7 +40,7 @@ def main():
     count=Soup((SITE/loc/'proposals.html').read_text(),'html.parser')
     assert len(count.select('article.pipeline-card'))==7
     status=Soup((SITE/loc/'project-robot-virtual-agent.html').read_text(),'html.parser').get_text(' ',strip=True)
-    assert ('Not funded · application unsuccessful' if loc=='' else 'Desteklenmedi · başvuru kabul edilmedi') in status
+    assert ('Submitted · decision pending' if loc=='' else 'Başvuru sunuldu · karar bekleniyor') in status
   for loc in ('','tr/'):
     page=Soup((SITE/loc/'project-vr-stem-vietnam.html').read_text(),'html.parser').get_text(' ',strip=True)
     assert ('Completed' if not loc else 'Tamamlandı') in page
@@ -143,6 +143,6 @@ def main():
     assert any('moritz-krell' in item['url'] for item in records)
     assert any('tubitak-dfg' in item['url'] for item in records)
     assert all((SITE/loc/item['url']).is_file() for item in records if item['url'].endswith('.html'))
-  print('BILINGUAL RELEASE VALIDATED:',len(paths),'EN/TR pairs; 1 supported + 2 completed BAP, 5 submitted, 1 planned, 1 non-funded; privacy and navigation checked.')
+  print('BILINGUAL RELEASE VALIDATED:',len(paths),'EN/TR pairs; 1 supported + 2 completed BAP, 6 submitted, 1 planned, 0 non-funded; privacy and navigation checked.')
 
 if __name__=='__main__':main()

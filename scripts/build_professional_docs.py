@@ -46,7 +46,6 @@ CV = [
   ('p','2013 | MS, Science Education, Erciyes University, Türkiye.'),
   ('p','2011 | BA, Science Education, Erzincan University, Türkiye.'),
   ('h','Selected funded research · including completed work'),
-  ('p','2026–2029 | TÜBİTAK 3501: Physical humanoid social robot versus screen-based virtual agent in AI-supported self-regulated environmental learning. Mixed-methods study with an active control condition among middle school students.'),
   ('p','2026–2027 | TÜBİTAK 1002-A, 226K999: Classroom Pilot Comparison of Two Pedagogical Scaffolding Approaches to Space-Pollution Problem Solving.'),
   ('p','Completed | KAEÜ BAP, EGT.A3.26.001: VR-supported STEM instruction, achievement, STEM attitudes and technology acceptance in Türkiye; evaluation of adaptability to the Vietnamese educational context.'),
   ('p','Completed | KAEÜ BAP, EGT.A3.25.001: VR-supported learning in the circulatory-system unit; student achievement, self-efficacy and classroom engagement.')],

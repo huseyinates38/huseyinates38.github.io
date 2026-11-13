@@ -1,6 +1,6 @@
 ## Version 4.8
 
-The Turkish and English homepages now use the owner-approved full-width illustrated hero, five research topics, five editorial cards, functional Tally QR, and factual counters. Vietnam-related STEM and circulatory-system VR BAP projects are both listed as completed. TÜBİTAK 2221 is a submitted application; TÜBİTAK 3501 was submitted but not funded. The build uses `scripts/apply_v48.py` after the bilingual directory/visual steps.
+The Turkish and English homepages now use the owner-approved full-width illustrated hero, five research topics, five editorial cards, functional Tally QR, and factual counters. Vietnam-related STEM and circulatory-system VR BAP projects are both listed as completed. TÜBİTAK 2221 is a submitted application; TÜBİTAK 3501 has been resubmitted and is awaiting a funding decision. The build uses `scripts/apply_v48.py` after the bilingual directory/visual steps.
 
 # Hüseyin Ateş — Academic Research Website
 
@@ -10,7 +10,7 @@ Website: https://huseyinates38.github.io/
 
 Research collaborators and editorial connections appear above current graduate researchers and alumni. The current record separates two other supported projects and one completed BAP project, seven submitted/planned/non-funded proposal records, an ongoing Türkiye–Colombia study and two distinct editorial initiatives.
 
-**Important correction:** TÜBİTAK 3501 is a proposal without a funding award. It is not included in supported research or the funded-project section of the public CV. ETHE is a collection proposal in development, not an open call or a confirmed Editorial Board appointment. TÜBİTAK 2221 is planned; the separate 2219 proposal with Naomi Winstone is submitted.
+**Current status:** A renewed TÜBİTAK 3501 application has been submitted and a funding decision is pending. The proposal is not included in funded research or the supported-project section of the public CV. ETHE is a collection proposal in development, not an open call or a confirmed Editorial Board appointment. TÜBİTAK 2221 and the separate 2219 proposal with Naomi Winstone are submitted; funding decisions are pending.
 
 The public CV now has three pages in PDF and DOCX. Existing teaching prototypes, citation exports and interactive resources are retained. The 23 listed publications remain a selection, not a complete career bibliography.
 

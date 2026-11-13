@@ -37,7 +37,7 @@ def updates(tr,prefix):
   ('conference','ICCAI 2027',f(tr,'Oral presentation accepted','Sözlü sunum için kabul edildi'),f(tr,'Seoul · 23–26 April 2027','Seul · 23–26 Nisan 2027'),'conference-iccai-2027.html',f(tr,'Conference','Konferans'),'accepted'),
   ('travel','TÜBİTAK 2224-A',f(tr,'Participation-support application submitted','Katılım desteği başvurusu yapıldı'),f(tr,'Funding decision pending','Destek sonucu bekleniyor'),'conference-iccai-2027.html',f(tr,'Application','Başvuru'),'applied'),
   ('visitor','TÜBİTAK 2221',f(tr,'Visiting-scientist application submitted','Konuk bilim insanı başvurusu yapıldı'),f(tr,'Decision pending','Destek sonucu bekleniyor'),'proposal-visiting-researchers-2221.html',f(tr,'Application','Başvuru'),'applied'),
-  ('grant','TÜBİTAK 3501',f(tr,'Research proposal submitted','Araştırma projesi başvurusu yapıldı'),f(tr,'Application not funded','Başvuru desteklenmedi'),'project-robot-virtual-agent.html',f(tr,'Proposal','Proje önerisi'),'notfunded'),
+  ('grant','TÜBİTAK 3501',f(tr,'Research proposal submitted','Araştırma projesi başvurusu yapıldı'),f(tr,'Decision pending','Karar bekleniyor'),'project-robot-virtual-agent.html',f(tr,'Proposal','Proje önerisi'),'applied'),
   ('orbit','TÜBİTAK 1002-A',f(tr,'Scientific support decision: 226K999','226K999 için bilimsel destek kararı'),f(tr,'Space-pollution problem-solving instruction','Uzay kirliliği problem çözme öğretimi'),'project-space-debris.html',f(tr,'Funded research','Araştırma desteği'),'supported')
  ]
  cards=[]
@@ -149,12 +149,12 @@ def simplify(s,tr,name):
    if any(x in t for x in ['The principal investigator reports','proje yürütücüsünün','bildirildi','project remains completed','no new research findings','kaynak olarak','göstermez']):
     if len(t)<250:p.decompose()
  if name in ['project-vr-stem-vietnam.html','project-vr-circulatory-system.html']:mark_complete(name)
- # Replace explanatory 'not funded' prose with the simple actual grant outcome for the old 3501.
+ # Keep the resubmitted 3501 proposal distinct from funded projects.
  if name=='project-robot-virtual-agent.html':
   for p in s.select('main p'):
    t=p.get_text(' ',strip=True)
    if t.startswith('Status boundary.') or t.startswith('Statü sınırı.'):
-    p.string=f(tr,'The TÜBİTAK 3501 application was submitted but was not funded.','TÜBİTAK 3501 başvurusu yapıldı; desteklenmedi.')
+    p.string=f(tr,'The TÜBİTAK 3501 proposal has been resubmitted; a funding decision is pending.','TÜBİTAK 3501 proje önerisi yeniden sunuldu; destek kararı bekleniyor.')
 
 def update_projects(s,tr):
  complete=s.select_one('#completed-projects')

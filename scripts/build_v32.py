@@ -51,10 +51,10 @@ def proposal_cards():
 
 def proposals():
     intro=hero('Research / Proposal pipeline','Submitted, planned<br>& <em>in development.</em>',
-      'Research proposals are presented separately from funding awards. Each record identifies whether an application is submitted, planned or not funded.',
+      'Research proposals are presented separately from funding awards. Each record identifies whether a proposal has been submitted or remains in development.',
       links([('Supported projects','projects.html#funded-projects'),('Ongoing collaborative study','project-ai-literacy-colombia.html'),('Editorial initiatives','editorial.html')]))
     body=intro+section(str(len(DATA['proposals']))+' proposals. <em>Different stages.</em>',
-        '<div class="pipeline-legend"><p><strong>Submitted:</strong> application made; no funding decision announced.</p><p><strong>Planned:</strong> research agenda or invitation discussions before submission.</p><p><strong>No funding award:</strong> a proposal retained in the research pipeline, not an accepted grant.</p></div>'+proposal_cards(),'muted')
+        '<div class="pipeline-legend"><p><strong>Submitted:</strong> application made; no funding decision announced.</p><p><strong>Planned:</strong> a research concept that has not yet been submitted.</p></div>'+proposal_cards(),'muted')
     body+=section('Status, not a promise of funding',
         '<p class="lead">Proposed durations, host arrangements and research scopes describe applications or plans. They do not establish an awarded grant, confirmed visit or completed research result.</p><p class="v3-small">Status reviewed: 12 November 2026. No private proposal documents or correspondence are made available through these pages.</p>'+links([('Public academic CV','downloads/Huseyin_Ates_Public_Academic_CV.pdf'),('Research enquiries','contact.html')]))
     render('proposals.html','Submitted & planned proposals',body,str(len(DATA['proposals']))+' submitted, planned or non-funded research proposals, clearly separated from supported projects.')
@@ -111,7 +111,7 @@ def projects_index():
     body+=section('Completed <em>research projects</em>.','<div class="project-overview-grid">'+''.join(str(c) for c in completed)+'</div>','white','completed-projects')
     body+=section('Supported <em>research project</em>.',controls+'<div class="project-overview-grid">'+''.join(str(c) for c in other)+'</div>','muted','funded-projects')
     body+=section('Ongoing <em>collaborative research</em>.',badge('Study development · not an external grant award','ongoing')+'<div class="feature"><div><h3>Türkiye–Colombia GenAI literacy study</h3><p class="lead">A cross-context collaboration with Juan Garzón and coordinator Juan David Murillo Egurrola, with contributions from Hüseyin Ateş and doctoral researcher Abdulkadir Aydın.</p><p>Instrument adaptation and pilot preparation are ongoing. Study participation is distinguished from a funding award.</p>'+link('Study scope and contributions','project-ai-literacy-colombia.html')+'</div><aside class="panel"><small>Evidence before claims</small><h3>Methodology, adaptation & preparation</h3><p>Published outputs will be linked when available. No unreported results or completed fieldwork are inferred.</p>'+link('Research collaborators','team.html#collaborators')+'</aside></div>','muted','ongoing-collaboration')
-    body+=section('Submitted & planned <em>applications</em>.','<p class="lead">Five submitted applications, one research concept in development and one unsuccessful TÜBİTAK 3501 application appear in a separate register.</p>'+proposal_cards()+links([('Full proposal register','proposals.html')]),'white','proposal-pipeline')
+    body+=section('Submitted & planned <em>applications</em>.','<p class="lead">Six submitted applications and one research concept in development appear in the separate register.</p>'+proposal_cards()+links([('Full proposal register','proposals.html')]),'white','proposal-pipeline')
     body+=section('Editorial & international <em>connections</em>.','<p>The proposed ETHE thematic collection and earlier Sustainable Environment advisory activity are presented separately from grant-funded research.</p>'+links([('Editorial initiatives','editorial.html'),('Research collaborators','team.html#collaborators'),('Public academic CV','downloads/Huseyin_Ates_Public_Academic_CV.pdf')]),'muted','international-collaborations')
     render('projects.html','Projects & proposals',body,'Two completed BAP projects and one supported 1002-A project, alongside ongoing collaboration and proposal records.')
 
@@ -143,7 +143,7 @@ def enrich_navigation():
         (SITE/p.name).write_text(str(s),encoding='utf-8')
     # Keep a concise public correction on the site notes, not a dump of private evidence.
     s=Soup((SITE/'site-notes.html').read_text(),'html.parser')
-    s.main.append(frag(section('Project-status update · 12 November 2026','<p>The TÜBİTAK 3501 robot–virtual-agent application was not funded. It appears only in the proposal register and not among supported projects. Submitted applications, planned activities and editorial collection proposals have distinct labels.</p><p>Research and editorial collaborators appear above graduate researchers. Private correspondence, invitation letters and draft research instruments are not published.</p>')))
+    s.main.append(frag(section('Project-status update · 12 November 2026','<p>The renewed TÜBİTAK 3501 robot–virtual-agent proposal has been submitted and a funding decision is pending. It remains in the proposal register rather than the funded-project list. Submitted research proposals, planned activities and editorial collection proposals have distinct labels.</p><p>Research and editorial collaborators appear above graduate researchers. Private correspondence, invitation letters and draft research instruments are not published.</p>')))
     (SITE/'site-notes.html').write_text(str(s),encoding='utf-8')
 
 

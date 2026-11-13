@@ -17,14 +17,14 @@ def main():
     assert len(s.select('#completed-projects .project-summary'))==1
     assert '3501' not in funded.get_text() and not funded.find('a',href='project-robot-virtual-agent.html')
     proposals=json.loads((ROOT/'content/research-pipeline.json').read_text())['proposals']
-    assert len(proposals)==7 and sum(p['state']=='submitted' for p in proposals)==4
-    assert sum(p['state']=='planned' for p in proposals)==2 and sum(p['state']=='not-funded' for p in proposals)==1
+    assert len(proposals)==7 and sum(p['state']=='submitted' for p in proposals)==6
+    assert sum(p['state']=='planned' for p in proposals)==1 and sum(p['state']=='not-funded' for p in proposals)==0
     for p in proposals:
         name=p.get('page','proposal-'+p['slug']+'.html');page=Soup((SITE/name).read_text(),'html.parser')
         assert p['status'] in page.main.get_text(),name
         assert p['programme'] in page.main.get_text(),name
     robot=Soup((SITE/'project-robot-virtual-agent.html').read_text(),'html.parser')
-    assert 'Proposal · no funding award' in robot.main.get_text()
+    assert 'Submitted · decision pending' in robot.main.get_text()
     assert '2026–2029' not in robot.main.get_text()
     people=Soup((SITE/'team.html').read_text(),'html.parser')
     order=[x.get('id') for x in people.select('main > section[id]')]
@@ -59,6 +59,6 @@ def main():
         assert any(r['url']==key for r in records),key
     if (SITE/'quality-report.json').is_file():
         q=json.loads((SITE/'quality-report.json').read_text());q['release']='3.2';q['search_records']=len(records);q['checks']+=['3501 excluded from awarded funding and public CV funded section','submitted vs planned proposal classification','collaborators precede graduate researchers','private source identifiers excluded from published content'];(SITE/'quality-report.json').write_text(json.dumps(q,indent=2))
-    print('EDITORIAL STATUS GATE: 2 other supported + 1 completed; 4 submitted, 2 planned and 1 non-funded proposal; people order and privacy checks passed.')
+    print('EDITORIAL STATUS GATE: 2 other supported + 1 completed; 6 submitted, 1 planned proposal; people order and privacy checks passed.')
 
 if __name__=='__main__':main()

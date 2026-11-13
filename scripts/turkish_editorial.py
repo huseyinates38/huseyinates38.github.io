@@ -79,7 +79,7 @@ REPL={
  'Burada yeni bir araştırma bulgusu ileri sürülmemektedir.':'',
  'Ölçme aracı uyarlaması ve pilot hazırlığı sürüyor. Çalışmaya katılım, destek kararı alınmasından ayrıdır.':'Ölçme aracının farklı dillere uyarlanması ve pilot araştırma hazırlıkları sürmektedir.',
  'Yayımlanan çıktılar erişime açıldığında bağlantı verilecek. Raporlanmamış sonuç veya tamamlanmış saha çalışması varsayılmaz.':'Çalışmanın yayımlanacak çıktıları ve materyalleri, erişime açıldıkça bu sayfada paylaşılacaktır.',
- 'Dört sunulmuş başvuru, iki planlanan araştırma çalışması ve desteklenmeyen bir TÜBİTAK 3501 başvurusu ayrı başvuru kayıtlarında yer almaktadır.':'Başvurusu yapılmış dört öneri, hazırlığı süren iki çalışma ve desteklenmeyen TÜBİTAK 3501 önerisi ayrı ayrı listelenmektedir.',
+ 'Altı sunulmuş başvuru ve geliştirilmekte olan bir araştırma önerisi ayrı başvuru kayıtlarında yer almaktadır.':'Başvurusu yapılmış altı öneri ile hazırlığı süren bir araştırma çalışması ayrı ayrı listelenmektedir.',
  'Sınıf içi ve çok merkezli müdahaleler, tekrarlı gözlemler ve gecikmeli sonuç ölçümleri.':'Sınıf içi ve çok merkezli uygulamalar, tekrarlı gözlemler ve gecikmeli sonuç ölçümleri.',
  'Açık bir sorudan başlayın.':'Araştırma materyallerine erişim',
  'Araştırmayı izlenebilir kılmak.':'Araştırma yöntemleri ve açık bilim',
