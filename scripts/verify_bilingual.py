@@ -9,7 +9,7 @@ from verify_site import validate
 def main():
   validate()
   m=json.loads((SITE/'deployment.json').read_text())
-  assert m['version']=='4.1' and m['languages']==['en','tr'],m
+  assert m['version']=='4.2' and m['languages']==['en','tr'],m
   assert m['language_pairs']==56 and m['page_count']==112,(m['language_pairs'],m['page_count'])
   paths=sorted(p.name for p in SITE.glob('*.html'))
   assert len(paths)==56
@@ -41,12 +41,24 @@ def main():
     assert len(count.select('article.pipeline-card'))==7
     status=Soup((SITE/loc/'project-robot-virtual-agent.html').read_text(),'html.parser').get_text(' ',strip=True)
     assert ('Not funded · application unsuccessful' if loc=='' else 'Desteklenmedi · başvuru kabul edilmedi') in status
+  for loc in ('','tr/'):
+    page=Soup((SITE/loc/'project-vr-stem-vietnam.html').read_text(),'html.parser').get_text(' ',strip=True)
+    assert ('Completed' if not loc else 'Tamamlandı') in page
+    assert '2026–2028' not in page,loc
+  from docx import Document
+  for name in ['Huseyin_Ates_Public_Academic_CV.docx','Huseyin_Ates_Akademik_Ozgecmis_TR.docx']:
+    cv=' '.join(p.text for p in Document(SITE/'downloads'/name).paragraphs)
+    assert 'EGT.A3.26.001' in cv and ('Completed' if 'Public' in name else 'Tamamlandı') in cv
+    assert '2026–2028 | KAEÜ BAP' not in cv
   for person in ('omid-noroozi','kazem-banihashem','elena-novak'):
     for loc in ('','tr/'):
       text=Soup((SITE/loc/('person-'+person+'.html')).read_text(),'html.parser').get_text(' ',strip=True)
       assert not any(x in text for x in ['declined a separate COST invitation','did not join the SciEpi-Feedback COST proposal','initial dates were unavailable','farklı bir COST davetini kabul etmedi','kurumsal kısıtlar nedeniyle SciEpi-Feedback','ilk tarihler uygun değildi'])
   pr=Soup((SITE/'projects.html').read_text(),'html.parser')
-  assert len(pr.select('#funded-projects .project-summary'))==3
+  assert len(pr.select('#funded-projects .project-summary'))==2
+  assert len(pr.select('#completed-projects .project-summary'))==1
+  assert pr.select_one('#completed-projects a[href="project-vr-stem-vietnam.html"]')
+  assert not pr.select_one('#funded-projects a[href="project-vr-stem-vietnam.html"]')
   assert '3501' not in pr.select_one('#funded-projects').get_text()
   for name in ['omid-noroozi','mohammadreza-farrokhnia','kazem-banihashem','elena-novak','guido-makransky','moritz-krell']:
     assert (SITE/('person-'+name+'.html')).is_file()
@@ -69,6 +81,6 @@ def main():
     assert any('moritz-krell' in item['url'] for item in records)
     assert any('tubitak-dfg' in item['url'] for item in records)
     assert all((SITE/loc/item['url']).is_file() for item in records if item['url'].endswith('.html'))
-  print('BILINGUAL RELEASE VALIDATED:',len(paths),'EN/TR pairs; 3 supported, 4 submitted, 2 planned, 1 non-funded; privacy and local navigation checked.')
+  print('BILINGUAL RELEASE VALIDATED:',len(paths),'EN/TR pairs; 2 other supported + 1 completed, 4 submitted, 2 planned, 1 non-funded; privacy and local navigation checked.')
 
 if __name__=='__main__':main()

@@ -4,7 +4,7 @@ Website: https://huseyinates38.github.io/
 
 ## Editorial release 3.2
 
-Research collaborators and editorial connections appear above current graduate researchers and alumni. The current record separates three supported projects, six submitted/planned/non-funded proposals, an ongoing Türkiye–Colombia study and two distinct editorial initiatives.
+Research collaborators and editorial connections appear above current graduate researchers and alumni. The current record separates two other supported projects and one completed BAP project, seven submitted/planned/non-funded proposal records, an ongoing Türkiye–Colombia study and two distinct editorial initiatives.
 
 **Important correction:** TÜBİTAK 3501 is a proposal without a funding award. It is not included in supported research or the funded-project section of the public CV. ETHE is a collection proposal in development, not an open call or a confirmed Editorial Board appointment. TÜBİTAK 2221 is planned; the separate 2219 proposal with Naomi Winstone is submitted.
 

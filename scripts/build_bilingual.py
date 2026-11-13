@@ -312,7 +312,7 @@ def main():
   for name,s in localized[lang].items():(out/name).write_text(str(s),encoding='utf-8')
  for name in ['bilingual.css','bilingual.js']:(SITE/'assets'/name).write_bytes((ROOT/'assets'/name).read_bytes())
  manifest=json.loads((SITE/'deployment.json').read_text());manifest.pop('files',None)
- manifest.update(version='4.1',languages=['en','tr'],language_pairs=len(docs),page_count=len(docs)*2,pages=sorted(p.relative_to(SITE).as_posix() for p in SITE.rglob('*.html')))
+ manifest.update(version='4.2',languages=['en','tr'],language_pairs=len(docs),page_count=len(docs)*2,pages=sorted(p.relative_to(SITE).as_posix() for p in SITE.rglob('*.html')))
  (SITE/'deployment.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
  urls=[]
  for name in sorted(docs):
@@ -323,7 +323,7 @@ def main():
    urls.append('<url><loc>'+url+'</loc>'+alternate+'<lastmod>'+DATE+'</lastmod></url>')
  (SITE/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'+''.join(urls)+'</urlset>')
  (SITE/'robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: '+BASE+'sitemap.xml\n')
- (SITE/'quality-report.json').write_text(json.dumps({'release':'4.1','languages':['en','tr'],'language_pairs':len(docs),'translation_units':len(mapping),'portrait_files_added':0,'content_statuses':'Existing supported / submitted / planned / non-funded distinctions preserved.','downloads':'Preserved; original English and new Turkish public CV available in PDF and DOCX.','limits':'Automated testing is not independent WCAG certification or research fact verification.'},indent=2))
+ (SITE/'quality-report.json').write_text(json.dumps({'release':'4.2','languages':['en','tr'],'language_pairs':len(docs),'translation_units':len(mapping),'portrait_files_added':0,'content_statuses':'Existing supported / submitted / planned / non-funded distinctions preserved.','downloads':'Preserved; original English and new Turkish public CV available in PDF and DOCX.','limits':'Automated testing is not independent WCAG certification or research fact verification.'},indent=2))
  print(f'Built {len(docs)} EN/TR page pairs. Existing publication citations and downloads retained; no portrait included.')
 
 if __name__=='__main__':
