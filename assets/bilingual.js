@@ -35,11 +35,15 @@
     cv: ['cv','ozgecmis','curriculum vitae'],
     dfg: ['dfg','tubitak dfg','moritz']
   };
-  const contains = (hay, term) => term.length < 3 ? new RegExp('(^|[^a-z0-9])'+term+'([^a-z0-9]|$)').test(hay) : hay.includes(term);
+  const contains = (hay, term) => {
+    // User input is always literal. Only validated alphabetic abbreviations enter this expression.
+    if (/^[a-z]{1,2}$/.test(term)) return new RegExp('(^|[^a-z0-9])'+term+'([^a-z0-9]|$)').test(hay);
+    return hay.includes(term);
+  };
   const matches = (hay, query) => {
     const n=norm(query).trim(); if(!n) return true;
     if(hay.includes(n)) return true;
-    return n.split(/\s+/).every(word => (aliases[word] || [word]).some(v=>contains(hay,norm(v))));
+    return n.split(/\s+/).every(word => (Object.hasOwn(aliases, word) ? aliases[word] : [word]).some(v=>contains(hay,norm(v))));
   };
   const getState = () => new URLSearchParams(location.hash.includes('=') ? location.hash.substring(1) : '');
   const saveState = state => {

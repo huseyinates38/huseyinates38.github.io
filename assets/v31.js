@@ -24,7 +24,7 @@
     const value = normalize(query).trim();
     if (!value) return true;
     if (value.length > 2 && text.includes(value)) return true;
-    return value.split(/\s+/).every(word => (aliases[word] || [word]).some(term => contains(text, term)));
+    return value.split(/\s+/).every(word => (Object.hasOwn(aliases, word) ? aliases[word] : [word]).some(term => contains(text, term)));
   }
   function readState() {
     return new URLSearchParams(location.hash.slice(1).includes('=') ? location.hash.slice(1) : '');

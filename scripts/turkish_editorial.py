@@ -10,6 +10,8 @@ import re
 
 # Verified, meaning-preserving adjustments to artificial/overly literal phrasing.
 REPL={
+ 'iş birliklerindan':'iş birliklerinden',
+ 'iş birlikleridır':'iş birlikleridir',
  'İnsan Odaklı Yapay Zekâ ve Geri Bildirim Tasarımı':'İnsan odaklı yapay zekâ ve geri bildirim tasarımı',
  'Bilimsel Akıl Yürütme ve Öz Düzenlemeli Öğrenme':'Bilimsel akıl yürütme ve öz düzenlemeli öğrenme',
  'STEM Eğitiminde Yeni Teknolojiler':'STEM eğitiminde yeni teknolojiler',

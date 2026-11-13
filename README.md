@@ -68,3 +68,10 @@ Pushes to main build, validate and browser-test the site before GitHub Pages dep
 The homepage now includes an original **conceptual** illustration, linked thematic research graphics, confirmed conference/grant/resource highlights, and a visible entry point to the existing interactive feedback comparison. Research pages contain linked vector illustrations. All content is bilingual. No personal photographs, fabricated study instruments, unverified project outcomes or live-news feed are included.
 
 The GitHub Pages workflow runs `scripts/enhance_visuals.py` **after** bilingual and team-directory generation. The illustrations are owned by this repository under `assets/visuals/`; the hero imagery is conceptual and not a photograph of an empirical research project.
+
+
+## Release 5.1 — bilingual editorial audit (13 November 2026)
+
+This release preserves the shared visual system while synchronizing submitted 2221 and 3501 applications across both languages and public CVs. It fixes literal search handling, stale bilingual copy, profile-stage labels, mobile search access, localized CV footer links, final-page metadata, and the shared fictional plant scenario. The final `scripts/apply_audit_fixes.py` pass must run after the visual-system builder.
+
+Regression gates: `scripts/verify_audit.py` (HTML, PDF, Word and scenario consistency) and `tests/audit_browser.py` (punctuation-safe search and mobile access). No project-specific responsibilities, thesis titles, funding outcomes or dates were inferred beyond the existing supplied records.

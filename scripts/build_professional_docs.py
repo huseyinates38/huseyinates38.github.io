@@ -33,7 +33,7 @@ CV = [
  [('title','Hüseyin Ateş, PhD'),('subtitle','Associate Professor of Science Education'),
   ('p','Department of Science Education, Faculty of Education | Kırşehir Ahi Evran University, Türkiye'),
   ('small','huseyin.ates@ahievran.edu.tr | ORCID 0000-0003-0031-8994'),
-  ('small',BASE+' | Public academic CV · 12 November 2026'),
+  ('small',BASE+' | Public academic CV · 13 November 2026'),
   ('h','Research profile'),
   ('p','Research on human-centered artificial intelligence, scientific reasoning and self-regulated learning, including feedback design, teachers’ technology adoption and experimental instructional research. Principal supervision of master’s and doctoral research.'),
   ('h','Academic and administrative appointments'),
@@ -92,11 +92,11 @@ def new_doc(title,lang):
         st.paragraph_format.space_before=Pt(10 if name=='Heading 1' else 0)
         st.paragraph_format.space_after=Pt(5)
     d.core_properties.title=title;d.core_properties.author='Hüseyin Ateş'
-    d.core_properties.subject='Public academic resource; 12 November 2026'
+    d.core_properties.subject='Public academic resource; 13 November 2026'
     d.core_properties.language='tr-TR' if lang=='tr' else 'en-GB'
     header=sec.header.paragraphs[0]; header.text='HÜSEYİN ATEŞ  /  ARAŞTIRMA VE ÖĞRENME' if lang=='tr' else 'HÜSEYİN ATEŞ  /  RESEARCH & LEARNING'
     header.style=d.styles['Caption']; header.runs[0].font.size=Pt(8)
-    footer=sec.footer.paragraphs[0];footer.text='huseyinates38.github.io   |   '+('13 Kasım 2026' if lang=='tr' else '12 Nov 2026')+'   |   '
+    footer=sec.footer.paragraphs[0];footer.text='huseyinates38.github.io   |   '+('13 Kasım 2026' if lang=='tr' else '13 Nov 2026')+'   |   '
     field=OxmlElement('w:fldSimple');field.set(qn('w:instr'),'PAGE');footer._p.append(field)
     footer.runs[0].font.size=Pt(8)
     return d
@@ -106,7 +106,7 @@ def pdf_footer(canvas,doc):
     canvas.saveState();canvas.setStrokeColor(HexColor('#D4E0DE'))
     canvas.line(45,40,A4[0]-45,40);canvas.setFont('SiteSans',7.5)
     canvas.setFillColor(HexColor('#536A72'))
-    canvas.drawString(45,27,'huseyinates38.github.io  |  12 November 2026')
+    canvas.drawString(45,27,'huseyinates38.github.io  |  13 November 2026')
     canvas.drawRightString(A4[0]-45,27,str(doc.page));canvas.restoreState()
 
 

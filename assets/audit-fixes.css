@@ -1,0 +1,17 @@
+/* Content-audit 5.1: preserve the established visual system. */
+.design-v49 .showcase-news-card .showcase-card-img img {object-fit:contain!important;object-position:center!important;background:#e8f3fa;}
+.mobile-search-link{display:none!important;}
+.relationship-stage{display:inline-block;max-width:100%;margin:.6rem 0 .85rem!important;padding:.42rem .65rem;border:1px solid #a6c4da;border-radius:8px;background:#eaf4fc;color:#173d60!important;font:600 12px/1.5 system-ui,sans-serif!important;letter-spacing:0!important;text-transform:none!important;}
+.design-v49 .affiliation-kind{font-size:12px!important;line-height:1.45!important;}
+.design-v49 .person-card .micro-label{font-size:12px!important;line-height:1.5!important;}
+.profile-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+.profile-facts>div{padding:15px 18px;border:1px solid #c7d9e8;border-radius:10px;background:#f6fbff;}
+.profile-facts dt{font-size:12px;font-weight:700;color:#315a70;margin-bottom:6px;}
+.profile-facts dd{margin:0;font-size:14px;line-height:1.65;overflow-wrap:anywhere;}
+#people-no-results{padding:16px 18px;border-left:3px solid #167589;background:#f0f8fc;}
+#people-no-results[hidden]{display:none;}
+.funding-stage small{display:block;font-size:12px;line-height:1.5;margin-top:6px;}
+.conference-date-place{font-weight:600;}
+.academic-stats-three{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+@media(max-width:1080px){#main-navigation.open .mobile-search-link{display:block!important;border-top:1px solid #cbdde8;margin-top:6px;padding-top:12px;}}
+@media(max-width:680px){.profile-facts{grid-template-columns:1fr;}.academic-stats-three{grid-template-columns:1fr!important;}.footer-links{gap:12px;}.footer-links a{line-height:1.6;}}

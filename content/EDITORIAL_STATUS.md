@@ -1,4 +1,4 @@
-# Current editorial record — 12 November 2026
+# Current editorial record — 13 November 2026
 
 Version 3.2 supersedes the earlier funding classification in preserved v3.1 input templates and historical notes. Only the final validated `_site` output is published.
 
@@ -8,7 +8,7 @@ The owner confirmed a renewed TÜBİTAK 3501 submission on 13 November 2026. The
 
 - Supported projects: TÜBİTAK 1002-A 226K999; KAEÜ BAP EGT.A3.26.001; KAEÜ BAP EGT.A3.25.001, based on the supplied CV.
 - Submitted proposals, decisions pending: TÜBİTAK 2219 (proposed host Naomi Winstone, Surrey); COST SciEpi-Feedback; ERC RECLAIM; AÜB International BAP (with Ahmet Sami Konca).
-- Planned application: TÜBİTAK 2221 visiting-researcher activity. Invitation discussions do not establish approved visits or appointments.
+- Submitted application, decision pending: TÜBİTAK 2221 visiting-researcher activity. Funding and visit arrangements remain separate decisions.
 - Resubmitted proposal, decision pending: TÜBİTAK 3501 robot–virtual-agent comparison.
 - Ongoing collaboration: Türkiye–Colombia GenAI literacy study, at instrument-adaptation and pilot-preparation stage. Not listed as an external grant award.
 - ETHE collection proposal: in development, subject to journal approval. Not an open call, approved special issue or Editorial Board appointment.

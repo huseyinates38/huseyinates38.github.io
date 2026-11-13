@@ -9,7 +9,7 @@ from verify_site import validate
 def main():
   validate()
   m=json.loads((SITE/'deployment.json').read_text())
-  assert m['version']=='4.9' and m['languages']==['en','tr'],m
+  assert m['version']=='5.1' and m['languages']==['en','tr'],m
   assert m['language_pairs']==69 and m['page_count']==138,(m['language_pairs'],m['page_count'])
   paths=sorted(p.name for p in SITE.glob('*.html'))
   assert len(paths)==69
@@ -22,7 +22,7 @@ def main():
     assert tr.select_one('link[hreflang="en"]')['href'].endswith('/'+name),name
     assert en.select_one('.site-language a[lang="tr"]')['href']=='tr/'+name,name
     assert tr.select_one('.site-language a[lang="en"]')['href']=='../'+name,name
-    assert len(en.select('nav#main-navigation a'))==len(tr.select('nav#main-navigation a'))==7,name
+    assert len(en.select('nav#main-navigation a:not(.mobile-search-link)'))==len(tr.select('nav#main-navigation a:not(.mobile-search-link)'))==7,name
     assert (SITE/'tr'/name).stat().st_size>1000,name
     assert not en.select('img[src*="portrait"],img[src*="IMG_"],img[src*="photo"]'),name
     assert not tr.select('img[src*="portrait"],img[src*="IMG_"],img[src*="photo"]'),name

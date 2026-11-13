@@ -191,7 +191,7 @@ def sync_cv():
  for page in en:
   for i,(k,t) in enumerate(page):
    if t.startswith('Ongoing PhD:'):page[i]=(k,'Ongoing PhD: Abdulkadir Aydın (expected 2028). Ongoing MSc: Tuğçe Ünsal and Nisa Gül (expected 2027); İrem Sude Köksal and Furkan Ensar Ateş (expected 2028).')
-   elif 'This public selection excludes manuscripts under review and proposals awaiting decisions.' in t:page[i]=(k,'Unpublished manuscripts are omitted. Submitted, planned and unsuccessful applications are listed separately, not as funding awards.')
+   elif 'This public selection excludes manuscripts under review and proposals awaiting decisions.' in t:page[i]=(k,'Unpublished manuscripts are omitted. Submitted and planned applications are listed separately from funding awards.')
    elif 'Public academic CV ·' in t:page[i]=(k,t.replace('12 November 2026','13 November 2026'))
  tr=json.loads((ROOT/'content/cv-tr.json').read_text())
  for page in tr:
