@@ -52,11 +52,13 @@ jobs:
         run: |
           python scripts/verify_bilingual.py
           python scripts/verify_audit.py
+          python scripts/verify_profile_refinement.py
       - name: Test mobile, desktop and interactive controls in Chromium
         run: |
           python tests/bilingual_browser.py
           python tests/design_browser.py
           python tests/audit_browser.py
+          python tests/network_browser.py
       - name: Retain browser and quality reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -67,6 +69,9 @@ jobs:
             design-browser-report.json
             audit-browser-report.json
             audit-report.json
+            profile-refinement-report.json
+            network-browser-report.json
+            profile-previews/
             design-previews/
             _site/quality-report.json
             overflow-smoke.png
@@ -89,6 +94,6 @@ jobs:
         run: python scripts/verify_site.py --live
       - name: Record release
         run: |
-          echo '## Academic website 5.1 — bilingual content and search audit fixes' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Academic website 5.2 — precise profile fields, bilingual copy and network search' >> "$GITHUB_STEP_SUMMARY"
           echo 'Shared visual system on all pages, independent EN/TR hero images, five photo-backed highlights, preserved research records and responsive controls.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Browser and live-file tests passed. These tests are not WCAG certification or academic fact verification.' >> "$GITHUB_STEP_SUMMARY"

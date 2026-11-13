@@ -9,7 +9,7 @@ from verify_site import validate
 def main():
   validate()
   m=json.loads((SITE/'deployment.json').read_text())
-  assert m['version']=='5.1' and m['languages']==['en','tr'],m
+  assert m['version']=='5.2' and m['languages']==['en','tr'],m
   assert m['language_pairs']==69 and m['page_count']==138,(m['language_pairs'],m['page_count'])
   paths=sorted(p.name for p in SITE.glob('*.html'))
   assert len(paths)==69

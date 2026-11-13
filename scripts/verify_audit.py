@@ -15,7 +15,7 @@ def main():
   pre='tr/' if lang=='tr' else '';tr=lang=='tr'
   docs={p.name:doc(pre+p.name) for p in (SITE/pre).glob('*.html')}
   for name,s in docs.items():
-   assert s.body.get('data-content-release')=='5.1',(pre,name)
+   assert s.body.get('data-content-release')=='5.2',(pre,name)
    assert s.select_one('nav#main-navigation a.mobile-search-link[href="search.html"]'),(pre,name)
    if tr:assert s.select_one('.footer-links a[href="../downloads/Huseyin_Ates_Akademik_Ozgecmis_TR.pdf"]'),name
    else:assert s.select_one('.footer-links a[href="downloads/Huseyin_Ates_Public_Academic_CV.pdf"]'),name
@@ -31,7 +31,9 @@ def main():
    record=next(r for r in records if r['url']==name)
    assert record['title']==docs[name].main.h1.get_text(' ',strip=True),(lang,name)
   cards=docs['team.html'].select('.person-card[data-person]');assert len(cards)==31
-  assert all(c.select_one('.relationship-stage') for c in cards)
+  from refine_profile_copy import NO_STAGE
+  assert all(c.select_one('.relationship-stage') for c in cards if c['data-person'] not in NO_STAGE)
+  assert all(not c.select_one('.relationship-stage') for c in cards if c['data-person'] in NO_STAGE and not c.find_parent(id='alumni'))
   assert docs['team.html'].select_one('#people-no-results')
   for slug in ['kubra-solmaz','rabia-ates','fatma-gazioglu','ipek-oz']:
    t=docs['person-'+slug+'.html'].main.get_text()
@@ -77,6 +79,6 @@ def main():
  assert 'A: observed growth = 2.0 cm' in result and 'B: observed growth = 5.0 cm' in result
  with zipfile.ZipFile(SITE/'downloads/synthetic-methods-example.zip') as z:assert z.read('fictional-plant-data.csv')==(SITE/'downloads/fictional-plant-data.csv').read_bytes()
  checks.append('Single fictional plant scenario in Explorer, CSVs, Python output and ZIP')
- report={'release':'5.1','html_pages':len(paths),'profile_pages':60,'checks':checks,'result':'passed','limits':'No additional project-specific task assignments inferred for researchers whose source roster only states a role.'}
+ report={'release':'5.2','html_pages':len(paths),'profile_pages':60,'checks':checks,'result':'passed','limits':'No additional project-specific task assignments inferred for researchers whose source roster only states a role.'}
  (ROOT/'audit-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2));print(json.dumps(report,ensure_ascii=False,indent=2))
 if __name__=='__main__':main()

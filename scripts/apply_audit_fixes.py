@@ -9,7 +9,8 @@ from html import escape
 import hashlib,json,re,shutil
 from bs4 import BeautifulSoup as Soup
 from build_bilingual import metadata,build_index
-ROOT=Path(__file__).resolve().parents[1];SITE=ROOT/'_site';VERSION='5.1'
+from refine_profile_copy import refine
+ROOT=Path(__file__).resolve().parents[1];SITE=ROOT/'_site';VERSION='5.2'
 def pair(tr,en,turkish):return turkish if tr else en
 def frag(x):return Soup(x,'html.parser')
 def text(node,value):
@@ -261,6 +262,7 @@ def main():
    common(s,name,tr);cleanup(s,name,tr)
    if name.startswith('person-'):person(s,name[7:-5],tr)
    if name in ['team.html','research-network.html']:team(s,tr) if name=='team.html' else replace_text(s,[('iş birliklerindan','iş birliklerinden'),('iş birlikleridır','iş birlikleridir')])
+   refine(s,name,tr)
    # Titles and sharing metadata are derived from the final, visible content, in both languages.
    metadata(s,name,lang)
    for old in s.select('link[href*="audit-fixes.css"]'):old.decompose()
@@ -274,5 +276,5 @@ def main():
   all_docs[lang]=docs
  for filename in ['deployment.json','quality-report.json']:
   path=SITE/filename;j=json.loads(path.read_text());j['version' if filename=='deployment.json' else 'release']=VERSION;j['content_review_date']='2026-11-13';j['editorial_audit']='application/CV consistency, bilingual parity, literal search, profile stage labels, mobile access, metadata and teaching-scenario consistency';j.pop('files',None);path.write_text(json.dumps(j,ensure_ascii=False,indent=2),encoding='utf-8')
- print('AUDIT 5.1: final bilingual copy, shared metadata/search, profile stages and accessible mobile search applied.')
+ print('AUDIT 5.2: final bilingual copy, shared metadata/search, profile stages and accessible mobile search applied.')
 if __name__=='__main__':main()
