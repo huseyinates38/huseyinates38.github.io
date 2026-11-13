@@ -1,0 +1,66 @@
+name: Review team and institution release
+on:
+  push:
+    branches: [team-institutions-v43]
+    paths: [.github/workflows/review-team-release.yml]
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Integrate versioned builder and regression gates
+        shell: python
+        run: |
+          from pathlib import Path
+          req=Path('requirements-site.txt');s=req.read_text()
+          if 'CairoSVG==' not in s:s+='\nCairoSVG==2.9.1\n'
+          req.write_text(s)
+          p=Path('scripts/verify_bilingual.py');s=p.read_text()
+          s=s.replace("m['version']=='4.2'","m['version']=='4.3'").replace("m['language_pairs']==56","m['language_pairs']==68").replace("m['page_count']==112","m['page_count']==136").replace('len(paths)==56','len(paths)==68');p.write_text(s)
+          p=Path('tests/bilingual_browser.py');s=p.read_text().replace("'release':'4.0'","'release':'4.3'").replace("'release':'4.1'","'release':'4.3'").replace("'release':'4.2'","'release':'4.3'").replace('len(pages)==112','len(pages)==136');p.write_text(s)
+          p=Path('.github/workflows/pages.yml');s=p.read_text()
+          if 'python scripts/build_team_directory.py' not in s:s=s.replace('          python scripts/build_bilingual.py','          python scripts/build_bilingual.py\n          python scripts/build_team_directory.py')
+          s=s.replace('run: python tests/bilingual_browser.py','run: |\n          python tests/bilingual_browser.py\n          python tests/team_directory_browser.py')
+          s=s.replace('            browser-report.json','            browser-report.json\n            team-directory-report.json')
+          s=s.replace('4.1 — editorial corrections and Turkish CV','4.3 — people, institutions and research network')
+          s=s.replace('Corrected unsuccessful 3501 status, reconciled seven proposal entries, refined collaborator privacy, and added Turkish academic CV in PDF/DOCX.','Updated approved team roles, official institutional marks, two 2028 supervisees and bilingual source-derived network posters; existing project statuses preserved.')
+          p.write_text(s)
+      - name: Save integration to the review branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add requirements-site.txt scripts/verify_bilingual.py tests/bilingual_browser.py .github/workflows/pages.yml
+          git diff --cached --quiet || git commit -m 'Integrate team-directory build and 136-page regression gates'
+          git push origin HEAD:team-institutions-v43
+      - name: Install build and browser dependencies
+        run: |
+          python -m pip install -r requirements-site.txt -r requirements-browser.txt
+          python -m playwright install --with-deps chromium
+      - name: Build and validate bilingual academic site
+        run: |
+          python scripts/release_editorial.py
+          python scripts/build_bilingual.py
+          python scripts/build_team_directory.py
+          python scripts/verify_bilingual.py
+          python tests/bilingual_browser.py
+          python tests/team_directory_browser.py
+          python scripts/verify_site.py
+      - name: Assemble source backup
+        if: always()
+        run: git archive --format=zip --prefix=source/ HEAD > team-v43-source.zip
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: team-v43-review
+          path: |
+            _site
+            team-v43-source.zip
+            browser-report.json
+            team-directory-report.json
+          include-hidden-files: true
+          retention-days: 7
