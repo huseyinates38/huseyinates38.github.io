@@ -30,7 +30,7 @@ def clean(s,name):
   hero.append(frag(links([('Projects & proposals','projects.html'),('Editorial initiatives','editorial.html'),('Methods & access','open-research.html')])) )
  if name=='projects.html':
   n=s.select_one('#proposal-pipeline .container')
-  if n:set_html(n,'<h2>Submitted, planned &amp; <em>unsuccessful applications.</em></h2><p class="lead">Four submitted applications, two planned research activities and one unsuccessful TÜBİTAK 3501 application appear in the separate proposal register.</p>'+links([('Full proposal register','proposals.html')]))
+  if n:set_html(n,'<h2>Submitted, planned &amp; <em>unsuccessful applications.</em></h2><p class="lead">Five submitted applications, one research concept in development and one unsuccessful TÜBİTAK 3501 application appear in the separate proposal register.</p>'+links([('Full proposal register','proposals.html')]))
  if name=='team.html':
   for n in s.select('.team-intro'):n.decompose()
   n=s.select_one('.pagehero p.lead')

@@ -1,3 +1,7 @@
+## Version 4.8
+
+The Turkish and English homepages now use the owner-approved full-width illustrated hero, five research topics, five editorial cards, functional Tally QR, and factual counters. Vietnam-related STEM and circulatory-system VR BAP projects are both listed as completed. TÜBİTAK 2221 is a submitted application; TÜBİTAK 3501 was submitted but not funded. The build uses `scripts/apply_v48.py` after the bilingual directory/visual steps.
+
 # Hüseyin Ateş — Academic Research Website
 
 Website: https://huseyinates38.github.io/

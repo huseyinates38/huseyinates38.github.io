@@ -9,7 +9,7 @@ from verify_site import validate
 def main():
   validate()
   m=json.loads((SITE/'deployment.json').read_text())
-  assert m['version']=='4.7' and m['languages']==['en','tr'],m
+  assert m['version']=='4.8' and m['languages']==['en','tr'],m
   assert m['language_pairs']==69 and m['page_count']==138,(m['language_pairs'],m['page_count'])
   paths=sorted(p.name for p in SITE.glob('*.html'))
   assert len(paths)==69
@@ -27,8 +27,8 @@ def main():
     assert not en.select('img[src*="portrait"],img[src*="IMG_"],img[src*="photo"]'),name
     assert not tr.select('img[src*="portrait"],img[src*="IMG_"],img[src*="photo"]'),name
   p=json.loads((ROOT/'content/research-pipeline.json').read_text())['proposals']
-  assert len(p)==7 and sum(x['state']=='submitted' for x in p)==4
-  assert sum(x['state']=='planned' for x in p)==2 and sum(x['state']=='not-funded' for x in p)==1
+  assert len(p)==7 and sum(x['state']=='submitted' for x in p)==5
+  assert sum(x['state']=='planned' for x in p)==1 and sum(x['state']=='not-funded' for x in p)==1
   assert not any(x['slug']=='tubitak-dfg-reasoning' and x['state']!='planned' for x in p)
   assert next(x for x in p if x['slug']=='robot-virtual-agent')['status']=='Not funded · application unsuccessful'
   assert (SITE/'downloads/Huseyin_Ates_Akademik_Ozgecmis_TR.pdf').stat().st_size>20000
@@ -55,9 +55,10 @@ def main():
       text=Soup((SITE/loc/('person-'+person+'.html')).read_text(),'html.parser').get_text(' ',strip=True)
       assert not any(x in text for x in ['declined a separate COST invitation','did not join the SciEpi-Feedback COST proposal','initial dates were unavailable','farklı bir COST davetini kabul etmedi','kurumsal kısıtlar nedeniyle SciEpi-Feedback','ilk tarihler uygun değildi'])
   pr=Soup((SITE/'projects.html').read_text(),'html.parser')
-  assert len(pr.select('#funded-projects .project-summary'))==2
-  assert len(pr.select('#completed-projects .project-summary'))==1
+  assert len(pr.select('#funded-projects .project-summary'))==1
+  assert len(pr.select('#completed-projects .project-summary'))==2
   assert pr.select_one('#completed-projects a[href="project-vr-stem-vietnam.html"]')
+  assert pr.select_one('#completed-projects a[href="project-vr-circulatory-system.html"]')
   assert not pr.select_one('#funded-projects a[href="project-vr-stem-vietnam.html"]')
   assert '3501' not in pr.select_one('#funded-projects').get_text()
   for name in ['omid-noroozi','mohammadreza-farrokhnia','kazem-banihashem','elena-novak','guido-makransky','moritz-krell']:
@@ -96,10 +97,10 @@ def main():
   # Verify that editorial visuals exist in both language editions and remain explicitly conceptual.
   for locale in ('','tr/'):
     homepage=Soup((SITE/locale/'index.html').read_text(encoding='utf-8'),'html.parser')
-    assert homepage.select_one('.visual-hero-figure img[src$="assets/visuals/research-hero.webp"]')
-    assert len(homepage.select('.visual-topic'))==3 and len(homepage.select('.visual-update'))==3
+    assert homepage.select_one('.showcase-hero')
+    assert len(homepage.select('.showcase-topic'))==5 and len(homepage.select('.showcase-news-card'))==5
     assert homepage.select_one('a[href="https://tally.so/r/Eq51Jr"]')
-    assert 'Temsili illüstrasyon' in homepage.get_text(' ',strip=True) if locale else 'Conceptual illustration' in homepage.get_text(' ',strip=True)
+    assert homepage.select_one('.showcase-join-qr img[src$="research-group-interest.png"]')
     research=Soup((SITE/locale/'research.html').read_text(encoding='utf-8'),'html.parser')
     assert len(research.select('.visual-research-gallery-grid a'))==3
     projects=Soup((SITE/locale/'projects.html').read_text(encoding='utf-8'),'html.parser')
@@ -142,6 +143,6 @@ def main():
     assert any('moritz-krell' in item['url'] for item in records)
     assert any('tubitak-dfg' in item['url'] for item in records)
     assert all((SITE/loc/item['url']).is_file() for item in records if item['url'].endswith('.html'))
-  print('BILINGUAL RELEASE VALIDATED:',len(paths),'EN/TR pairs; 2 other supported + 1 completed, 4 submitted, 2 planned, 1 non-funded; privacy and local navigation checked.')
+  print('BILINGUAL RELEASE VALIDATED:',len(paths),'EN/TR pairs; 1 supported + 2 completed BAP, 5 submitted, 1 planned, 1 non-funded; privacy and navigation checked.')
 
 if __name__=='__main__':main()

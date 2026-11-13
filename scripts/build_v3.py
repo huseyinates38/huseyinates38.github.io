@@ -125,8 +125,8 @@ def publication_tools():
 PROJECTS=[
  ('project-robot-virtual-agent.html','3501','2026–2029','Physical agent vs. virtual agent',['Physical humanoid robot','Screen-based virtual agent','Active control condition'],'Mixed-methods comparison in middle-school environmental learning. These are the comparison conditions stated in the project title, not a randomisation or recruitment diagram.'),
  ('project-space-debris.html','1002-A','2026–2027','Space-debris scaffolding',['Scaffolding approach A','Classroom problem-solving context','Scaffolding approach B'],'A classroom pilot comparing two scaffolding approaches. The labels A and B are explanatory placeholders; intervention specifications are not published here.'),
- ('project-vr-stem-vietnam.html','BAP','Completed','VR-supported STEM instruction',['VR-supported STEM in Türkiye','Achievement, attitudes, acceptance','Adaptability to Vietnam'],'The principal investigator reports this project as completed. The diagram describes the research scope, not findings or a verified classroom intervention in Vietnam.'),
- ('project-vr-circulatory-system.html','BAP','2025–2026','Circulatory-system learning',['Virtual-reality science learning','Circulatory-system unit','Achievement, self-efficacy, engagement'],'A conceptual overview of the learning setting and outcomes named in the project. No outcomes or completion status are inferred from the calendar dates.')]
+ ('project-vr-stem-vietnam.html','BAP','Completed','VR-supported STEM instruction',['VR-supported STEM in Türkiye','Achievement, attitudes, acceptance','Adaptability to Vietnam'],'Scope of the completed VR-supported STEM research project.'),
+ ('project-vr-circulatory-system.html','BAP','Completed','Circulatory-system learning',['Virtual-reality science learning','Circulatory-system unit','Achievement, self-efficacy, engagement'],'Scope of the completed VR-supported science learning project.')]
 
 def projects():
  s=load('projects.html')

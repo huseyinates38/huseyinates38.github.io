@@ -10,7 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]; SITE=ROOT/'_site'
 
 def main():
   offline='--offline' in sys.argv
-  report={'release':'4.7','widths':[360,768,1440],'pages':0,'layout_checks':0,'interactions':[],'errors':[]}
+  report={'release':'4.8','widths':[360,768,1440],'pages':0,'layout_checks':0,'interactions':[],'errors':[]}
   class Quiet(http.server.SimpleHTTPRequestHandler):
     def log_message(self,*args):pass
   server=None
@@ -58,7 +58,7 @@ def main():
       load('index.html'); assert page.locator('a[data-site-lang="tr"]').get_attribute('href')=='tr/index.html'
       if not offline:page.locator('a[data-site-lang="tr"]').click()
       else:load('tr/index.html')
-      assert 'Yapay zekâ destekli öğrenme' in page.locator('h1').inner_text()
+      assert 'İnsan, teknoloji' in page.locator('h1').inner_text()
       page.locator('.menu-button').click();assert page.locator('#main-navigation').is_visible();page.keyboard.press('Escape');assert page.locator('.menu-button').get_attribute('aria-expanded')=='false'
       report['interactions'].append('English to Turkish switching, academic-language homepage, mobile menu')
       load('tr/team.html')
@@ -83,8 +83,13 @@ def main():
       page.locator('#pub-query').fill('nomatch-983js');assert page.locator('.no-results').is_visible()
       page.locator('#pub-reset').click();assert page.locator('.publication:visible').count()==23
       report['interactions'].append('Turkish publication filter, reset and empty state')
-      load('tr/projects.html');page.locator('#project-programme').select_option('BAP');assert page.locator('.project-summary:visible').count()==2
-      report['interactions'].append('Funded-project filtering')
+      load('tr/projects.html');assert page.locator('#completed-projects .project-summary').count()==2
+      assert page.locator('#funded-projects .project-summary').count()==1
+      report['interactions'].append('Completed two-BAP research display and 1002-A support record')
+      load('tr/index.html');assert page.locator('.showcase-news-card').count()==5
+      assert page.locator('.showcase-topic').count()==5
+      assert page.locator('.showcase-join-qr img').count()==1
+      report['interactions'].append('Five live homepage update cards, research area bar and Tally QR')
       load('tr/feedback-explorer.html');mode=page.locator('[data-feedback-picker]');mode.select_option('hybrid')
       assert page.locator('[data-mode]:visible').count()>=1
       report['interactions'].append('Turkish feedback example mode selection')

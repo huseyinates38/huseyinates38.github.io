@@ -45,6 +45,7 @@ jobs:
           python scripts/build_bilingual.py
           python scripts/build_team_directory.py
           python scripts/enhance_visuals.py
+          python scripts/apply_v48.py
       - name: Validate public status, privacy, search and documents
         run: python scripts/verify_bilingual.py
       - name: Test mobile, desktop and interactive controls in Chromium
@@ -77,6 +78,6 @@ jobs:
         run: python scripts/verify_site.py --live
       - name: Record release
         run: |
-          echo '## Academic website 4.7 — original illustrations and curated research highlights' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Visual research themes, verified milestones and the existing research-group link added in English and Turkish. Conceptual illustrations are not represented as project photographs or empirical results.' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Academic website 4.8 — screenshot-inspired live layout and verified research statuses' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Responsive five-card homepage and real research-group QR; two completed BAP studies, submitted 2221 and nonfunded 3501 distinguished in both languages.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Browser and live-file tests passed. These tests are not WCAG certification or academic fact verification.' >> "$GITHUB_STEP_SUMMARY"

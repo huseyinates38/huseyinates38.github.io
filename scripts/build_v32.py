@@ -93,22 +93,27 @@ def editorial():
 def projects_index():
     existing=Soup((SITE/'projects.html').read_text(),'html.parser')
     cards=existing.select('.project-summary')
-    # Keep all three historical funding records, but separate completed work from the other records.
+    # Keep three funded project records; both BAP studies are complete.
     for c in cards:
         if c.find('a',href='project-robot-virtual-agent.html'):c.decompose()
     cards=[c for c in cards if c.parent]
     assert len(cards)==3,'Supported-project register must exclude the 3501 proposal'
-    completed=[c for c in cards if c.find('a',href='project-vr-stem-vietnam.html')]
+    completed=[c for c in cards if any(c.find('a',href=k) for k in ('project-vr-stem-vietnam.html','project-vr-circulatory-system.html'))]
     other=[c for c in cards if c not in completed]
-    assert len(other)==2 and len(completed)==1
+    assert len(other)==1 and len(completed)==2
     controls='<div class="v3-topic-filter"><label for="project-programme">Supported-project programme</label><select id="project-programme"><option value="all">All programmes</option><option>1002-A</option><option>BAP</option></select><span id="project-filter-status" role="status">3 projects shown</span></div>'
     body=hero('Research / Projects & proposals','Research at<br><em>different stages.</em>','Supported projects, ongoing collaborative research and prospective applications are separated by status.',links([('Supported projects','#funded-projects'),('Ongoing collaboration','#ongoing-collaboration'),('Proposal pipeline','proposals.html'),('Editorial initiatives','editorial.html')]))
-    body+=section('Other supported <em>projects</em>.','<p>These two funded records have no newly confirmed completion status. The completed Vietnam-related BAP project is archived separately below.</p>'+controls+'<div class="project-overview-grid">'+''.join(str(c) for c in other)+'</div>','white','funded-projects')
-    body+=section('Completed funded <em>research</em>.','<p>The KAEÜ BAP VR-supported STEM project (EGT.A3.26.001), including the Vietnam-adaptability component, is completed as reported by the principal investigator in November 2026. No new research findings are asserted here.</p><div class="project-overview-grid">'+''.join(str(c) for c in completed)+'</div>','muted','completed-projects')
+    for c in completed:
+        c['data-project-status']='completed'
+        c['class']=list(dict.fromkeys(c.get('class',[])+['completed-project-card']))
+        idx=c.select_one('.project-index')
+        if idx: idx.string=idx.get_text(' ',strip=True).split(' · ')[0]+' · COMPLETED'
+    body+=section('Completed <em>research projects</em>.','<div class="project-overview-grid">'+''.join(str(c) for c in completed)+'</div>','white','completed-projects')
+    body+=section('Supported <em>research project</em>.',controls+'<div class="project-overview-grid">'+''.join(str(c) for c in other)+'</div>','muted','funded-projects')
     body+=section('Ongoing <em>collaborative research</em>.',badge('Study development · not an external grant award','ongoing')+'<div class="feature"><div><h3>Türkiye–Colombia GenAI literacy study</h3><p class="lead">A cross-context collaboration with Juan Garzón and coordinator Juan David Murillo Egurrola, with contributions from Hüseyin Ateş and doctoral researcher Abdulkadir Aydın.</p><p>Instrument adaptation and pilot preparation are ongoing. Study participation is distinguished from a funding award.</p>'+link('Study scope and contributions','project-ai-literacy-colombia.html')+'</div><aside class="panel"><small>Evidence before claims</small><h3>Methodology, adaptation & preparation</h3><p>Published outputs will be linked when available. No unreported results or completed fieldwork are inferred.</p>'+link('Research collaborators','team.html#collaborators')+'</aside></div>','muted','ongoing-collaboration')
-    body+=section('Submitted & planned <em>applications</em>.','<p class="lead">Four submitted applications, two planned research activities and one unsuccessful TÜBİTAK 3501 application appear in a separate register.</p>'+proposal_cards()+links([('Full proposal register','proposals.html')]),'white','proposal-pipeline')
+    body+=section('Submitted & planned <em>applications</em>.','<p class="lead">Five submitted applications, one research concept in development and one unsuccessful TÜBİTAK 3501 application appear in a separate register.</p>'+proposal_cards()+links([('Full proposal register','proposals.html')]),'white','proposal-pipeline')
     body+=section('Editorial & international <em>connections</em>.','<p>The proposed ETHE thematic collection and earlier Sustainable Environment advisory activity are presented separately from grant-funded research.</p>'+links([('Editorial initiatives','editorial.html'),('Research collaborators','team.html#collaborators'),('Public academic CV','downloads/Huseyin_Ates_Public_Academic_CV.pdf')]),'muted','international-collaborations')
-    render('projects.html','Projects & proposals',body,'Two other supported project records and one completed BAP project, alongside ongoing collaboration and seven proposal records.')
+    render('projects.html','Projects & proposals',body,'Two completed BAP projects and one supported 1002-A project, alongside ongoing collaboration and proposal records.')
 
 
 def enrich_navigation():
@@ -150,6 +155,6 @@ def main():
     (SITE/'deployment.json').write_text(json.dumps(manifest,indent=2))
     urls=''.join('<url><loc>'+BASE+n+'</loc><lastmod>'+DATE+'</lastmod></url>' for n in manifest['pages'] if n not in ['404.html','search.html'])
     (SITE/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+urls+'</urlset>')
-    print('Research-status update: 2 other supported + 1 completed funded record, 7 proposal entries, 1 ongoing international study and 2 editorial initiatives.')
+    print('Research-status update: 1 supported + 2 completed BAP projects, 7 proposal entries, 1 ongoing international study and 2 editorial initiatives.')
 
 if __name__=='__main__':main()

@@ -27,7 +27,7 @@ The AÜB submitted status follows the supplied CV; independent funding confirmat
 `content/editorial-update.json` contains current public people records and the separate proposal/editorial CV page. `content/research-pipeline.json` contains public proposal summaries and status labels. `scripts/release_editorial.py` applies these current records over the preserved templates and builds all output. `scripts/build_v32.py` generates the proposal register, editorial page and international-study record. `scripts/verify_editorial_status.py` checks the key status and privacy regressions before publication.
 
 ## November 2026 completion update
-KAEÜ BAP EGT.A3.26.001 (VR-supported STEM instruction, including the Vietnamese-context adaptability component) is completed, as reported by the principal investigator. It is retained in completed funded research, not current/ongoing research. No findings or Vietnam-based implementation are inferred from the completion statement.
+KAEÜ BAP EGT.A3.26.001 and EGT.A3.25.001 are both completed, according to the owner. They remain in the completed research register, not ongoing funded work.
 
 
 ## 13 November 2026 — team editorial note
