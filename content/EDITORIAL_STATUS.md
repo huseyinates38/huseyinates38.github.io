@@ -28,3 +28,9 @@ The AÜB submitted status follows the supplied CV; independent funding confirmat
 
 ## November 2026 completion update
 KAEÜ BAP EGT.A3.26.001 (VR-supported STEM instruction, including the Vietnamese-context adaptability component) is completed, as reported by the principal investigator. It is retained in completed funded research, not current/ongoing research. No findings or Vietnam-based implementation are inferred from the completion statement.
+
+
+## 13 November 2026 — team editorial note
+- The active academic collaboration page differentiates accepted publications, ongoing manuscript work, exploratory research design and proposed funding.
+- Approved for funding: 226K999 scientific support decision dated 28 August 2026; this letter alone does not evidence execution of a grant contract.
+- Private journal-submission tracker is deliberately not published.

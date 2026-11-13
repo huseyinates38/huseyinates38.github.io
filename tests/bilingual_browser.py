@@ -10,7 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]; SITE=ROOT/'_site'
 
 def main():
   offline='--offline' in sys.argv
-  report={'release':'4.0','widths':[360,768,1440],'pages':0,'layout_checks':0,'interactions':[],'errors':[]}
+  report={'release':'4.4','widths':[360,768,1440],'pages':0,'layout_checks':0,'interactions':[],'errors':[]}
   class Quiet(http.server.SimpleHTTPRequestHandler):
     def log_message(self,*args):pass
   server=None
@@ -39,7 +39,7 @@ def main():
         for code in scripts:page.add_script_tag(content=code)
       pages=sorted(p.relative_to(SITE).as_posix() for p in SITE.rglob('*.html'))
       report['pages']=len(pages)
-      assert len(pages)==112,len(pages)
+      assert len(pages)==136,len(pages)
       for width in [360,768,1440]:
         page.set_viewport_size({'width':width,'height':900})
         for file in pages:
@@ -87,6 +87,28 @@ def main():
       load('tr/feedback-explorer.html');mode=page.locator('[data-feedback-picker]');mode.select_option('hybrid')
       assert page.locator('[data-mode]:visible').count()>=1
       report['interactions'].append('Turkish feedback example mode selection')
+      load('tr/team.html')
+      assert page.locator('.person-card').count()==30
+      for img in page.locator('.institution-mark img').all():
+        img.scroll_into_view_if_needed()
+        if not offline:
+          img.evaluate('(n)=>n.decode()')
+          assert img.evaluate('(n)=>n.complete && n.naturalWidth>0')
+      page.locator('#people-query').fill('Irem')
+      assert page.locator('.person-card:visible').count()==1
+      assert '2028' in page.locator('.person-card:visible').inner_text()
+      page.locator('#people-reset').click()
+      assert page.locator('.person-card:visible').count()==30
+      page.locator('#people-query').fill('Hollanda')
+      assert page.locator('.person-card:visible').count()==3
+      report['interactions'].append('Thirty team profiles, loaded institutional logos and accent-insensitive directory filter')
+      load('tr/research-network.html')
+      assert page.locator('.network-country').count()==22
+      assert page.locator('.network-country li').count()==43
+      page.locator('#network-query').fill('Vietnam')
+      assert page.locator('.network-country:visible').count()==1
+      assert page.locator('a[data-site-lang="en"]').get_attribute('href')=='../research-network.html'
+      report['interactions'].append('Bilingual source-derived network poster and searchable 22-country 43-institution directory')
       assert not report['errors'],report['errors']
       browser.close()
   finally:

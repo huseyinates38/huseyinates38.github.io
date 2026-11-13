@@ -2,7 +2,7 @@
 
 Website: https://huseyinates38.github.io/
 
-## Editorial release 3.2
+## Editorial release 4.4 — bilingual research team and affiliation directory
 
 Research collaborators and editorial connections appear above current graduate researchers and alumni. The current record separates two other supported projects and one completed BAP project, seven submitted/planned/non-funded proposal records, an ongoing Türkiye–Colombia study and two distinct editorial initiatives.
 
@@ -18,8 +18,10 @@ Use Python 3.12, Linux fonts-dejavu-core and the pinned requirements. Font files
 python -m pip install -r requirements-site.txt -r requirements-browser.txt
 python -m playwright install --with-deps chromium
 python scripts/release_editorial.py
-python scripts/verify_editorial_status.py
-python tests/editorial_browser.py
+python scripts/build_bilingual.py
+python scripts/build_team_directory.py
+python scripts/verify_bilingual.py
+python tests/bilingual_browser.py --offline
 python scripts/verify_site.py
 ```
 
@@ -28,12 +30,15 @@ Serve `_site` for preview. **Root HTML files and earlier builders are preserved 
 ## Editing
 
 - Current people and proposal/editorial CV section: `content/editorial-update.json`.
+- Current research-team roster and reviewed institution marks: `content/team-directory.json` and `content/institution-logo-sources.json`.
+- Ongoing research-relationship context: `content/ongoing-collaborations.json`.
+- The 22-country / 43-institution posters are source-derived graphics. They do not establish formal institutional partnerships.
 - Proposal status and public scope: `content/research-pipeline.json`.
 - Proposal, editorial and ongoing-study layouts: `scripts/build_v32.py`.
 - Existing publications and teaching examples: `content/expansion.json` and source templates.
 - Status boundaries and source precedence: `content/EDITORIAL_STATUS.md`.
 
-Private correspondence and original invitation documents are not included in the repository or published files. No unaccepted guest, grant award, research result or affiliation is inferred.
+Private correspondence, journal review-status tables, manuscript-review notes and original invitation documents are not included in the repository or published files. No unaccepted guest, grant award, research result or affiliation is inferred.
 
 ## Publication and quality
 

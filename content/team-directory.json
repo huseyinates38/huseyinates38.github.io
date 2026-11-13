@@ -1,0 +1,785 @@
+{
+  "reviewed": "2026-11-13",
+  "countries": {
+    "TR": [
+      "Türkiye",
+      "Türkiye"
+    ],
+    "CO": [
+      "Colombia",
+      "Kolombiya"
+    ],
+    "NL": [
+      "Netherlands",
+      "Hollanda"
+    ],
+    "US": [
+      "United States",
+      "ABD"
+    ],
+    "DK": [
+      "Denmark",
+      "Danimarka"
+    ],
+    "DE": [
+      "Germany",
+      "Almanya"
+    ],
+    "GR": [
+      "Greece",
+      "Yunanistan"
+    ],
+    "GB": [
+      "United Kingdom",
+      "Birleşik Krallık"
+    ],
+    "AE": [
+      "United Arab Emirates",
+      "Birleşik Arap Emirlikleri"
+    ],
+    "ES": [
+      "Spain",
+      "İspanya"
+    ],
+    "VN": [
+      "Vietnam",
+      "Vietnam"
+    ],
+    "CH": [
+      "Switzerland",
+      "İsviçre"
+    ],
+    "SE": [
+      "Sweden",
+      "İsveç"
+    ],
+    "EE": [
+      "Estonia",
+      "Estonya"
+    ],
+    "CZ": [
+      "Czechia",
+      "Çekya"
+    ],
+    "IT": [
+      "Italy",
+      "İtalya"
+    ],
+    "RO": [
+      "Romania",
+      "Romanya"
+    ],
+    "BG": [
+      "Bulgaria",
+      "Bulgaristan"
+    ],
+    "SK": [
+      "Slovakia",
+      "Slovakya"
+    ],
+    "HU": [
+      "Hungary",
+      "Macaristan"
+    ],
+    "CY": [
+      "Cyprus",
+      "Kıbrıs"
+    ],
+    "AU": [
+      "Australia",
+      "Avustralya"
+    ]
+  },
+  "institutions": {
+    "kaeu": {
+      "names": [
+        "Kırşehir Ahi Evran University",
+        "Kırşehir Ahi Evran Üniversitesi"
+      ],
+      "country": "TR",
+      "url": "https://www.ahievran.edu.tr/"
+    },
+    "uco": {
+      "names": [
+        "Universidad Católica de Oriente",
+        "Universidad Católica de Oriente"
+      ],
+      "country": "CO",
+      "url": "https://uco.edu.co/"
+    },
+    "wur": {
+      "names": [
+        "Wageningen University & Research",
+        "Wageningen Üniversitesi ve Araştırma Merkezi"
+      ],
+      "country": "NL",
+      "url": "https://www.wur.nl/en"
+    },
+    "twente": {
+      "names": [
+        "University of Twente",
+        "Twente Üniversitesi"
+      ],
+      "country": "NL",
+      "url": "https://www.utwente.nl/en/",
+      "dark": true
+    },
+    "maastricht": {
+      "names": [
+        "Maastricht University",
+        "Maastricht Üniversitesi"
+      ],
+      "country": "NL",
+      "url": "https://www.maastrichtuniversity.nl/"
+    },
+    "kent": {
+      "names": [
+        "Kent State University",
+        "Kent State Üniversitesi"
+      ],
+      "country": "US",
+      "url": "https://www.kent.edu/"
+    },
+    "copenhagen": {
+      "names": [
+        "University of Copenhagen",
+        "Kopenhag Üniversitesi"
+      ],
+      "country": "DK",
+      "url": "https://www.ku.dk/en"
+    },
+    "ipn": {
+      "names": [
+        "Leibniz Institute for Science and Mathematics Education (IPN)",
+        "Leibniz Fen ve Matematik Eğitimi Enstitüsü (IPN)"
+      ],
+      "country": "DE",
+      "url": "https://www.leibniz-ipn.de/en"
+    },
+    "macedonia": {
+      "names": [
+        "University of Macedonia",
+        "Makedonya Üniversitesi"
+      ],
+      "country": "GR",
+      "url": "https://www.uom.gr/en"
+    },
+    "crete": {
+      "names": [
+        "University of Crete",
+        "Girit Üniversitesi"
+      ],
+      "country": "GR",
+      "url": "https://www.uoc.gr/en/home/"
+    },
+    "surrey": {
+      "names": [
+        "University of Surrey",
+        "Surrey Üniversitesi"
+      ],
+      "country": "GB",
+      "url": "https://www.surrey.ac.uk/",
+      "dark": true
+    },
+    "uaeu": {
+      "names": [
+        "United Arab Emirates University",
+        "Birleşik Arap Emirlikleri Üniversitesi"
+      ],
+      "country": "AE",
+      "url": "https://www.uaeu.ac.ae/en/"
+    },
+    "uoc": {
+      "names": [
+        "Universitat Oberta de Catalunya",
+        "Universitat Oberta de Catalunya"
+      ],
+      "country": "ES",
+      "url": "https://www.uoc.edu/en"
+    },
+    "hcmute": {
+      "names": [
+        "Ho Chi Minh City University of Technology and Engineering (HCM-UTE)",
+        "Ho Chi Minh City Teknoloji ve Mühendislik Üniversitesi (HCM-UTE)"
+      ],
+      "country": "VN",
+      "url": "https://hcmute.edu.vn/en"
+    },
+    "itu": {
+      "names": [
+        "Istanbul Technical University",
+        "İstanbul Teknik Üniversitesi"
+      ],
+      "country": "TR",
+      "url": "https://www.itu.edu.tr/"
+    },
+    "marmara": {
+      "names": [
+        "Marmara University",
+        "Marmara Üniversitesi"
+      ],
+      "country": "TR",
+      "url": "https://www.marmara.edu.tr/"
+    },
+    "meb": {
+      "names": [
+        "Ministry of National Education (MEB)",
+        "Millî Eğitim Bakanlığı (MEB)"
+      ],
+      "country": "TR",
+      "url": "https://www.meb.gov.tr/"
+    },
+    "school": {
+      "names": [
+        "Kırşehir Anadolu İmam Hatip High School",
+        "Kırşehir Anadolu İmam Hatip Lisesi"
+      ],
+      "country": "TR",
+      "url": "https://www.meb.gov.tr/",
+      "logo": "meb",
+      "logo_label": [
+        "Ministry of National Education emblem",
+        "Millî Eğitim Bakanlığı amblemi"
+      ]
+    },
+    "bogazici": {
+      "names": [
+        "Boğaziçi University",
+        "Boğaziçi Üniversitesi"
+      ],
+      "country": "TR",
+      "url": "https://bogazici.edu.tr/"
+    },
+    "nevsehir": {
+      "names": [
+        "Nevşehir Hacı Bektaş Veli University",
+        "Nevşehir Hacı Bektaş Veli Üniversitesi"
+      ],
+      "country": "TR",
+      "url": "https://www.nevsehir.edu.tr/"
+    },
+    "tokat": {
+      "names": [
+        "Tokat Gaziosmanpaşa University",
+        "Tokat Gaziosmanpaşa Üniversitesi"
+      ],
+      "country": "TR",
+      "url": "https://www.gop.edu.tr/"
+    }
+  },
+  "affiliations": {
+    "juan-garzon": [
+      "uco"
+    ],
+    "omid-noroozi": [
+      "wur"
+    ],
+    "mohammadreza-farrokhnia": [
+      "twente"
+    ],
+    "kazem-banihashem": [
+      "maastricht"
+    ],
+    "elena-novak": [
+      "kent"
+    ],
+    "guido-makransky": [
+      "copenhagen"
+    ],
+    "moritz-krell": [
+      "ipn"
+    ],
+    "georgios-lampropoulos": [
+      "macedonia",
+      "crete"
+    ],
+    "naomi-winstone": [
+      "surrey"
+    ],
+    "ahmet-sami-konca": [
+      "uaeu"
+    ],
+    "juan-david-murillo-egurrola": [
+      "uco"
+    ],
+    "marc-romero-carbonell": [
+      "uoc"
+    ],
+    "abdulkadir-aydin": [
+      "kaeu"
+    ],
+    "tugce-unsal": [
+      "kaeu"
+    ],
+    "nisa-gul": [
+      "kaeu"
+    ],
+    "kubra-solmaz": [
+      "kaeu"
+    ],
+    "rabia-ates": [
+      "kaeu"
+    ],
+    "fatma-gazioglu": [
+      "kaeu"
+    ],
+    "ipek-oz": [
+      "school"
+    ]
+  },
+  "new_people": [
+    {
+      "slug": "bui-van-hong",
+      "name": "Bui Van Hong",
+      "institutions": [
+        "hcmute"
+      ],
+      "group": "collaborators",
+      "role": [
+        "Ongoing research contact · completed VR-STEM study",
+        "Süren araştırma bağlantısı · tamamlanan VR-STEM çalışması"
+      ],
+      "topic": [
+        "STEM education and international research collaboration",
+        "STEM eğitimi ve uluslararası araştırma iş birliği"
+      ],
+      "description": [
+        "The Vietnam-based academic connection through HCM-UTE is retained in the international collaboration network. The VR-supported STEM project is completed; no new funded intervention or current data collection is claimed.",
+        "HCM-UTE üzerinden Vietnam ile kurulan akademik bağlantı uluslararası araştırma ağında sürdürülüyor. VR destekli STEM projesi tamamlandı; yeni fonlanan uygulama veya devam eden veri toplama iddia edilmiyor."
+      ],
+      "links": [
+        [
+          "Completed VR–STEM project",
+          "Tamamlanan VR–STEM projesi",
+          "project-vr-stem-vietnam.html"
+        ]
+      ]
+    },
+    {
+      "slug": "gokhan-ince",
+      "name": "Gökhan İnce",
+      "titles": [
+        "Assoc. Prof. Dr.",
+        "Doç. Dr."
+      ],
+      "institutions": [
+        "itu"
+      ],
+      "group": "project-researchers",
+      "role": [
+        "Researcher",
+        "Araştırmacı"
+      ],
+      "topic": [
+        "Project research team",
+        "Proje araştırma ekibi"
+      ],
+      "description": [
+        "Listed as a researcher in the research-team roster supplied by Hüseyin Ateş. Institutional affiliation: Istanbul Technical University.",
+        "Hüseyin Ateş’in paylaştığı araştırma ekibi listesinde araştırmacı olarak yer alıyor. Kurumu İstanbul Teknik Üniversitesidir."
+      ]
+    },
+    {
+      "slug": "zeynep-aydemir",
+      "name": "Zeynep Aydemir",
+      "titles": [
+        "Assoc. Prof. Dr.",
+        "Doç. Dr."
+      ],
+      "institutions": [
+        "marmara"
+      ],
+      "group": "project-researchers",
+      "role": [
+        "Researcher",
+        "Araştırmacı"
+      ],
+      "topic": [
+        "Project research team",
+        "Proje araştırma ekibi"
+      ],
+      "description": [
+        "Researcher in the team roster supplied by Hüseyin Ateş. Institutional affiliation: Marmara University.",
+        "Hüseyin Ateş’in paylaştığı ekip listesinde araştırmacı olarak yer alıyor. Kurumu Marmara Üniversitesidir."
+      ]
+    },
+    {
+      "slug": "ahmet-salih-simsek",
+      "name": "Ahmet Salih Şimşek",
+      "titles": [
+        "Assoc. Prof. Dr.",
+        "Doç. Dr."
+      ],
+      "institutions": [
+        "kaeu"
+      ],
+      "group": "project-researchers",
+      "role": [
+        "Researcher",
+        "Araştırmacı"
+      ],
+      "topic": [
+        "Project research team",
+        "Proje araştırma ekibi"
+      ],
+      "description": [
+        "Researcher at Kırşehir Ahi Evran University, listed in Hüseyin Ateş’s research-team roster.",
+        "Kırşehir Ahi Evran Üniversitesinde görev yapan ve Hüseyin Ateş’in ekip listesinde araştırmacı olarak yer alan öğretim üyesi."
+      ]
+    },
+    {
+      "slug": "kibar-gul",
+      "name": "Kibar Gül",
+      "titles": [
+        "Assoc. Prof. Dr.",
+        "Doç. Dr."
+      ],
+      "institutions": [
+        "nevsehir"
+      ],
+      "group": "project-researchers",
+      "role": [
+        "Researcher · AÜB proposal team",
+        "Araştırmacı · AÜB başvuru ekibi"
+      ],
+      "topic": [
+        "STEM teacher education and activity design",
+        "STEM öğretmen eğitimi ve etkinlik tasarımı"
+      ],
+      "description": [
+        "Named as the Nevşehir Hacı Bektaş Veli University researcher in the Türkiye–UAE AÜB application. Her proposed contribution concerns STEM teacher education, activity design and performance criteria. The application is not presented as an awarded grant.",
+        "Türkiye–BAE AÜB başvurusunda Nevşehir Hacı Bektaş Veli Üniversitesi araştırmacısı olarak yer alıyor. Önerilen katkısı STEM öğretmen eğitimi, etkinlik tasarımı ve performans ölçütleriyle ilgili. Başvuru, destek kararı alınmış proje olarak sunulmuyor."
+      ],
+      "links": [
+        [
+          "AÜB proposal",
+          "AÜB başvurusu",
+          "proposal-turkiye-uae-stem.html"
+        ]
+      ]
+    },
+    {
+      "slug": "naciye-somuncu-demir",
+      "name": "Naciye Somuncu Demir",
+      "titles": [
+        "Assist. Prof. Dr.",
+        "Dr. Öğr. Üyesi"
+      ],
+      "institutions": [
+        "tokat"
+      ],
+      "group": "project-researchers",
+      "role": [
+        "Researcher · AÜB proposal team",
+        "Araştırmacı · AÜB başvuru ekibi"
+      ],
+      "topic": [
+        "Science–mathematics integration and pilot design",
+        "Fen–matematik bütünleştirmesi ve pilot tasarımı"
+      ],
+      "description": [
+        "Named as the Tokat Gaziosmanpaşa University researcher in the Türkiye–UAE AÜB application, with proposed contributions to science–mathematics integration, scientific suitability and piloting.",
+        "Türkiye–BAE AÜB başvurusunda Tokat Gaziosmanpaşa Üniversitesi araştırmacısı olarak yer alıyor. Önerilen katkıları fen–matematik bütünleştirmesi, bilimsel uygunluk ve pilot uygulamayla ilgili."
+      ],
+      "links": [
+        [
+          "AÜB proposal",
+          "AÜB başvurusu",
+          "proposal-turkiye-uae-stem.html"
+        ]
+      ]
+    },
+    {
+      "slug": "serbay-durmaz",
+      "name": "Serbay Durmaz",
+      "titles": [
+        "Dr.",
+        "Dr."
+      ],
+      "institutions": [
+        "meb"
+      ],
+      "group": "project-contributors",
+      "role": [
+        "Researcher · Expert teacher",
+        "Araştırmacı · Uzman öğretmen"
+      ],
+      "topic": [
+        "Research team and school practice",
+        "Araştırma ekibi ve okul uygulamaları"
+      ],
+      "description": [
+        "Researcher in the supplied team roster and an expert teacher within Türkiye’s Ministry of National Education.",
+        "Paylaşılan ekip listesinde araştırmacı olarak yer alıyor; Millî Eğitim Bakanlığı bünyesinde uzman öğretmen olarak çalışıyor."
+      ]
+    },
+    {
+      "slug": "yesim-taktat-ates",
+      "name": "Yeşim Taktat Ateş",
+      "titles": [
+        "Dr.",
+        "Dr."
+      ],
+      "institutions": [],
+      "group": "project-contributors",
+      "role": [
+        "Researcher · Independent researcher",
+        "Araştırmacı · Bağımsız araştırmacı"
+      ],
+      "topic": [
+        "Research collaboration and AÜB proposal team",
+        "Araştırma iş birliği ve AÜB başvuru ekibi"
+      ],
+      "description": [
+        "Independent researcher with no current institutional affiliation. The AÜB application identifies her as an external team member. No university affiliation or employment is implied.",
+        "Güncel kurumsal bağlılığı bulunmayan bağımsız araştırmacı. AÜB başvurusunda kurum dışı ekip üyesi olarak yer alıyor; herhangi bir üniversiteye bağlı çalışma veya istihdam bilgisi atanmıyor."
+      ],
+      "links": [
+        [
+          "AÜB proposal",
+          "AÜB başvurusu",
+          "proposal-turkiye-uae-stem.html"
+        ]
+      ]
+    },
+    {
+      "slug": "ipek-oz",
+      "name": "İpek Öz",
+      "institutions": [
+        "school"
+      ],
+      "group": "project-contributors",
+      "role": [
+        "Researcher · Expert teacher · MSc alumna",
+        "Araştırmacı · Uzman öğretmen · Yüksek lisans mezunu"
+      ],
+      "topic": [
+        "School practice, distance education and technology adoption",
+        "Okul uygulamaları, uzaktan eğitim ve teknoloji benimseme"
+      ],
+      "description": [
+        "Researcher and expert teacher at Kırşehir Anadolu İmam Hatip High School. She completed her master’s thesis under Hüseyin Ateş’s supervision in 2022 on science teachers’ intentions to use distance-education tools, using structural equation modelling.",
+        "Kırşehir Anadolu İmam Hatip Lisesinde uzman öğretmen ve araştırma ekibinde araştırmacı. Hüseyin Ateş danışmanlığındaki yüksek lisansını 2022’de tamamladı. Tezi, fen öğretmenlerinin uzaktan eğitim araçlarını kullanma niyetini yapısal eşitlik modellemesiyle inceliyor."
+      ]
+    },
+    {
+      "slug": "ibrahim-delen",
+      "name": "İbrahim Delen",
+      "titles": [
+        "Prof. Dr.",
+        "Prof. Dr."
+      ],
+      "institutions": [
+        "bogazici"
+      ],
+      "group": "project-contributors",
+      "role": [
+        "Research adviser",
+        "Araştırma danışmanı"
+      ],
+      "topic": [
+        "Project research team",
+        "Proje araştırma ekibi"
+      ],
+      "description": [
+        "Listed as an adviser in the research-team roster supplied by Hüseyin Ateş. Institutional affiliation: Boğaziçi University.",
+        "Hüseyin Ateş’in paylaştığı araştırma ekibi listesinde danışman olarak yer alıyor. Kurumu Boğaziçi Üniversitesidir."
+      ]
+    },
+    {
+      "slug": "irem-sude-koksal",
+      "name": "İrem Sude Köksal",
+      "institutions": [
+        "kaeu"
+      ],
+      "group": "graduate-researchers",
+      "role": [
+        "Master’s researcher",
+        "Yüksek lisans araştırmacısı"
+      ],
+      "topic": [
+        "Master’s research · expected completion 2028",
+        "Yüksek lisans araştırması · beklenen bitiş 2028"
+      ],
+      "description": [
+        "Master’s student supervised by Hüseyin Ateş at Kırşehir Ahi Evran University. Expected completion: 2028. This is a planned completion date, not an awarded degree.",
+        "Kırşehir Ahi Evran Üniversitesinde Hüseyin Ateş danışmanlığında yüksek lisans öğrencisi. Beklenen bitiş yılı 2028’dir; bu tarih tamamlanmış derece değil, öngörülen bitişi gösterir."
+      ]
+    },
+    {
+      "slug": "furkan-ensar-ates",
+      "name": "Furkan Ensar Ateş",
+      "institutions": [
+        "kaeu"
+      ],
+      "group": "graduate-researchers",
+      "role": [
+        "Master’s researcher",
+        "Yüksek lisans araştırmacısı"
+      ],
+      "topic": [
+        "Master’s research · expected completion 2028",
+        "Yüksek lisans araştırması · beklenen bitiş 2028"
+      ],
+      "description": [
+        "Master’s student supervised by Hüseyin Ateş at Kırşehir Ahi Evran University. Expected completion: 2028. This is a planned completion date, not an awarded degree.",
+        "Kırşehir Ahi Evran Üniversitesinde Hüseyin Ateş danışmanlığında yüksek lisans öğrencisi. Beklenen bitiş yılı 2028’dir; bu tarih tamamlanmış derece değil, öngörülen bitişi gösterir."
+      ]
+    }
+  ],
+  "network": [
+    [
+      "DE",
+      [
+        "Leibniz Institute for Science and Mathematics Education (IPN)",
+        "Hochschule der Medien Stuttgart",
+        "FernUniversität in Hagen",
+        "University of Duisburg-Essen",
+        "Leibniz Universität Hannover",
+        "Saarland University"
+      ]
+    ],
+    [
+      "NL",
+      [
+        "University of Twente",
+        "Maastricht University",
+        "Wageningen University & Research (WUR)"
+      ]
+    ],
+    [
+      "DK",
+      [
+        "University of Copenhagen"
+      ]
+    ],
+    [
+      "GB",
+      [
+        "University of Surrey"
+      ]
+    ],
+    [
+      "US",
+      [
+        "Kent State University"
+      ]
+    ],
+    [
+      "CO",
+      [
+        "Universidad Católica de Oriente"
+      ]
+    ],
+    [
+      "ES",
+      [
+        "Universidade de Santiago de Compostela",
+        "Universidad de Jaén",
+        "Universidad de Almería",
+        "Universitat Oberta de Catalunya (UOC)"
+      ]
+    ],
+    [
+      "CH",
+      [
+        "University of Applied Sciences and Arts Northwestern Switzerland (FHNW)"
+      ]
+    ],
+    [
+      "SE",
+      [
+        "Kristianstad University"
+      ]
+    ],
+    [
+      "EE",
+      [
+        "University of Tartu"
+      ]
+    ],
+    [
+      "CZ",
+      [
+        "Charles University",
+        "University of Hradec Králové"
+      ]
+    ],
+    [
+      "IT",
+      [
+        "University of Naples Federico II",
+        "Pegaso University",
+        "University of Trento"
+      ]
+    ],
+    [
+      "GR",
+      [
+        "National and Kapodistrian University of Athens",
+        "University of Macedonia"
+      ]
+    ],
+    [
+      "RO",
+      [
+        "West University of Timișoara"
+      ]
+    ],
+    [
+      "BG",
+      [
+        "St. Cyril and St. Methodius University of Veliko Tarnovo"
+      ]
+    ],
+    [
+      "SK",
+      [
+        "Slovak Academy of Sciences"
+      ]
+    ],
+    [
+      "HU",
+      [
+        "Budapest University of Technology and Economics"
+      ]
+    ],
+    [
+      "CY",
+      [
+        "University of Nicosia"
+      ]
+    ],
+    [
+      "TR",
+      [
+        "Kırşehir Ahi Evran Üniversitesi",
+        "Atatürk Üniversitesi",
+        "Nevşehir Hacı Bektaş Veli Üniversitesi",
+        "Tokat Gaziosmanpaşa Üniversitesi",
+        "İstanbul Teknik Üniversitesi (İTÜ)",
+        "Boğaziçi Üniversitesi",
+        "Marmara Üniversitesi",
+        "İstanbul Okan Üniversitesi"
+      ]
+    ],
+    [
+      "AE",
+      [
+        "United Arab Emirates University"
+      ]
+    ],
+    [
+      "VN",
+      [
+        "Ho Chi Minh City University of Technology and Engineering (HCM-UTE)"
+      ]
+    ],
+    [
+      "AU",
+      [
+        "Curtin University"
+      ]
+    ]
+  ]
+}

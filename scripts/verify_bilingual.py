@@ -9,10 +9,10 @@ from verify_site import validate
 def main():
   validate()
   m=json.loads((SITE/'deployment.json').read_text())
-  assert m['version']=='4.2' and m['languages']==['en','tr'],m
-  assert m['language_pairs']==56 and m['page_count']==112,(m['language_pairs'],m['page_count'])
+  assert m['version']=='4.4' and m['languages']==['en','tr'],m
+  assert m['language_pairs']==68 and m['page_count']==136,(m['language_pairs'],m['page_count'])
   paths=sorted(p.name for p in SITE.glob('*.html'))
-  assert len(paths)==56
+  assert len(paths)==68
   for name in paths:
     en=Soup((SITE/name).read_text(encoding='utf-8'),'html.parser')
     tr=Soup((SITE/'tr'/name).read_text(encoding='utf-8'),'html.parser')
@@ -64,6 +64,15 @@ def main():
     assert (SITE/('person-'+name+'.html')).is_file()
     assert (SITE/'tr'/('person-'+name+'.html')).is_file()
   team=Soup((SITE/'tr/team.html').read_text(),'html.parser')
+  assert 'Fen Bilgisi Eğitimi Doçenti' not in team.get_text(' ',strip=True)
+  assert team.select_one('#collaborators h2').get_text(' ',strip=True)=='Devam Eden Araştırma İş Birlikleri'
+  assert 'Naomi Winstone' in team.get_text(' ',strip=True)
+  for slug in ('naomi-winstone','elena-novak','guido-makransky','moritz-krell','georgios-lampropoulos','bui-van-hong'):
+    for local in ('','tr/'):
+      source=(SITE/local/('person-'+slug+'.html')).read_text()
+      assert 'ongoing-research' in source or 'Süren akademik bağlantı' in source or 'Ongoing academic connection' in source,slug
+  assert (SITE/'downloads/research-network-tr.pdf').is_file()
+  assert (SITE/'downloads/research-network-en.pdf').is_file()
   sections=[n.get('id') for n in team.select('main > section[id]')]
   assert sections.index('collaborators')<sections.index('graduate-researchers')
   assert 'Omid Noroozi' in team.get_text() and 'Guido Makransky' in team.get_text()

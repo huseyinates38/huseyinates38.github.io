@@ -43,6 +43,7 @@ jobs:
         run: |
           python scripts/release_editorial.py
           python scripts/build_bilingual.py
+          python scripts/build_team_directory.py
       - name: Validate public status, privacy, search and documents
         run: python scripts/verify_bilingual.py
       - name: Test mobile, desktop and interactive controls in Chromium
@@ -75,6 +76,6 @@ jobs:
         run: python scripts/verify_site.py --live
       - name: Record release
         run: |
-          echo '## Academic website 4.2 — completed Vietnam-related BAP project' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Classified KAEÜ BAP EGT.A3.26.001 as completed, separated it from other funded projects, and refreshed both language editions and public CVs.' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Academic website 4.4 — people, institutions and research network' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Expanded ongoing collaboration context, verified team roles and institutional marks, 2028 supervisees and bilingual research-network posters. Non-public manuscript tracking remains private.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Browser and live-file tests passed. These tests are not WCAG certification or academic fact verification.' >> "$GITHUB_STEP_SUMMARY"
