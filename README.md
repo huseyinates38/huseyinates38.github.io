@@ -43,3 +43,11 @@ Private correspondence, journal review-status tables, manuscript-review notes an
 ## Publication and quality
 
 Pushes to main build, validate and browser-test the site before GitHub Pages deployment. Every published file is then downloaded and checked against its release SHA256. A failing pre-deployment check leaves the previous live site intact. Monday link-health checks retain reports without changing public research content. Automated checks are not WCAG/PDF-UA certification, funding verification or confirmation of journal indexing.
+
+## 4.5 research-group updates
+
+- TÜBİTAK 226K999 official title corrected from the 28 August 2026 funding decision (English translation clearly distinguished).
+- İpek Öz shown as both project researcher and 2022 MSc alumna.
+- Dr. Serbay Durmaz affiliated with Adana Yüreğir Karacaoğlan Ortaokulu.
+- A clickable research group form (https://tally.so/r/Eq51Jr) with QR added to People and Join pages.
+

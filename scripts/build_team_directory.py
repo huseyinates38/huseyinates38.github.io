@@ -9,6 +9,10 @@ ROOT=Path(__file__).resolve().parents[1];SITE=ROOT/'_site';BASE='https://huseyin
 DATA=json.loads((ROOT/'content/team-directory.json').read_text())
 ONGOING=json.loads((ROOT/'content/ongoing-collaborations.json').read_text())
 NEW={p['slug']:p for p in DATA['new_people']}
+FORM_URL='https://tally.so/r/Eq51Jr'
+OFFICIAL_1002_TITLE_TR='Uzay Kirliliği Problem Çözme Öğretiminde İki Pedagojik İskele Yaklaşımının Sınıf İçi Pilot Karşılaştırması'
+OFFICIAL_1002_TITLE_EN='Classroom Pilot Comparison of Two Pedagogical Scaffolding Approaches to Space-Pollution Problem Solving'
+
 AFF={**DATA['affiliations'],**{k:v['institutions'] for k,v in NEW.items()}}
 LABELS={
  'collaborators':('Ongoing research collaborations','Devam Eden Araştırma İş Birlikleri'),
@@ -63,6 +67,8 @@ def new_profile(p,lang,template):
  if p['slug'] in ONGOING:
   paragraphs=''.join('<p>'+e(t)+'</p>' for t in ONGOING[p['slug']][lang])
   body+=section('<h2>'+pick(('Ongoing academic connection','Süren akademik bağlantı'),lang)+'</h2>'+paragraphs,'muted')
+ if p['slug']=='ipek-oz':
+  body+=section('<h2>'+pick(('Completed master’s degree','Tamamlanan yüksek lisans'),lang)+'</h2><p>'+pick(('Master’s degree in 2022 under the supervision of Hüseyin Ateş. The thesis investigated science teachers’ intention to use distance-education tools with structural equation modelling.','Hüseyin Ateş danışmanlığındaki yüksek lisans derecesini 2022’de tamamladı. Tez çalışmasında fen öğretmenlerinin uzaktan eğitim araçlarını kullanma niyetini yapısal eşitlik modellemesiyle inceledi.'),lang)+'</p>'+affiliations(['kaeu'],lang,alumni=True),'ipek-masters','muted')
  body+=section(link(pick(('Back to the research team','Araştırma ekibine dön'),lang),'team.html','btn alt'))
  return shell(template,name,lang,body)
 
@@ -74,7 +80,7 @@ def enhance_profiles(docs,lang):
   container=s.select_one('.pagehero .container');container.append(fragment(affiliations(keys,lang,slug in ['kubra-solmaz','rabia-ates','fatma-gazioglu'])))
   if slug=='georgios-lampropoulos':
    eyebrow=container.select_one('.eyebrow');eyebrow.string=pick(('Research collaborator · Postdoctoral researcher','Araştırma ortağı · Doktora sonrası araştırmacı'),lang)
-   s.main.append(fragment(section('<h2>'+pick(('Principal academic affiliations','Başlıca akademik görevler'),lang)+'</h2><p>'+pick(('Postdoctoral research at the Department of Applied Informatics, University of Macedonia, and the Department of Preschool Education, University of Crete, Greece. These principal affiliations are recorded in the CV shared by Georgios Lampropoulos in July 2026.','Yunanistan’da Makedonya Üniversitesi Uygulamalı Bilişim Bölümü ve Girit Üniversitesi Okul Öncesi Eğitimi Bölümünde doktora sonrası araştırma görevleri. Bu başlıca kurum bilgileri Georgios Lampropoulos’un Temmuz 2026’da paylaştığı özgeçmişte yer alıyor.'),lang)+'</p>')))
+   s.main.append(fragment(section('<h2>'+pick(('Principal academic affiliations','Başlıca akademik görevler'),lang)+'</h2><p>'+pick(('Postdoctoral research at the Department of Applied Informatics, University of Macedonia, and the Department of Preschool Education, University of Crete, Greece. ','Yunanistan’da Makedonya Üniversitesi Uygulamalı Bilişim Bölümü ve Girit Üniversitesi Okul Öncesi Eğitimi Bölümünde doktora sonrası araştırma görevleri. '),lang)+'</p>')))
    for ld in s.select('script[type="application/ld+json"]'):
     try:
      obj=json.loads(ld.string or '{}')
@@ -86,6 +92,16 @@ def enhance_profiles(docs,lang):
    s.main.append(fragment(section('<h2>'+heading+'</h2>'+paragraphs,'ongoing-research','muted')))
   metadata(s,name,lang)
 
+
+
+def research_interest(lang,compact=False):
+ prefix='../' if lang=='tr' else ''
+ lead=pick(('Join the research conversation','Araştırma grubuna katılmak ister misiniz?'),lang)
+ body=pick(('Have a research idea or an interest in working with the group? Share it using the research-group interest form.','Araştırma grubuyla paylaşmak istediğiniz bir araştırma fikri veya iş birliği öneriniz varsa ilgi formunu doldurabilirsiniz.'),lang)
+ label=pick(('Open the research-group interest form','Araştırma grubu katılım formunu aç'),lang)
+ note=pick(('The form opens on Tally. Sending an expression of interest does not guarantee research-group membership, funding or admission.','Form Tally üzerinden açılır. İlgi bildirmek araştırma grubu üyeliği, burs veya kesin kabul anlamına gelmez.'),lang)
+ qralt=pick(('QR code to open the research-group interest form','Araştırma grubu katılım formunu açan QR kod'),lang)
+ return section('<div class="research-join"><div><p class="eyebrow">'+pick(('Research group · Open enquiry','Araştırma grubu · Katılım formu'),lang)+'</p><h2>'+lead+'</h2><p>'+body+'</p><p>'+link(label,FORM_URL,'btn')+'</p><p class="join-form-url"><a href="'+FORM_URL+'" target="_blank" rel="noopener noreferrer">'+FORM_URL+'</a></p><p class="v3-small">'+note+'</p></div><a class="research-join-qr" href="'+FORM_URL+'" target="_blank" rel="noopener noreferrer" aria-label="'+qralt+'"><img src="'+prefix+'assets/qr/research-group-interest.png" alt="'+qralt+'" width="220" height="220" loading="lazy" decoding="async"/><span>'+pick(('Scan or click','Tara veya tıkla'),lang)+'</span></a></div>','white','research-join')
 
 def network_intro(lang,full=False):
  url='research-network.html';prefix='../' if lang=='tr' else ''
@@ -107,6 +123,7 @@ def network_page(template,lang):
  search='<label for="network-query">'+pick(('Find a country or institution','Ülke veya kurum ara'),lang)+'</label><input id="network-query" type="search" placeholder="'+pick(('Country or institution name','Ülke veya kurum adı'),lang)+'"/><p id="network-count" aria-live="polite"></p>'
  body=network_intro(lang,True)+section('<h2>'+pick(('Country & institution directory','Ülke ve kurum dizini'),lang)+'</h2>'+legend+'<p>'+pick(('Names and the 22/43 totals follow the supplied posters. Additional affiliations on individual profiles do not change this poster snapshot.','Kurum adları ve 22/43 toplamları paylaşılan afişleri izler. Kişisel profillerdeki ek kurumlar, bu afiş kaydının toplamlarını değiştirmez.'),lang)+'</p><div class="directory-tools">'+search+'</div><div class="network-country-grid">'+''.join(parts)+'</div>','network-directory','muted')
  body+=section('<h2>'+pick(('Start a conversation','Birlikte çalışma için iletişim'),lang)+'</h2><p>'+pick(('The form linked in the supplied poster is hosted by Tally. Opening it leaves this website; information is submitted only when you choose to send the form.','Paylaşılan afişteki form Tally üzerinde barındırılıyor. Bağlantı bu siteden ayrılır; bilgiler ancak formu göndermeyi seçtiğinizde iletilir.'),lang)+'</p><div class="buttonrow">'+link(pick(('Research-group interest form','Çalışma grubu ilgi formu'),lang),'https://tally.so/r/Eq51Jr','btn')+link(pick(('Research team','Araştırma ekibi'),lang),'team.html','btn alt')+'</div>')
+ body+=research_interest(lang)
  return shell(template,'research-network.html',lang,body)
 
 
@@ -140,12 +157,17 @@ def team_page(docs,lang):
   intro=''
   if gid=='collaborators':intro='<p>'+pick(('Ongoing joint manuscripts, research design and scholarly communication are grouped here; individual profiles distinguish submitted proposals, conceptual work and completed projects. These entries are not an assertion that every institution has signed a project agreement.','Ortak makaleler, araştırma tasarımı ve bilimsel iletişim alanlarında süren akademik bağlantılar burada toplanmıştır. Kişisel profiller başvuruları, kavramsal çalışmaları ve tamamlanan projeleri ayırır; kurumların tamamının resmî proje anlaşması imzaladığı iddia edilmez.'),lang)+'</p>'
   if gid=='project-researchers':intro='<p>'+pick(('Roles follow the supplied team roster. AÜB application-team roles are labelled separately; inclusion is not a statement of a funding award.','Görevler paylaşılan ekip listesine göre sunulur. AÜB başvuru ekibindeki roller ayrıca etiketlenmiştir; listelenmek destek kararı alındığı anlamına gelmez.'),lang)+'</p>'
-  if gid=='alumni':intro='<p>'+pick(('Completed graduate supervision. İpek Öz also contributes as a researcher and is listed above.','Tamamlanan lisansüstü danışmanlıklar. İpek Öz araştırmacı olarak da katkı sunuyor ve üst bölümde listeleniyor.'),lang)+' '+link(pick(('İpek Öz’s profile','İpek Öz’ün profili'),lang),'person-ipek-oz.html')+'</p>'
+  if gid=='alumni':
+   intro='<p>'+pick(('Completed master’s degrees supervised by Hüseyin Ateş.','Hüseyin Ateş danışmanlığında tamamlanan yüksek lisans tezleri.'),lang)+'</p>'
+   ipek_role=pick(('Master’s graduate · 2022','Yüksek lisans mezunu · 2022'),lang)
+   ipek_topic=pick(('Distance education and technology adoption','Uzaktan eğitim ve teknoloji benimseme'),lang)
+   ipek='<article class="person-card" data-person="ipek-oz-alumna"><div class="person-top"><div><p class="micro-label">'+ipek_role+'</p><h3>İpek Öz</h3></div></div><p class="person-topic">'+ipek_topic+'</p>'+affiliations(['kaeu'],lang,alumni=True)+link(pick(('View master’s alumna profile','Yüksek lisans mezunu profilini incele'),lang),'person-ipek-oz.html')+'</article>'
+   groups[gid].append('ipek-oz-alumna');cards['ipek-oz-alumna']=fragment(ipek).article
   block='<h2>'+pick(title,lang)+'</h2>'+intro+'<div class="people-grid">'+''.join(str(cards[slug]) for slug in groups[gid])+'</div>'
   body+=section(block,gid,'muted' if i%2==0 else 'white')
- body+=network_intro(lang)+section(link(pick(('Explore working together','Birlikte çalışma olanaklarını incele'),lang),'join.html','btn'))
+ body+=research_interest(lang)+network_intro(lang)
  sethtml(s.main,body);metadata(s,'team.html',lang)
- return len(cards)
+ return len(cards)-('ipek-oz-alumna' in cards)
 
 
 def sync_cv():
@@ -153,6 +175,7 @@ def sync_cv():
  en=copy.deepcopy(d.CV)
  en[0]=[(k,t) for k,t in en[0] if 'TÜBİTAK 3501:' not in t]
  en.append([tuple(x) for x in json.loads((ROOT/'content/editorial-update.json').read_text())['cv_proposals_page']])
+ en=[[ (k,(t.replace('space-debris problem-solving instruction','space-pollution problem solving') if 'TÜBİTAK 1002-A, 226K999' in t else t)) for k,t in pg ] for pg in en]
  for page in en:
   for i,(k,t) in enumerate(page):
    if t.startswith('Ongoing PhD:'):page[i]=(k,'Ongoing PhD: Abdulkadir Aydın (expected 2028). Ongoing MSc: Tuğçe Ünsal and Nisa Gül (expected 2027); İrem Sude Köksal and Furkan Ensar Ateş (expected 2028).')
@@ -166,10 +189,56 @@ def sync_cv():
  d.export_document('Huseyin_Ates_Akademik_Ozgecmis_TR',tr,'Hüseyin Ateş — Akademik Özgeçmiş',lang='tr')
 
 
+
+def fix_1002_titles(docs,lang):
+ # The TÜBİTAK 226K999 decision letter of 28 August 2026 is authoritative.
+ # Display title is corrected after localization to prevent stale translation-map overrides.
+ pairs=(
+  [('Uzay Enkazı Problem Çözme Öğretiminde İki Pedagojik Destekleme Yaklaşımının Sınıf İçi Pilot Karşılaştırması',OFFICIAL_1002_TITLE_TR),
+   ('Uzay Enkazı Problem Çözme Öğretimi','Uzay Kirliliği Problem Çözme Öğretimi'),
+   ('Uzay Enkazı Problemlerini Çözme','Uzay Kirliliği Problemlerini Çözme'),
+   ('uzay enkazı','uzay kirliliği'),('Uzay enkazı','Uzay kirliliği'),
+   ('pedagojik destekleme','pedagojik iskele'),('Pedagojik Destekleme','Pedagojik İskele')]
+  if lang=='tr' else
+  [('A Classroom Pilot Comparison of Two Pedagogical Scaffolding Approaches in Space-Debris Problem-Solving Instruction',OFFICIAL_1002_TITLE_EN),
+   ('Space-Debris Problem-Solving Instruction','Space-Pollution Problem Solving'),
+   ('Space-Debris Problem-Solving','Space-Pollution Problem Solving'),
+   ('Space-debris problem-solving','Space-pollution problem solving'),
+   ('space-debris','space-pollution'),('Space-debris','Space-pollution')])
+ for name,doc in docs.items():
+  if name=='person-ipek-oz.html':continue
+  for node in list(doc.find_all(string=True)):
+   if node.parent and node.parent.name in ('script','style'):continue
+   old=str(node);new=old
+   for a,b in pairs:new=new.replace(a,b)
+   if new!=old:node.replace_with(new)
+  for node in doc.find_all(['meta']):
+   for attr in ['content']:
+    if node.get(attr):
+     val=node[attr]
+     for a,b in pairs:val=val.replace(a,b)
+     node[attr]=val
+  if name=='project-space-debris.html':
+   # Exact project title is shown as the main heading; public-facing study summary stays concise.
+   hero=doc.select_one('.pagehero h1')
+   if hero:hero.string=OFFICIAL_1002_TITLE_TR if lang=='tr' else OFFICIAL_1002_TITLE_EN
+   subtitle=doc.select_one('.pagehero p.lead')
+   if subtitle:subtitle.string=pick(('TÜBİTAK 1002-A · Project 226K999 · Classroom pilot in science education',
+       'TÜBİTAK 1002-A · Proje 226K999 · Fen eğitiminde sınıf içi pilot çalışma'),lang)
+   # Keep conceptual schematic but remove explanatory placeholders or working-note style prose.
+   for ptag in list(doc.select('p')):
+    val=ptag.get_text(' ',strip=True)
+    if 'The labels A and B are explanatory placeholders' in val or 'A ve B açıklayıcı yer tutuculardır' in val:
+     ptag.string=pick(('A classroom pilot that compares two pedagogical scaffolding approaches.',
+         'İki pedagojik iskele yaklaşımını karşılaştıran sınıf içi pilot çalışma.'),lang)
+   metadata(doc,name,lang)
+
 def main():
  target=SITE/'assets/institutions';target.mkdir(parents=True,exist_ok=True)
  for p in (ROOT/'assets/institutions').glob('*.png'):shutil.copy2(p,target/p.name)
  for name in ['team-directory.css','team-directory.js']:shutil.copy2(ROOT/'assets'/name,SITE/'assets'/name)
+ (SITE/'assets/qr').mkdir(parents=True,exist_ok=True)
+ shutil.copy2(ROOT/'assets/qr/research-group-interest.png',SITE/'assets/qr/research-group-interest.png')
  # Optimised source-derived vectors share a compact archive; no private input files are copied.
  packed=''.join(p.read_text().strip() for p in sorted((ROOT/'content').glob('network-posters-*.b64')))
  assert hashlib.sha256(packed.encode()).hexdigest()=='66bf789cb01045a9afb1d6d191de0c809863db3d0b25b8760b3ae76434389dcc', 'Poster transfer checksum mismatch'
@@ -192,6 +261,14 @@ def main():
   s=docs['about.html']
   for span in s.select('li span'):
    if 'Tuğçe Ünsal' in span.get_text() and 'Nisa Gül' in span.get_text():span.string=pick(('Tuğçe Ünsal and Nisa Gül (expected 2027); İrem Sude Köksal and Furkan Ensar Ateş (expected 2028).','Tuğçe Ünsal ve Nisa Gül (beklenen bitiş: 2027); İrem Sude Köksal ve Furkan Ensar Ateş (beklenen bitiş: 2028).'),lang)
+  s=docs['join.html']
+  for ptag in s.main.find_all('p'):
+   text=ptag.get_text(' ',strip=True)
+   if 'No application form is hosted here.' in text:
+    ptag.string='For research-group enquiries, use the external interest form below. Email links remain available for direct correspondence. Please do not send identifiable student data.'
+   elif 'Bu sitede başvuru formu yoktur.' in text:
+    ptag.string='Araştırma grubuna yönelik talepler için aşağıdaki dış bağlantılı ilgi formunu kullanabilirsiniz. E-posta üzerinden doğrudan iletişim seçeneği de mevcuttur. Kimliği belirlenebilir öğrenci verilerini göndermeyiniz.'
+  s.main.append(fragment(research_interest(lang)))
   # Proposed team membership stays attached to the submitted AÜB application.
   s=docs['proposal-turkiye-uae-stem.html'];s.main.append(fragment(section('<h2>'+pick(('Proposed research team','Önerilen araştırma ekibi'),lang)+'</h2><p>'+pick(('Team listed in the supplied application: Hüseyin Ateş (coordinator), Kibar Gül (NEVÜ), Naciye Somuncu Demir (TOGÜ), Ahmet Sami Konca (UAEU), and independent researcher Yeşim Taktat Ateş. The application status is unchanged.','Paylaşılan başvurudaki ekip: Hüseyin Ateş (yürütücü), Kibar Gül (NEVÜ), Naciye Somuncu Demir (TOGÜ), Ahmet Sami Konca (UAEU) ve bağımsız araştırmacı Yeşim Taktat Ateş. Başvurunun değerlendirme durumu değişmemiştir.'),lang)+'</p>'+link(pick(('People and affiliations','Ekip ve kurumlar'),lang),'team.html#project-researchers'),'proposal-team')))
   # Scientific funding decision for 1002-A project, without asserting a signed contract.
@@ -199,11 +276,12 @@ def main():
   s.main.append(fragment(section('<h2>'+pick(('Funding decision evidence','Destek kararı kaydı'),lang)+'</h2><p>'+pick(('The TÜBİTAK SOBAG decision letter dated 28 August 2026 confirms a positive scientific funding decision for project 226K999. The letter also describes separate financial and contracting procedures, and does not by itself establish that the project contract has been signed.','28 Ağustos 2026 tarihli TÜBİTAK SOBAG karar yazısı, 226K999 numaralı proje için olumlu bilimsel destek kararını doğruluyor. Yazı mali değerlendirme ve sözleşme işlemlerini ayrıca tanımlıyor; tek başına proje sözleşmesinin imzalandığını göstermez.'),lang)+'</p>','funding-decision-note','muted')))
   s=docs['project-vr-stem-vietnam.html'];s.main.append(fragment(section('<h2>'+pick(('Research connection in Vietnam','Vietnam’daki araştırma bağlantısı'),lang)+'</h2>'+link('Bui Van Hong · HCM-UTE','person-bui-van-hong.html')+'<p>'+pick(('This project remains completed; the collaboration profile does not reopen the project.','Proje tamamlanmış durumdadır; araştırmacı profili eklenmesi projenin yeniden başladığı anlamına gelmez.'),lang)+'</p>')))
   docs['research.html'].main.append(fragment(section('<h2>'+pick(('International research network','Uluslararası araştırma ağı'),lang)+'</h2>'+link(pick(('22 countries · 43 institutions','22 ülke · 43 kurum'),lang),'research-network.html'))))
+  fix_1002_titles(docs,lang)
   build_index(docs,lang)
   for name,s in docs.items():(folder/name).write_text(str(s))
   localized[lang]=docs
  manifest=json.loads((SITE/'deployment.json').read_text());manifest.pop('files',None)
- manifest.update(version='4.4',language_pairs=len(localized['en']),page_count=len(localized['en'])*2,pages=sorted(p.relative_to(SITE).as_posix() for p in SITE.rglob('*.html')),downloads=sorted(p.name for p in (SITE/'downloads').iterdir() if p.is_file()),updated='2026-11-13')
+ manifest.update(version='4.5',language_pairs=len(localized['en']),page_count=len(localized['en'])*2,pages=sorted(p.relative_to(SITE).as_posix() for p in SITE.rglob('*.html')),downloads=sorted(p.name for p in (SITE/'downloads').iterdir() if p.is_file()),updated='2026-11-13')
  (SITE/'deployment.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2))
  urls=[]
  for name in sorted(localized['en']):
@@ -212,7 +290,7 @@ def main():
    alts=''.join(f'<xhtml:link rel="alternate" hreflang="{code}" href="{BASE}{prefix}{name}"/>' for code,prefix in [('en',''),('tr','tr/'),('x-default','')])
    urls.append(f'<url><loc>{BASE}'+('tr/' if lang=='tr' else '')+name+'</loc>'+alts+'<lastmod>2026-11-13</lastmod></url>')
  (SITE/'sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">'+''.join(urls)+'</urlset>')
- (SITE/'quality-report.json').write_text(json.dumps({'release':'4.4','language_pairs':len(localized['en']),'people_profiles':num,'countries_in_source_posters':22,'institutions_in_source_posters':43,'photos_added':0,'limits':'Countries identify institutional location; logos are not endorsements. Proposal and completed-project statuses are preserved.'},indent=2))
+ (SITE/'quality-report.json').write_text(json.dumps({'release':'4.5','language_pairs':len(localized['en']),'people_profiles':num,'countries_in_source_posters':22,'institutions_in_source_posters':43,'photos_added':0,'limits':'Countries identify institutional location; logos are not endorsements. Proposal and completed-project statuses are preserved.'},indent=2))
  print('TEAM DIRECTORY BUILT',num,'profiles;',manifest['page_count'],'pages')
 
 if __name__=='__main__':main()

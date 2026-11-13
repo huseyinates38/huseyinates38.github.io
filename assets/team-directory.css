@@ -3,3 +3,14 @@
 @media(max-width:1050px){.people-grid,.network-country-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.network-callout{grid-template-columns:1fr}.network-preview{max-width:100%}}
 @media(max-width:640px){.people-grid,.network-country-grid,.team-leader,.profile-summary{grid-template-columns:1fr}.profile-summary{gap:20px}.team-leader{padding:24px;gap:12px}.person-card{padding:23px}.network-stats{gap:20px}.network-stats strong{font-size:27px}.network-stats span{font-size:9px}.network-callout{gap:24px}.country-tag{font-size:12px}.institution-mark{width:105px;flex-basis:105px}.pagehero .affiliation-item{flex-basis:100%}.network-country{padding:20px}}
 @media print{.directory-tools,.network-preview>span{display:none}.network-country-grid,.people-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.person-card,.network-country{break-inside:avoid}.institution-mark{box-shadow:none}.network-preview{box-shadow:none}}
+
+/* Public research-group interest form: direct link and accessible QR. */
+.research-join{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:26px;align-items:center;background:#edf5f0;border:1px solid #cddfd8;border-radius:8px;padding:28px}
+.research-join h2{margin:6px 0 13px;font-size:clamp(24px,3vw,35px)}
+.research-join p{max-width:720px}.research-join a.btn{display:inline-flex}
+.join-form-url{font-size:13px;overflow-wrap:anywhere;margin-top:10px}
+.join-form-url a{color:#176f78}
+.research-join-qr{background:white;border:1px solid #c5dcd7;border-radius:8px;padding:8px;color:#1b5961;text-align:center;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:5px;transition:box-shadow .15s}
+.research-join-qr:hover{box-shadow:0 8px 24px #103e4c23}.research-join-qr img{display:block;width:100%;max-width:220px;height:auto;aspect-ratio:1;object-fit:contain}
+.research-join-qr span{font-size:12px;font-weight:600;padding-bottom:5px}
+@media(max-width:660px){.research-join{grid-template-columns:1fr;padding:20px}.research-join-qr{max-width:220px}}

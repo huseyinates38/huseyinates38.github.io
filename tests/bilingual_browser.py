@@ -10,7 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]; SITE=ROOT/'_site'
 
 def main():
   offline='--offline' in sys.argv
-  report={'release':'4.4','widths':[360,768,1440],'pages':0,'layout_checks':0,'interactions':[],'errors':[]}
+  report={'release':'4.5','widths':[360,768,1440],'pages':0,'layout_checks':0,'interactions':[],'errors':[]}
   class Quiet(http.server.SimpleHTTPRequestHandler):
     def log_message(self,*args):pass
   server=None
@@ -88,7 +88,7 @@ def main():
       assert page.locator('[data-mode]:visible').count()>=1
       report['interactions'].append('Turkish feedback example mode selection')
       load('tr/team.html')
-      assert page.locator('.person-card').count()==30
+      assert page.locator('.person-card').count()==31
       for img in page.locator('.institution-mark img').all():
         img.scroll_into_view_if_needed()
         if not offline:
@@ -98,10 +98,16 @@ def main():
       assert page.locator('.person-card:visible').count()==1
       assert '2028' in page.locator('.person-card:visible').inner_text()
       page.locator('#people-reset').click()
-      assert page.locator('.person-card:visible').count()==30
+      assert page.locator('.person-card:visible').count()==31
       page.locator('#people-query').fill('Hollanda')
       assert page.locator('.person-card:visible').count()==3
-      report['interactions'].append('Thirty team profiles, loaded institutional logos and accent-insensitive directory filter')
+      report['interactions'].append('Thirty researcher profiles, two Ipek role cards and loaded institutional logos')
+      assert page.locator('#alumni [data-person="ipek-oz-alumna"]').count()==1
+      assert page.locator('a[href="https://tally.so/r/Eq51Jr"]').count()>=1
+      load('tr/join.html')
+      assert page.locator('a[href="https://tally.so/r/Eq51Jr"]').count()>=1
+      assert page.locator('.research-join-qr img').count()==1
+      report['interactions'].append('Interest form and QR link in team and join page')
       load('tr/research-network.html')
       assert page.locator('.network-country').count()==22
       assert page.locator('.network-country li').count()==43

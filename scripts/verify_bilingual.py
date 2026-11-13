@@ -9,7 +9,7 @@ from verify_site import validate
 def main():
   validate()
   m=json.loads((SITE/'deployment.json').read_text())
-  assert m['version']=='4.4' and m['languages']==['en','tr'],m
+  assert m['version']=='4.5' and m['languages']==['en','tr'],m
   assert m['language_pairs']==68 and m['page_count']==136,(m['language_pairs'],m['page_count'])
   paths=sorted(p.name for p in SITE.glob('*.html'))
   assert len(paths)==68
@@ -76,6 +76,23 @@ def main():
   sections=[n.get('id') for n in team.select('main > section[id]')]
   assert sections.index('collaborators')<sections.index('graduate-researchers')
   assert 'Omid Noroozi' in team.get_text() and 'Guido Makransky' in team.get_text()
+  # Public research group and grant titles must not regress to editor/author notes.
+  for prefix in ('','tr/'):
+    team_page=Soup((SITE/prefix/'team.html').read_text(encoding='utf-8'),'html.parser')
+    alumni=team_page.select_one('#alumni')
+    researchers=team_page.select_one('#project-contributors')
+    assert alumni and alumni.select_one('[data-person="ipek-oz-alumna"]')
+    assert researchers and researchers.select_one('[data-person="ipek-oz"]')
+    assert team_page.select_one('a[href="https://tally.so/r/Eq51Jr"]')
+    assert team_page.select_one('img[src$="assets/qr/research-group-interest.png"]')
+    assert 'İpek Öz araştırmacı olarak da katkı sunuyor ve üst bölümde listeleniyor' not in team_page.get_text(' ',strip=True)
+    join_page=Soup((SITE/prefix/'join.html').read_text(encoding='utf-8'),'html.parser')
+    assert join_page.select_one('a[href="https://tally.so/r/Eq51Jr"]') and join_page.select_one('img[src$="assets/qr/research-group-interest.png"]')
+    project=Soup((SITE/prefix/'project-space-debris.html').read_text(encoding='utf-8'),'html.parser')
+    assert ('Uzay Kirliliği Problem Çözme Öğretiminde İki Pedagojik İskele Yaklaşımının Sınıf İçi Pilot Karşılaştırması' if prefix else 'Classroom Pilot Comparison of Two Pedagogical Scaffolding Approaches') in project.select_one('h1').get_text(' ',strip=True)
+    serbay=Soup((SITE/prefix/'person-serbay-durmaz.html').read_text(encoding='utf-8'),'html.parser').get_text(' ',strip=True)
+    assert ('Karacaoğlan Ortaokulu' if prefix else 'Karacaoğlan Secondary School') in serbay
+  assert (SITE/'assets/qr/research-group-interest.png').stat().st_size>1000
   dfg=Soup((SITE/'tr/proposal-tubitak-dfg-reasoning.html').read_text(),'html.parser').get_text(' ',strip=True)
   assert 'başvuru yapılmadı' in dfg and 'Krell' in dfg
   protected=['mail.google.com','teams.microsoft.com/meet','Invitation Letter.docx','IMG_3348','IMG_8514','professional_outdoor_business_portrait','/mnt/data/','ghp_']

@@ -265,6 +265,19 @@
       ],
       "country": "TR",
       "url": "https://www.gop.edu.tr/"
+    },
+    "karacaoglan-school": {
+      "names": [
+        "Karacaoğlan Secondary School, Yüreğir, Adana",
+        "Adana Yüreğir Karacaoğlan Ortaokulu"
+      ],
+      "country": "TR",
+      "url": "https://www.meb.gov.tr/",
+      "logo": "meb",
+      "logo_label": [
+        "Ministry of National Education emblem",
+        "Millî Eğitim Bakanlığı amblemi"
+      ]
     }
   },
   "affiliations": {
@@ -375,8 +388,8 @@
         "Proje araştırma ekibi"
       ],
       "description": [
-        "Listed as a researcher in the research-team roster supplied by Hüseyin Ateş. Institutional affiliation: Istanbul Technical University.",
-        "Hüseyin Ateş’in paylaştığı araştırma ekibi listesinde araştırmacı olarak yer alıyor. Kurumu İstanbul Teknik Üniversitesidir."
+        "Research team member affiliated with Istanbul Technical University.",
+        "İstanbul Teknik Üniversitesinde görev yapan araştırma ekibi üyesidir."
       ]
     },
     {
@@ -399,8 +412,8 @@
         "Proje araştırma ekibi"
       ],
       "description": [
-        "Researcher in the team roster supplied by Hüseyin Ateş. Institutional affiliation: Marmara University.",
-        "Hüseyin Ateş’in paylaştığı ekip listesinde araştırmacı olarak yer alıyor. Kurumu Marmara Üniversitesidir."
+        "Research team member affiliated with Marmara University.",
+        "Marmara Üniversitesinde görev yapan araştırma ekibi üyesidir."
       ]
     },
     {
@@ -423,8 +436,8 @@
         "Proje araştırma ekibi"
       ],
       "description": [
-        "Researcher at Kırşehir Ahi Evran University, listed in Hüseyin Ateş’s research-team roster.",
-        "Kırşehir Ahi Evran Üniversitesinde görev yapan ve Hüseyin Ateş’in ekip listesinde araştırmacı olarak yer alan öğretim üyesi."
+        "Research team member affiliated with Kırşehir Ahi Evran University.",
+        "Kırşehir Ahi Evran Üniversitesinde görev yapan araştırma ekibi üyesidir."
       ]
     },
     {
@@ -497,7 +510,7 @@
         "Dr."
       ],
       "institutions": [
-        "meb"
+        "karacaoglan-school"
       ],
       "group": "project-contributors",
       "role": [
@@ -509,8 +522,8 @@
         "Araştırma ekibi ve okul uygulamaları"
       ],
       "description": [
-        "Researcher in the supplied team roster and an expert teacher within Türkiye’s Ministry of National Education.",
-        "Paylaşılan ekip listesinde araştırmacı olarak yer alıyor; Millî Eğitim Bakanlığı bünyesinde uzman öğretmen olarak çalışıyor."
+        "Researcher and expert teacher at Karacaoğlan Secondary School in Yüreğir, Adana, within Türkiye’s Ministry of National Education.",
+        "Adana’nın Yüreğir ilçesindeki Karacaoğlan Ortaokulunda uzman öğretmen ve araştırma ekibinde araştırmacı olarak görev yapmaktadır."
       ]
     },
     {
@@ -582,8 +595,8 @@
         "Proje araştırma ekibi"
       ],
       "description": [
-        "Listed as an adviser in the research-team roster supplied by Hüseyin Ateş. Institutional affiliation: Boğaziçi University.",
-        "Hüseyin Ateş’in paylaştığı araştırma ekibi listesinde danışman olarak yer alıyor. Kurumu Boğaziçi Üniversitesidir."
+        "Research adviser affiliated with Boğaziçi University.",
+        "Boğaziçi Üniversitesinde görev yapan araştırma danışmanıdır."
       ]
     },
     {
