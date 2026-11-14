@@ -99,6 +99,11 @@ def main():
   docs={p.name:Soup(p.read_text(encoding='utf-8'),'html.parser') for p in sorted(folder.glob('*.html'))}
   knowledge=corpus(docs,lang)
   s=copy.deepcopy(docs['contact.html']);s.main.clear();s.main.append(Soup(interface(lang,pre),'html.parser'))
+  # Prevent native form submissions even if the JavaScript fails or is disabled.
+  question=s.select_one('#chat-question');question.attrs.pop('name',None);question['spellcheck']='false'
+  s.select_one('#chat-send')['disabled']=''
+  for old in s.select('meta[http-equiv="Content-Security-Policy"]'):old.decompose()
+  s.head.append(s.new_tag('meta',attrs={'http-equiv':'Content-Security-Policy','content':"form-action 'none'"}))
   title,desc=metadata(s,lang)
   for node in s.select('script[src*="academic-assistant"],link[href*="academic-assistant"],.ai-launch'):node.decompose()
   data=s.new_tag('script',id='assistant-knowledge',type='application/json');data.string=json.dumps(knowledge,ensure_ascii=False).replace('<','\\u003c');s.main.append(data)
