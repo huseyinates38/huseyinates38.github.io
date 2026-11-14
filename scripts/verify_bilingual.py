@@ -81,9 +81,10 @@ def main():
   for prefix in ('','tr/'):
     team_page=Soup((SITE/prefix/'team.html').read_text(encoding='utf-8'),'html.parser')
     alumni=team_page.select_one('#alumni')
-    researchers=team_page.select_one('#project-contributors')
+    team3501=team_page.select_one('#project-team-3501')
     assert alumni and alumni.select_one('[data-person="ipek-oz-alumna"]')
-    assert researchers and researchers.select_one('[data-person="ipek-oz"]')
+    assert team3501 and team3501.select_one('[data-person="ipek-oz"]')
+    assert len(team3501.select('.person-card[data-person]'))==6
     assert team_page.select_one('a[href="https://tally.so/r/Eq51Jr"]')
     assert team_page.select_one('img[src$="assets/qr/research-group-interest.png"]')
     assert 'İpek Öz araştırmacı olarak da katkı sunuyor ve üst bölümde listeleniyor' not in team_page.get_text(' ',strip=True)

@@ -393,16 +393,23 @@
       ],
       "group": "project-researchers",
       "role": [
-        "Researcher",
-        "Araştırmacı"
+        "Researcher · TÜBİTAK 3501",
+        "Araştırmacı · TÜBİTAK 3501"
       ],
       "topic": [
-        "Project research team",
-        "Proje araştırma ekibi"
+        "TÜBİTAK 3501 · Physical robot vs. virtual agent",
+        "TÜBİTAK 3501 · Fiziksel robot ve sanal ajan"
       ],
       "description": [
-        "Research team member affiliated with Istanbul Technical University.",
-        "İstanbul Teknik Üniversitesinde görev yapan araştırma ekibi üyesidir."
+        "Research team member affiliated with Istanbul Technical University. This researcher is part of the resubmitted TÜBİTAK 3501 proposal team; the funding decision is pending.",
+        "İstanbul Teknik Üniversitesinde görev yapan araştırma ekibi üyesidir. Yeniden sunulan TÜBİTAK 3501 proje önerisinin ekibinde yer almaktadır; destek kararı beklenmektedir."
+      ],
+      "links": [
+        [
+          "TÜBİTAK 3501 proposal",
+          "TÜBİTAK 3501 başvurusu",
+          "project-robot-virtual-agent.html"
+        ]
       ]
     },
     {
@@ -417,16 +424,23 @@
       ],
       "group": "project-researchers",
       "role": [
-        "Researcher",
-        "Araştırmacı"
+        "Researcher · TÜBİTAK 3501",
+        "Araştırmacı · TÜBİTAK 3501"
       ],
       "topic": [
-        "Project research team",
-        "Proje araştırma ekibi"
+        "TÜBİTAK 3501 · Physical robot vs. virtual agent",
+        "TÜBİTAK 3501 · Fiziksel robot ve sanal ajan"
       ],
       "description": [
-        "Research team member affiliated with Marmara University.",
-        "Marmara Üniversitesinde görev yapan araştırma ekibi üyesidir."
+        "Research team member affiliated with Marmara University. This researcher is part of the resubmitted TÜBİTAK 3501 proposal team; the funding decision is pending.",
+        "Marmara Üniversitesinde görev yapan araştırma ekibi üyesidir. Yeniden sunulan TÜBİTAK 3501 proje önerisinin ekibinde yer almaktadır; destek kararı beklenmektedir."
+      ],
+      "links": [
+        [
+          "TÜBİTAK 3501 proposal",
+          "TÜBİTAK 3501 başvurusu",
+          "project-robot-virtual-agent.html"
+        ]
       ]
     },
     {
@@ -441,16 +455,23 @@
       ],
       "group": "project-researchers",
       "role": [
-        "Researcher",
-        "Araştırmacı"
+        "Researcher · TÜBİTAK 3501",
+        "Araştırmacı · TÜBİTAK 3501"
       ],
       "topic": [
-        "Project research team",
-        "Proje araştırma ekibi"
+        "TÜBİTAK 3501 · Physical robot vs. virtual agent",
+        "TÜBİTAK 3501 · Fiziksel robot ve sanal ajan"
       ],
       "description": [
-        "Research team member affiliated with Kırşehir Ahi Evran University.",
-        "Kırşehir Ahi Evran Üniversitesinde görev yapan araştırma ekibi üyesidir."
+        "Research team member affiliated with Kırşehir Ahi Evran University. This researcher is part of the resubmitted TÜBİTAK 3501 proposal team; the funding decision is pending.",
+        "Kırşehir Ahi Evran Üniversitesinde görev yapan araştırma ekibi üyesidir. Yeniden sunulan TÜBİTAK 3501 proje önerisinin ekibinde yer almaktadır; destek kararı beklenmektedir."
+      ],
+      "links": [
+        [
+          "TÜBİTAK 3501 proposal",
+          "TÜBİTAK 3501 başvurusu",
+          "project-robot-virtual-agent.html"
+        ]
       ]
     },
     {
@@ -525,18 +546,25 @@
       "institutions": [
         "karacaoglan-school"
       ],
-      "group": "project-contributors",
+      "group": "project-researchers",
       "role": [
-        "Researcher · Expert teacher",
-        "Araştırmacı · Uzman öğretmen"
+        "Researcher · Expert teacher · TÜBİTAK 3501",
+        "Araştırmacı · Uzman öğretmen · TÜBİTAK 3501"
       ],
       "topic": [
-        "Research team and school practice",
-        "Araştırma ekibi ve okul uygulamaları"
+        "TÜBİTAK 3501 · Physical robot vs. virtual agent",
+        "TÜBİTAK 3501 · Fiziksel robot ve sanal ajan"
       ],
       "description": [
-        "Researcher and expert teacher at Karacaoğlan Secondary School in Yüreğir, Adana, within Türkiye’s Ministry of National Education.",
-        "Adana’nın Yüreğir ilçesindeki Karacaoğlan Ortaokulunda uzman öğretmen ve araştırma ekibinde araştırmacı olarak görev yapmaktadır."
+        "Researcher and expert teacher at Karacaoğlan Secondary School in Yüreğir, Adana, within Türkiye’s Ministry of National Education. This researcher is part of the resubmitted TÜBİTAK 3501 proposal team; the funding decision is pending.",
+        "Adana’nın Yüreğir ilçesindeki Karacaoğlan Ortaokulunda uzman öğretmen ve araştırma ekibinde araştırmacı olarak görev yapmaktadır. Yeniden sunulan TÜBİTAK 3501 proje önerisinin ekibinde yer almaktadır; destek kararı beklenmektedir."
+      ],
+      "links": [
+        [
+          "TÜBİTAK 3501 proposal",
+          "TÜBİTAK 3501 başvurusu",
+          "project-robot-virtual-agent.html"
+        ]
       ]
     },
     {
@@ -547,7 +575,7 @@
         "Dr."
       ],
       "institutions": [],
-      "group": "project-contributors",
+      "group": "project-researchers",
       "role": [
         "Researcher · Independent researcher",
         "Araştırmacı · Bağımsız araştırmacı"
@@ -574,18 +602,25 @@
       "institutions": [
         "school"
       ],
-      "group": "project-contributors",
+      "group": "project-researchers",
       "role": [
-        "Researcher · Expert teacher · MSc alumna",
-        "Araştırmacı · Uzman öğretmen · Yüksek lisans mezunu"
+        "Researcher · Expert teacher · MSc alumna · TÜBİTAK 3501",
+        "Araştırmacı · Uzman öğretmen · Yüksek lisans mezunu · TÜBİTAK 3501"
       ],
       "topic": [
-        "School practice, distance education and technology adoption",
-        "Okul uygulamaları, uzaktan eğitim ve teknoloji benimseme"
+        "TÜBİTAK 3501 · Physical robot vs. virtual agent",
+        "TÜBİTAK 3501 · Fiziksel robot ve sanal ajan"
       ],
       "description": [
-        "Researcher and expert teacher at Kırşehir Anadolu İmam Hatip High School. She completed her master’s thesis under Hüseyin Ateş’s supervision in 2022 on science teachers’ intentions to use distance-education tools, using structural equation modelling.",
-        "Kırşehir Anadolu İmam Hatip Lisesinde uzman öğretmen ve araştırma ekibinde araştırmacı. Hüseyin Ateş danışmanlığındaki yüksek lisansını 2022’de tamamladı. Tezi, fen öğretmenlerinin uzaktan eğitim araçlarını kullanma niyetini yapısal eşitlik modellemesiyle inceliyor."
+        "Researcher and expert teacher at Kırşehir Anadolu İmam Hatip High School. She completed her master’s thesis under Hüseyin Ateş’s supervision in 2022 on science teachers’ intentions to use distance-education tools, using structural equation modelling. This researcher is part of the resubmitted TÜBİTAK 3501 proposal team; the funding decision is pending.",
+        "Kırşehir Anadolu İmam Hatip Lisesinde uzman öğretmen ve araştırma ekibinde araştırmacı. Hüseyin Ateş danışmanlığındaki yüksek lisansını 2022’de tamamladı. Tezi, fen öğretmenlerinin uzaktan eğitim araçlarını kullanma niyetini yapısal eşitlik modellemesiyle inceliyor. Yeniden sunulan TÜBİTAK 3501 proje önerisinin ekibinde yer almaktadır; destek kararı beklenmektedir."
+      ],
+      "links": [
+        [
+          "TÜBİTAK 3501 proposal",
+          "TÜBİTAK 3501 başvurusu",
+          "project-robot-virtual-agent.html"
+        ]
       ]
     },
     {
@@ -598,18 +633,25 @@
       "institutions": [
         "bogazici"
       ],
-      "group": "project-contributors",
+      "group": "project-researchers",
       "role": [
-        "Research adviser",
-        "Araştırma danışmanı"
+        "Research adviser · TÜBİTAK 3501",
+        "Araştırma danışmanı · TÜBİTAK 3501"
       ],
       "topic": [
-        "Project research team",
-        "Proje araştırma ekibi"
+        "TÜBİTAK 3501 · Physical robot vs. virtual agent",
+        "TÜBİTAK 3501 · Fiziksel robot ve sanal ajan"
       ],
       "description": [
-        "Research adviser affiliated with Boğaziçi University.",
-        "Boğaziçi Üniversitesinde görev yapan araştırma danışmanıdır."
+        "Research adviser affiliated with Boğaziçi University. This researcher is part of the resubmitted TÜBİTAK 3501 proposal team; the funding decision is pending.",
+        "Boğaziçi Üniversitesinde görev yapan araştırma danışmanıdır. Yeniden sunulan TÜBİTAK 3501 proje önerisinin ekibinde yer almaktadır; destek kararı beklenmektedir."
+      ],
+      "links": [
+        [
+          "TÜBİTAK 3501 proposal",
+          "TÜBİTAK 3501 başvurusu",
+          "project-robot-virtual-agent.html"
+        ]
       ]
     },
     {
@@ -809,6 +851,34 @@
     ]
   ],
   "project_teams": [
+    {
+      "id": "3501",
+      "title": [
+        "TÜBİTAK 3501 · Physical Humanoid Robot vs. Virtual Agent",
+        "TÜBİTAK 3501 · Fiziksel İnsansı Robot ve Sanal Ajan"
+      ],
+      "stage": [
+        "Resubmitted 3501 proposal · funding decision pending",
+        "Yeniden sunulan 3501 başvurusu · destek kararı bekleniyor"
+      ],
+      "description": [
+        "Team of the resubmitted TÜBİTAK 3501 proposal comparing a physical humanoid social robot with a screen-based virtual agent in AI-supported self-regulated environmental learning. Researcher, expert-teacher and adviser roles are distinguished below.",
+        "Yapay zekâ destekli öz düzenlemeli çevre öğreniminde fiziksel insansı sosyal robot ile ekran tabanlı sanal ajanın karşılaştırılmasını konu alan, yeniden sunulmuş TÜBİTAK 3501 başvurusunun ekibi. Araştırmacı, uzman öğretmen ve danışman rolleri aşağıda ayrı belirtilmiştir."
+      ],
+      "note": [
+        "Research lead / applicant: Hüseyin Ateş. The proposal has been resubmitted; a funding award has not been confirmed.",
+        "Yürütücü / başvuru sahibi: Hüseyin Ateş. Öneri yeniden sunulmuştur; destek kararı henüz doğrulanmamıştır."
+      ],
+      "people": [
+        "gokhan-ince",
+        "zeynep-aydemir",
+        "ahmet-salih-simsek",
+        "serbay-durmaz",
+        "ipek-oz",
+        "ibrahim-delen"
+      ],
+      "url": "project-robot-virtual-agent.html"
+    },
     {
       "id": "aub-stem",
       "title": [

@@ -56,8 +56,9 @@ def main():
       assert page.evaluate('document.documentElement.scrollWidth <= innerWidth+1'),(pre,name,width)
       assert page.locator('h1').count()==1
       if name=='team.html':
-       for group_id,expected in [('project-team-aub-stem',3),('project-team-unassigned',3),('project-school-practice',2),('project-advisers',1)]:
+       for group_id,expected in [('project-team-3501',6),('project-team-aub-stem',3)]:
         assert page.locator('#'+group_id+' .person-card').count()==expected,(pre,group_id)
+       assert page.locator('#project-team-unassigned,#project-contributors').count()==0
        for institution in ['surrey','twente']:
         logo=page.locator('.institution-mark.dark img[src$="'+institution+'.png"]').first
         assert logo.count()==1,(pre,institution)
@@ -66,7 +67,10 @@ def main():
        if width==1440:
         page.locator('#people-query').fill('Kibar Gül')
         assert page.locator('#project-team-aub-stem').is_visible()
-        assert page.locator('#project-team-unassigned').is_hidden()
+        assert page.locator('#project-team-3501').is_hidden()
+        page.locator('#people-query').fill('Gökhan İnce')
+        assert page.locator('#project-team-3501').is_visible()
+        assert page.locator('#project-team-aub-stem').is_hidden()
         page.locator('#people-reset').click()
       report['layout_checks']+=1
       if width in [390,1440] and pre=='tr/' and name in ['person-gokhan-ince.html','person-marc-romero-carbonell.html','resource-use.html']:

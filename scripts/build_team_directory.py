@@ -16,8 +16,7 @@ OFFICIAL_1002_TITLE_EN='Classroom Pilot Comparison of Two Pedagogical Scaffoldin
 AFF={**DATA['affiliations'],**{k:v['institutions'] for k,v in NEW.items()}}
 LABELS={
  'collaborators':('Ongoing research collaborations','Devam Eden Araştırma İş Birlikleri'),
- 'project-researchers':('Project researchers','Proje Araştırmacıları'),
- 'project-contributors':('Research practitioners & advisers','Araştırmacılar ve Danışmanlar'),
+ 'project-researchers':('Project teams & advisers','Proje Ekipleri ve Danışmanlar'),
  'editorial-collaborators':('Ongoing editorial collaboration','Devam Eden Editoryal İş Birliği'),
  'graduate-researchers':('Graduate researchers','Lisansüstü Araştırmacılar'),
  'alumni':('Research alumni','Mezun Araştırmacılar')}
@@ -146,7 +145,7 @@ def project_team_block(project,cards,lang):
   missing=[slug for slug in members if slug not in cards]
   if missing:raise ValueError('Unknown research team member: '+', '.join(missing))
   info='<div class="project-team-head"><div><p class="micro-label">'+e(pick(project['stage'],lang))+'</p><h3>'+e(pick(project['title'],lang))+'</h3><p>'+e(pick(project['description'],lang))+'</p></div>'+link(pick(('View proposal record','Başvuru kaydını incele'),lang),project['url'])+'</div>'
-  note='<p class="project-team-note">'+e(pick(project['note'],lang))+' '+link(pick(('Ahmet Sami Konca profile','Ahmet Sami Konca profili'),lang),project['related_profile'])+'</p>'
+  note='<p class="project-team-note">'+e(pick(project['note'],lang))+((' '+link(pick(('Ahmet Sami Konca profile','Ahmet Sami Konca profili'),lang),project['related_profile'])) if project.get('related_profile') else '')+'</p>'
   return '<div class="project-team" data-project-team id="project-team-'+e(project['id'])+'">'+info+'<div class="people-grid">'+''.join(str(cards[slug]) for slug in members)+'</div>'+note+'</div>'
 
 def project_roles_block(id_,heading,summary,slugs,cards,lang):
@@ -193,22 +192,10 @@ def team_page(docs,lang):
    ipek='<article class="person-card" data-person="ipek-oz-alumna"><div class="person-top"><div><p class="micro-label">'+ipek_role+'</p><h3>İpek Öz</h3></div></div><p class="person-topic">'+ipek_topic+'</p>'+affiliations(['kaeu'],lang,alumni=True)+link(pick(('View master’s alumna profile','Yüksek lisans mezunu profilini incele'),lang),'person-ipek-oz.html')+'</article>'
    groups[gid].append('ipek-oz-alumna');cards['ipek-oz-alumna']=fragment(ipek).article
   if gid=='project-researchers':
-   intro='<p>'+pick(('Project records are shown separately. Only verified members of a named application are grouped together; researchers without a specified project are not assigned to that application.','Proje ve başvuru kayıtları ayrı gösterilir. Yalnızca adı belirtilen başvuruda yer aldığı doğrulanan kişiler aynı ekipte toplanır; proje eşleştirmesi belirtilmeyen araştırmacılar bu ekibe dâhil edilmez.'),lang)+'</p>'
+   intro='<p>'+pick(('The TÜBİTAK 3501 proposal team and the Türkiye–UAE AÜB application team are shown separately. Researcher, expert-teacher and adviser roles are identified within their own team; neither proposal is presented as an awarded grant.','TÜBİTAK 3501 proje önerisi ekibi ve Türkiye–BAE AÜB başvuru ekibi ayrı gösterilmektedir. Araştırmacı, uzman öğretmen ve danışman rolleri kendi ekiplerinde belirtilmiştir; başvurular desteklenmiş proje olarak sunulmaz.'),lang)+'</p>'
    blocks=[project_team_block(project,cards,lang) for project in DATA.get('project_teams',[])]
    unknown=[slug for slug in groups[gid] if slug not in project_people]
    blocks.append(project_roles_block('project-team-unassigned',('Other researchers · project not specified','Diğer araştırmacılar · proje belirtilmemiş'),('These are individual researcher records. The available roster does not identify a specific study for each person, so no shared project or grant is implied.','Bu kişiler ayrı araştırmacı kayıtlarıdır. Mevcut ekip listesinde her kişinin hangi çalışmada görev aldığı belirtilmediğinden ortak proje veya destek ilişkisi varsayılmamıştır.'),unknown,cards,lang))
-   block='<h2>'+pick(title,lang)+'</h2>'+intro+'<div class="project-team-stack">'+''.join(blocks)+'</div>'
-  elif gid=='project-contributors':
-   intro='<p>'+pick(('School-based research roles and academic advisory roles are listed independently, not as one common project team.','Okul temelli araştırma görevleri ve akademik danışmanlık rolleri tek bir proje ekibi gibi değil, birbirinden bağımsız olarak listelenir.'),lang)+'</p>'
-   remaining=[slug for slug in groups[gid] if slug not in project_people]
-   school=[slug for slug in remaining if slug in ('serbay-durmaz','ipek-oz')]
-   advisers=[slug for slug in remaining if slug in ('ibrahim-delen',)]
-   other=[slug for slug in remaining if slug not in set(school+advisers)]
-   blocks=[
-    project_roles_block('project-school-practice',('School-based research roles','Okul temelli araştırma rolleri'),('Each researcher is listed by their own role; a joint project assignment has not been specified.','Her araştırmacı kendi göreviyle listelenir; ortak bir projede görev aldıkları belirtilmemiştir.'),school,cards,lang),
-    project_roles_block('project-advisers',('Academic advisory role','Akademik danışmanlık rolü'),('The advisory relationship is recorded without assigning the adviser to an otherwise unverified project.','Danışmanlık ilişkisi, doğrulanmamış bir projeye atama yapılmadan gösterilir.'),advisers,cards,lang),
-    project_roles_block('project-other-roles',('Other research roles','Diğer araştırma rolleri'),('No specific shared project is attributed to these people.','Bu kişilere ortak bir proje atfedilmemiştir.'),other,cards,lang)
-   ]
    block='<h2>'+pick(title,lang)+'</h2>'+intro+'<div class="project-team-stack">'+''.join(blocks)+'</div>'
   else:
    block='<h2>'+pick(title,lang)+'</h2>'+intro+'<div class="people-grid">'+''.join(str(cards[slug]) for slug in groups[gid])+'</div>'
@@ -328,6 +315,11 @@ def main():
   activity_link=link(pick(('ICCAI 2027 conference contribution and 2224-A application','ICCAI 2027 bildirisi ve 2224-A başvurusu'),lang),'conference-iccai-2027.html')
   docs['about.html'].main.append(fragment(section('<h2>'+pick(('Academic events and conference contributions','Bilimsel etkinlikler ve konferans bildirileri'),lang)+'</h2><p>'+pick(('The conference contribution and participation-support application are recorded separately from research grants.','Kabul edilen konferans bildirileri ve katılım desteği başvuruları, araştırma projeleriyle karıştırılmadan sunulmaktadır.'),lang)+'</p>'+activity_link,'academic-events','muted')))
   docs['proposals.html'].main.append(fragment(section('<h2>'+pick(('International conference participation support','Uluslararası bilimsel etkinlik katılım desteği'),lang)+'</h2><p>'+pick(('TÜBİTAK 2224-A is an event-participation support application and is not included in the seven research-proposal records above.','TÜBİTAK 2224-A, bilimsel etkinliğe katılım desteği başvurusudur; yukarıda yer alan yedi araştırma önerisi kaydına dâhil değildir.'),lang)+'</p>'+activity_link,'conference-support')))
+  # TÜBİTAK 3501 team: confirmed by site owner; funding is still pending.
+  p3501=next(project for project in DATA['project_teams'] if project['id']=='3501')
+  project_team_members=''.join('<li>'+link(NEW[slug]['name'],'person-'+slug+'.html')+' — '+e(pick(NEW[slug]['role'],lang))+'</li>' for slug in p3501['people'])
+  s=docs['project-robot-virtual-agent.html']
+  s.main.append(fragment(section('<h2>'+pick(('TÜBİTAK 3501 proposal team','TÜBİTAK 3501 başvuru ekibi'),lang)+'</h2><p>'+e(pick(p3501['note'],lang))+'</p><ul class="focus-list">'+project_team_members+'</ul><p>'+link(pick(('All project teams and advisers','Tüm proje ekipleri ve danışmanlar'),lang),'team.html#project-researchers')+'</p>','proposal-3501-team','muted')))
   # Proposed team membership stays attached to the submitted AÜB application.
   s=docs['proposal-turkiye-uae-stem.html'];s.main.append(fragment(section('<h2>'+pick(('Proposed research team','Önerilen araştırma ekibi'),lang)+'</h2><p>'+pick(('Team listed in the supplied application: Hüseyin Ateş (coordinator), Kibar Gül (NEVÜ), Naciye Somuncu Demir (TOGÜ), Ahmet Sami Konca (UAEU), and independent researcher Yeşim Taktat Ateş. The application status is unchanged.','Paylaşılan başvurudaki ekip: Hüseyin Ateş (yürütücü), Kibar Gül (NEVÜ), Naciye Somuncu Demir (TOGÜ), Ahmet Sami Konca (UAEU) ve bağımsız araştırmacı Yeşim Taktat Ateş. Başvurunun değerlendirme durumu değişmemiştir.'),lang)+'</p>'+link(pick(('People and affiliations','Ekip ve kurumlar'),lang),'team.html#project-researchers'),'proposal-team')))
   # Scientific funding decision for 1002-A project, without asserting a signed contract.
