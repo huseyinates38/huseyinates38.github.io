@@ -18,3 +18,9 @@ Each school override includes the exact institution names, its official MEB scho
 Membership and project-stage context are read from the reviewed team/project pages. Specific contribution descriptions are limited to the existing Kibar Gül and Naciye Somuncu Demir application records. Other members retain their documented role; technical development, measurement or analysis duties must not be inferred. No thesis identifier, thesis URL, funded appointment or new partnership is invented.
 
 Run the normal build and checks, including `python tests/record_review_browser.py`. The latter also supports `--offline` for local, fully inlined asset checks in restricted environments. Browser coverage includes both languages, 390/768/1440-pixel widths, date fields, institutional logos and the separate 3501/AÜB groups.
+
+## Shared project memberships and concise information (14 November 2026)
+
+The website owner confirmed Dr. Yeşim Taktat Ateş in both the TÜBİTAK 3501 and Türkiye–UAE AÜB application teams. Display her in each team and link both studies from her single academic profile. Project teams display an application stage once in the heading. Do not repeat the project title, principal investigator or pending-decision caveat in each team card. Preserve legitimate distinct roles, institution affiliations and both proposal records.
+
+The final `scripts/concise_team_copy.py` pass runs after `apply_record_review.py` has created the initial project facts and before search-index generation. It removes same-page duplicate role/focus/stage labels, while retaining each independent status record and any documented unique contribution. Recheck dual-membership search, role accuracy and project links with the browser suite. Do not infer technical responsibilities or renew review dates automatically.

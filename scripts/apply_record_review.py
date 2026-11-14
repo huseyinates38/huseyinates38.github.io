@@ -212,11 +212,15 @@ def validate(docs, config, lang: str):
         assert matching and all(a['href'] == school['url'] for a in matching), school['key']
     for team_id, proposal_slug in TEAM_RECORDS.items():
         members = docs['team.html'].select(f'#project-team-{team_id} .person-card[data-person]')
-        assert len(members) == (6 if team_id == '3501' else 3)
+        assert len(members) == (7 if team_id == '3501' else 3)
         for card in members:
             s = docs['person-' + card['data-person'] + '.html']
             assert s.select_one(f'[data-project-record="study"] a[href="{proposal_page(proposal_slug)}"]')
             assert s.select_one('[data-project-record="stage"]')
+    yesim = docs['person-yesim-taktat-ates.html']
+    hrefs = {a['href'] for a in yesim.select('[data-project-record="study"] a[href]')}
+    assert hrefs == {'project-robot-virtual-agent.html','proposal-turkiye-uae-stem.html'}
+    assert len(yesim.select('[data-project-record="stage"]')) == 1
     assert not docs['team.html'].select_one('#project-team-unassigned')
     for s in docs.values():
         assert not any(plain(h) in CTA_OLD for h in s.select('main h1,main h2,main h3'))
@@ -241,6 +245,8 @@ def main():
         about_dates(docs['about.html'], config, lang)
         proposal_dates(docs, config, lang)
         project_context(docs, config, lang)
+        from concise_team_copy import polish
+        polish(docs, config, lang)
         for s in docs.values():
             school_links(s, config)
             for heading in s.select('main h1,main h2,main h3'):

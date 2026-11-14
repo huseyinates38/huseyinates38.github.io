@@ -577,24 +577,18 @@
       "institutions": [],
       "group": "project-researchers",
       "role": [
-        "Researcher · Independent researcher",
-        "Araştırmacı · Bağımsız araştırmacı"
+        "Independent researcher",
+        "Bağımsız araştırmacı"
       ],
       "topic": [
-        "Research collaboration and AÜB proposal team",
-        "Araştırma iş birliği ve AÜB başvuru ekibi"
+        "TÜBİTAK 3501 and AÜB applications",
+        "TÜBİTAK 3501 ve AÜB başvuruları"
       ],
       "description": [
-        "Independent researcher with no current institutional affiliation. The AÜB application identifies her as an external team member. No university affiliation or employment is implied.",
-        "Güncel kurumsal bağlılığı bulunmayan bağımsız araştırmacı. AÜB başvurusunda kurum dışı ekip üyesi olarak yer alıyor; herhangi bir üniversiteye bağlı çalışma veya istihdam bilgisi atanmıyor."
+        "Independent researcher on both the TÜBİTAK 3501 and Türkiye–UAE AÜB proposal teams; no institutional affiliation is recorded.",
+        "TÜBİTAK 3501 ve Türkiye–BAE AÜB başvuru ekiplerinde bağımsız araştırmacıdır; güncel kurumsal bağlılığı bulunmamaktadır."
       ],
-      "links": [
-        [
-          "AÜB proposal",
-          "AÜB başvurusu",
-          "proposal-turkiye-uae-stem.html"
-        ]
-      ]
+      "links": []
     },
     {
       "slug": "ipek-oz",
@@ -862,12 +856,8 @@
         "Yeniden sunulan 3501 başvurusu · destek kararı bekleniyor"
       ],
       "description": [
-        "Team of the resubmitted TÜBİTAK 3501 proposal comparing a physical humanoid social robot with a screen-based virtual agent in AI-supported self-regulated environmental learning. Researcher, expert-teacher and adviser roles are distinguished below.",
-        "Yapay zekâ destekli öz düzenlemeli çevre öğreniminde fiziksel insansı sosyal robot ile ekran tabanlı sanal ajanın karşılaştırılmasını konu alan, yeniden sunulmuş TÜBİTAK 3501 başvurusunun ekibi. Araştırmacı, uzman öğretmen ve danışman rolleri aşağıda ayrı belirtilmiştir."
-      ],
-      "note": [
-        "Research lead / applicant: Hüseyin Ateş. The proposal has been resubmitted; a funding award has not been confirmed.",
-        "Yürütücü / başvuru sahibi: Hüseyin Ateş. Öneri yeniden sunulmuştur; destek kararı henüz doğrulanmamıştır."
+        "Researcher and adviser team for the active-control comparison in middle-school environmental learning.",
+        "Ortaokulda çevre öğrenimine yönelik aktif kontrol koşullu karşılaştırma çalışmasının araştırmacı ve danışman ekibi."
       ],
       "people": [
         "gokhan-ince",
@@ -875,7 +865,8 @@
         "ahmet-salih-simsek",
         "serbay-durmaz",
         "ipek-oz",
-        "ibrahim-delen"
+        "ibrahim-delen",
+        "yesim-taktat-ates"
       ],
       "url": "project-robot-virtual-agent.html"
     },
@@ -890,12 +881,12 @@
         "AÜB başvurusu yapıldı · destek kararı bekleniyor"
       ],
       "description": [
-        "This is the named application team for the Türkiye–UAE study on generative-AI guidance and independent STEM instructional design. It is not presented as a funded project.",
-        "Üretken yapay zekâ rehberliği ve bağımsız STEM öğretim tasarımı üzerine Türkiye–BAE çalışması için adı belirtilen başvuru ekibidir. Desteklenmiş proje olarak gösterilmemektedir."
+        "Team developing the Türkiye–UAE proposal on independent STEM instructional design with generative-AI guidance.",
+        "Üretken yapay zekâ rehberliğinde bağımsız STEM öğretim tasarımını inceleyen Türkiye–BAE başvurusunun ekibi."
       ],
       "note": [
-        "The application also names Hüseyin Ateş as coordinator and Ahmet Sami Konca (UAEU) as a team member. Their participation here does not imply that other listed researchers are part of this proposal.",
-        "Başvuruda Hüseyin Ateş yürütücü, Ahmet Sami Konca (UAEU) ise ekip üyesi olarak da yer alır. Bu ekipte bulunmaları, sayfadaki diğer araştırmacıların aynı başvuruda görev aldığı anlamına gelmez."
+        "Ahmet Sami Konca (UAEU) also participates in this proposal.",
+        "Ahmet Sami Konca (UAEU) da bu başvuruda görev almaktadır."
       ],
       "related_profile": "person-ahmet-sami-konca.html",
       "people": [

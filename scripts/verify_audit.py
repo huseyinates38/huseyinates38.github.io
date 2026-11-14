@@ -30,9 +30,9 @@ def main():
   for name in ['team.html','publications.html','proposal-visiting-researchers-2221.html']:
    record=next(r for r in records if r['url']==name)
    assert record['title']==docs[name].main.h1.get_text(' ',strip=True),(lang,name)
-  cards=docs['team.html'].select('.person-card[data-person]');assert len(cards)==31
+  cards=docs['team.html'].select('.person-card[data-person]');assert len(cards)==32
   from refine_profile_copy import NO_STAGE
-  assert all(c.select_one('.relationship-stage') for c in cards if c['data-person'] not in NO_STAGE)
+  assert all(c.select_one('.relationship-stage') for c in cards if c['data-person'] not in NO_STAGE and not c.find_parent(class_='project-team'))
   assert all(not c.select_one('.relationship-stage') for c in cards if c['data-person'] in NO_STAGE and not c.find_parent(id='alumni'))
   assert docs['team.html'].select_one('#people-no-results')
   for slug in ['kubra-solmaz','rabia-ates','fatma-gazioglu','ipek-oz']:

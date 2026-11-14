@@ -46,7 +46,7 @@ def main():
      load(pre+name);page.locator('.menu-button').click();assert page.locator('#main-navigation a.mobile-search-link').is_visible()
      assert page.locator('#main-navigation a.mobile-search-link').get_attribute('href')=='search.html';report['mobile_search_checks']+=1
     load(pre+'team.html');page.locator('#people-query').fill('zzzz-unmatched-researcher');assert page.locator('#people-no-results').is_visible();assert page.locator('.person-card[data-person]:not([hidden])').count()==0
-    page.locator('#people-reset').click();assert page.locator('#people-no-results').is_hidden();assert page.locator('.person-card[data-person]:not([hidden])').count()==31
+    page.locator('#people-reset').click();assert page.locator('#people-no-results').is_hidden();assert page.locator('.person-card[data-person]:not([hidden])').count()==32
     for key in ['guido-makransky','bui-van-hong','marc-romero-carbonell']:assert page.locator(f'[data-person="{key}"] .relationship-stage').count()==1
     page.set_viewport_size({'width':1600,'height':1080});load(pre+'index.html')
     assert page.locator('.showcase-news-card .showcase-card-img img').count()==5

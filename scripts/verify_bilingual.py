@@ -84,7 +84,9 @@ def main():
     team3501=team_page.select_one('#project-team-3501')
     assert alumni and alumni.select_one('[data-person="ipek-oz-alumna"]')
     assert team3501 and team3501.select_one('[data-person="ipek-oz"]')
-    assert len(team3501.select('.person-card[data-person]'))==6
+    assert len(team3501.select('.person-card[data-person]'))==7
+    assert team3501.select_one('[data-person="yesim-taktat-ates"]')
+    assert team_page.select_one('#project-team-aub-stem [data-person="yesim-taktat-ates"]')
     assert team_page.select_one('a[href="https://tally.so/r/Eq51Jr"]')
     assert team_page.select_one('img[src$="assets/qr/research-group-interest.png"]')
     assert 'İpek Öz araştırmacı olarak da katkı sunuyor ve üst bölümde listeleniyor' not in team_page.get_text(' ',strip=True)

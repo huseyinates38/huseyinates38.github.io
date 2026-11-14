@@ -44,7 +44,7 @@ def main():
     report = {'layout_checks': 0, 'record_checks': 0, 'errors': []}
     names = ['index.html', 'about.html', 'proposals.html', 'team.html',
              'person-gokhan-ince.html', 'person-serbay-durmaz.html',
-             'person-ipek-oz.html', 'person-kibar-gul.html', 'project-robot-virtual-agent.html']
+             'person-ipek-oz.html', 'person-kibar-gul.html', 'person-yesim-taktat-ates.html', 'project-robot-virtual-agent.html']
     try:
         with sync_playwright() as p:
             browser = p.chromium.launch(executable_path=shutil.which('chromium') or shutil.which('google-chrome'), args=['--no-sandbox'])
@@ -69,14 +69,16 @@ def main():
                         if name == 'proposals.html':
                             assert page.locator('.pipeline-card [data-record-date] time').count() == 7
                         if name.startswith('person-'):
-                            assert page.locator('[data-project-record="study"] a').count() == 1
+                            assert page.locator('[data-project-record="study"] a').count() == (2 if name == 'person-yesim-taktat-ates.html' else 1)
                             assert page.locator('[data-project-record="stage"]').count() == 1
                         if name == 'team.html':
                             for key in ('surrey', 'twente'):
                                 logo = page.locator(f'.institution-mark.dark img[alt*="{key.title()}"]').first
                                 assert logo.evaluate('(img) => img.complete && img.naturalWidth > 0')
                                 assert logo.evaluate('(img) => getComputedStyle(img.parentElement).backgroundColor') == 'rgb(23, 55, 70)'
-                            assert page.locator('#project-team-3501 .person-card').count() == 6
+                            assert page.locator('#project-team-3501 .person-card').count() == 7
+                            assert page.locator('#project-team-3501 [data-person="yesim-taktat-ates"]').count() == 1
+                            assert page.locator('#project-team-aub-stem [data-person="yesim-taktat-ates"]').count() == 1
                             assert page.locator('#project-team-aub-stem .person-card').count() == 3
                         report['record_checks'] += 1
             browser.close()
