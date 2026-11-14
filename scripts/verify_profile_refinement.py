@@ -14,7 +14,12 @@ def main():
   team=read(pre+'team.html')
   for slug in ROLE_ONLY:
    s=read(pre+'person-'+slug+'.html');fields=values(s)
-   assert list(fields)==(['Rol'] if tr else ['Role']),(slug,fields)
+   expected=['Rol'] if tr else ['Role']
+   if s.select_one('[data-project-record="study"]'):
+    expected+=['İlgili çalışma / başvuru','Başvuru aşaması'] if tr else ['Related study / application','Application stage']
+    assert s.select_one('[data-project-record="study"] a[href="project-robot-virtual-agent.html"]')
+    assert '3501' in fields[expected[1]]
+   assert list(fields)==expected,(slug,fields)
    assert s.select_one('#academic-record .institution-name') and s.select_one('#academic-record .country-tag')
    assert s.select_one('#academic-record img'),slug
    assert not s.select_one('.pagehero .lead')

@@ -48,6 +48,7 @@ jobs:
           python scripts/apply_v48.py
           python scripts/apply_design_system.py
           python scripts/apply_audit_fixes.py
+          python scripts/apply_record_review.py
       - name: Validate public status, privacy, search and documents
         run: |
           python scripts/verify_bilingual.py
@@ -59,6 +60,7 @@ jobs:
           python tests/design_browser.py
           python tests/audit_browser.py
           python tests/network_browser.py
+          python tests/record_review_browser.py
       - name: Retain browser and quality reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -71,6 +73,8 @@ jobs:
             audit-report.json
             profile-refinement-report.json
             network-browser-report.json
+            record-review-report.json
+            record-review-browser-report.json
             profile-previews/
             design-previews/
             _site/quality-report.json
@@ -94,6 +98,6 @@ jobs:
         run: python scripts/verify_site.py --live
       - name: Record release
         run: |
-          echo '## Academic website 5.2 — precise profile fields, bilingual copy and network search' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Shared visual system on all pages, independent EN/TR hero images, five photo-backed highlights, preserved research records and responsive controls.' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Academic website 5.2 — explicit record dates, verified school links and project context' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Shared visual system preserved. Page/CV dates are separate; proposal-status dates remain explicit reviewed records.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Browser and live-file tests passed. These tests are not WCAG certification or academic fact verification.' >> "$GITHUB_STEP_SUMMARY"

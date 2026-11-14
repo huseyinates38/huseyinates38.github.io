@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "editorial_change_date": "2026-11-14",
+  "date_policy": "Dates are explicit reviewed records, not the build clock. Page changes do not renew CV content or funding-status verification.",
+  "about": {
+    "page_updated": "2026-11-14",
+    "cv_updated": "2026-11-13",
+    "basis": "Both downloadable CV editions in successful release 5c8c81be carry 13 November 2026. This edit changes the page labels, not the CV files."
+  },
+  "proposal_review_basis": "Imported from content/research-pipeline.json status_date 2026-11-13 and the existing reviewed application register. No new award decision is inferred.",
+  "proposal_status_reviewed": {
+    "feedback-fading": "2026-11-13",
+    "sciepi-feedback": "2026-11-13",
+    "reclaim": "2026-11-13",
+    "turkiye-uae-stem": "2026-11-13",
+    "visiting-researchers-2221": "2026-11-13",
+    "tubitak-dfg-reasoning": "2026-11-13",
+    "robot-virtual-agent": "2026-11-13"
+  },
+  "schools": [
+    {
+      "key": "karacaoglan-school",
+      "names": ["Karacaoğlan Secondary School, Yüreğir, Adana", "Adana Yüreğir Karacaoğlan Ortaokulu"],
+      "url": "https://karacaoglanortaokulu.meb.k12.tr/",
+      "source": "https://karacaoglanortaokulu.meb.k12.tr/tema/okulumuz_hakkinda.php",
+      "url_verified_on": "2026-11-14"
+    },
+    {
+      "key": "school",
+      "names": ["Kırşehir Anadolu İmam Hatip High School", "Kırşehir Anadolu İmam Hatip Lisesi"],
+      "url": "https://kanadoluimamhatiplisesi.meb.k12.tr/",
+      "source": "https://kanadoluimamhatiplisesi.meb.k12.tr/tema/okulumuz_hakkinda.html",
+      "url_verified_on": "2026-11-14"
+    }
+  ],
+  "profile_contributions": {
+    "kibar-gul": ["STEM teacher education, activity design and performance criteria (proposed contribution).", "STEM öğretmen eğitimi, etkinlik tasarımı ve performans ölçütleri (önerilen katkı)."],
+    "naciye-somuncu-demir": ["Science–mathematics integration, scientific suitability and piloting (proposed contribution).", "Fen–matematik bütünleştirmesi, bilimsel uygunluk ve pilot uygulama (önerilen katkı)."]
+  },
+  "contribution_basis": "Existing descriptions in content/team-directory.json. Detailed technical or methodological tasks are not assigned to other members without evidence."
+}
