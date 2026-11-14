@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Final assistant upgrade. Exports only already-public data; never activates paid use."""
 from pathlib import Path
-import json, re, shutil, hashlib
+import json, re, shutil, hashlib, unicodedata
 from urllib.parse import urlsplit
 from bs4 import BeautifulSoup as Soup
 ROOT=Path(__file__).resolve().parents[1]; SITE=ROOT/'_site'
@@ -76,7 +76,7 @@ def main():
     page=Soup((folder/row['url']).read_text(),'html.parser');main=page.main
     for hidden in main.select('script,style'):hidden.decompose()
     row['summary']=main.select_one('.lead').get_text(' ',strip=True) if main.select_one('.lead') else row.get('summary','')
-    row['key']=main.get_text(' ',strip=True).casefold()
+    row['key']=''.join(c for c in unicodedata.normalize('NFD',main.get_text(' ',strip=True)) if unicodedata.category(c)!='Mn').replace('ı','i').lower()
   data.string=json.dumps(rows,ensure_ascii=False).replace('<','\\u003c');path.write_text(str(doc),encoding='utf-8')
  for name in ('deployment.json','quality-report.json'):
   path=SITE/name;value=json.loads(path.read_text());value.pop('files',None);value['assistant_mode']='server-ready; source guide until authorised';value['assistant_context_revision']=bundle['revision'];path.write_text(json.dumps(value,ensure_ascii=False,indent=2))
