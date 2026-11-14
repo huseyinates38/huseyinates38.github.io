@@ -112,6 +112,13 @@ def polish(docs, config, lang):
             intro=layout.select_one('p.lead')
             if intro and intro.find_next_sibling('p'):
                 intro.decompose()
+    # An application stage is not a proposed project duration.
+    # Its status already appears in the metadata and heading.
+    for item in list(robot.select('.proposal-meta dt')):
+        if plain(item) in ('Proposed duration / visit','Önerilen süre / ziyaret'):
+            value=item.find_next_sibling('dd')
+            if value and any(x in plain(value).lower() for x in ('resubmitted proposal','yeniden sunulan başvuru')):
+                item.decompose(); value.decompose()
     # The 3501 collaboration subsection repeats the pending status already
     # presented in the hero and the proposal's structured status record.
     for sec in list(robot.select('main > section')):

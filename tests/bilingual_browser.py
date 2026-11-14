@@ -94,7 +94,7 @@ def main():
       assert page.locator('[data-mode]:visible').count()>=1
       report['interactions'].append('Turkish feedback example mode selection')
       load('tr/team.html')
-      assert page.locator('.person-card').count()==31
+      assert page.locator('.person-card').count()==32
       for img in page.locator('.institution-mark img').all():
         img.scroll_into_view_if_needed()
         if not offline:
@@ -104,10 +104,10 @@ def main():
       assert page.locator('.person-card:visible').count()==1
       assert '2028' in page.locator('.person-card:visible').inner_text()
       page.locator('#people-reset').click()
-      assert page.locator('.person-card:visible').count()==31
+      assert page.locator('.person-card:visible').count()==32
       page.locator('#people-query').fill('Hollanda')
       assert page.locator('.person-card:visible').count()==3
-      report['interactions'].append('Thirty researcher profiles, two Ipek role cards and loaded institutional logos')
+      report['interactions'].append('Shared 3501/AÜB team membership, two Ipek role cards and loaded institutional logos')
       assert page.locator('#alumni [data-person="ipek-oz-alumna"]').count()==1
       assert page.locator('a[href="https://tally.so/r/Eq51Jr"]').count()>=1
       load('tr/join.html')
