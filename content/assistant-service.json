@@ -1,0 +1,5 @@
+{
+  "version": 3,
+  "endpoint": "",
+  "note": "Set only after the server is authorised, quota-limited and evaluated. Never place a provider key here."
+}

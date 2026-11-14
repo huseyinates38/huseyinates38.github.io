@@ -71,6 +71,13 @@ jobs:
           node --check _site/assets/academic-assistant.js
           node --check _site/assets/academic-answer-engine.js
           python tests/assistant_quality_browser.py
+      - name: Build and test server-ready conversation
+        run: |
+          set -euo pipefail
+          python scripts/build_assistant_v3.py
+          node --check _site/assets/assistant-conversation.js
+          node --test assistant-service/test/*.test.mjs | tee assistant-service-test.tap
+          python tests/assistant_v3_browser.py
       - name: Retain browser and quality reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -88,6 +95,9 @@ jobs:
             assistant-browser-report.json
             assistant-quality-build.json
             assistant-quality-report.json
+            assistant-v3-browser-report.json
+            assistant-service-test.tap
+            assistant-v3-previews/
             assistant-quality-previews/
             assistant-previews/
             profile-previews/
@@ -113,6 +123,6 @@ jobs:
         run: python scripts/verify_site.py --live
       - name: Record release
         run: |
-          echo '## Academic website — question-specific public-record answers' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Structured factual answers, bilingual follow-ups, complete team membership and sentence-ranked retrieval. The small on-device generative model remains experimental.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Actual factual-answer and UI tests passed. Real generative-answer quality is not validated; no cloud model has been connected.' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Academic website — server-ready conversation architecture' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Trusted public sources, bounded conversation history, explicit consent and fail-closed usage quotas. No small browser model is loaded by the final interface.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Cloud remains inactive until an owner-authorised service is configured. Transport and source tests do not certify real model answer quality.' >> "$GITHUB_STEP_SUMMARY"
