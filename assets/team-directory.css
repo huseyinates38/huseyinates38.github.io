@@ -16,3 +16,18 @@
 @media(max-width:660px){.research-join{grid-template-columns:1fr;padding:20px}.research-join-qr{max-width:220px}}
 
 .institution-text-mark{background:#f0f5f3;color:#163e4c;font:700 25px/1 'DM Sans',Arial,sans-serif;letter-spacing:-.04em}
+
+/* Independent project/role entries; grouping never implies an undocumented common study. */
+.project-team-stack{display:grid;gap:26px;margin-top:23px}
+.project-team{min-width:0;padding:26px;background:#f8fbff;border:1px solid #c8dce9;border-radius:12px}
+.project-team-head{display:flex;justify-content:space-between;align-items:flex-start;gap:24px}
+.project-team-head>div{min-width:0;max-width:800px}
+.project-team-head h3{font-size:clamp(19px,2vw,25px);margin:0 0 9px;line-height:1.3}
+.project-team-head p{margin:0;font-size:14px;line-height:1.65}
+.project-team-head .micro-label{margin:0 0 9px;color:#28536b}
+.project-team-head .textlink{flex:0 0 auto;max-width:200px}
+.project-team .people-grid{margin-top:20px}
+.project-team-note{border-top:1px solid #c8dce9;padding-top:15px;margin:20px 0 0;font-size:13px}
+.project-team-note .textlink{display:inline;margin-left:7px}
+.project-team[hidden]{display:none!important}
+@media(max-width:720px){.project-team{padding:18px}.project-team-head{flex-direction:column;gap:12px}.project-team-head .textlink{max-width:none}.project-team-stack{gap:18px}}

@@ -139,6 +139,23 @@ def network_page(template,lang):
  return shell(template,'research-network.html',lang,body)
 
 
+
+def project_team_block(project,cards,lang):
+  """Render only explicitly documented project members together."""
+  members=project['people']
+  missing=[slug for slug in members if slug not in cards]
+  if missing:raise ValueError('Unknown research team member: '+', '.join(missing))
+  info='<div class="project-team-head"><div><p class="micro-label">'+e(pick(project['stage'],lang))+'</p><h3>'+e(pick(project['title'],lang))+'</h3><p>'+e(pick(project['description'],lang))+'</p></div>'+link(pick(('View proposal record','Başvuru kaydını incele'),lang),project['url'])+'</div>'
+  note='<p class="project-team-note">'+e(pick(project['note'],lang))+' '+link(pick(('Ahmet Sami Konca profile','Ahmet Sami Konca profili'),lang),project['related_profile'])+'</p>'
+  return '<div class="project-team" data-project-team id="project-team-'+e(project['id'])+'">'+info+'<div class="people-grid">'+''.join(str(cards[slug]) for slug in members)+'</div>'+note+'</div>'
+
+def project_roles_block(id_,heading,summary,slugs,cards,lang):
+  """Separate unassigned roles without claiming a shared study."""
+  if not slugs:return ''
+  info='<div class="project-team-head"><div><h3>'+e(pick(heading,lang))+'</h3><p>'+e(pick(summary,lang))+'</p></div></div>'
+  return '<div class="project-team" data-project-team id="'+e(id_)+'">'+info+'<div class="people-grid">'+''.join(str(cards[slug]) for slug in slugs)+'</div></div>'
+
+
 def team_page(docs,lang):
  s=docs['team.html'];asset(s,lang);cards={};groups={k:[] for k in LABELS}
  for gid in ['collaborators','editorial-collaborators','graduate-researchers','alumni']:
@@ -165,17 +182,36 @@ def team_page(docs,lang):
  nav='<nav class="subnav" aria-label="'+pick(('People sections','Ekip bölümleri'),lang)+'">'+''.join(link(pick(label,lang),'#'+gid) for gid,label in LABELS.items())+link(pick(('International network','Uluslararası ağ'),lang),'research-network.html')+'</nav>'
  body='<section class="pagehero"><div class="container"><p class="eyebrow">'+pick(('People / Research connections','Ekip / Araştırma bağlantıları'),lang)+'</p><h1>'+pick(('Research grows through <em>people.</em>','Araştırma <em>insanlarla</em> gelişir.'),lang)+'</h1><p class="lead">'+pick(('Research collaborators, project researchers and advisers, followed by graduate researchers and alumni.','Araştırma ortakları, proje araştırmacıları ve danışmanlar; ardından lisansüstü araştırmacılar ve mezunlar.'),lang)+'</p>'+nav+'</div></section>'+str(leader)
  body+=section('<div class="directory-tools"><label for="people-query">'+pick(('Find a researcher, institution or country','Araştırmacı, kurum veya ülke ara'),lang)+'</label><input id="people-query" type="search"/><button type="button" id="people-reset">'+pick(('Clear search','Aramayı temizle'),lang)+'</button><p id="people-count" aria-live="polite"></p></div><p class="v3-small">'+pick(('Countries refer to the location of the stated institution, not nationality. Institutional marks identify affiliations; they do not imply institutional endorsement or funding.','Ülke bilgileri kişinin vatandaşlığını değil, belirtilen kurumun bulunduğu ülkeyi gösterir. Kurum logoları aidiyeti tanıtır; kurumsal onay veya proje desteği anlamına gelmez.'),lang)+'</p>','directory-search')
+ project_people={slug for project in DATA.get('project_teams',[]) for slug in project['people']}
  for i,(gid,title) in enumerate(LABELS.items()):
   intro=''
   if gid=='collaborators':intro='<p>'+pick(('Ongoing joint manuscripts, research design and scholarly communication are grouped here; individual profiles distinguish submitted proposals, conceptual work and completed projects. These entries are not an assertion that every institution has signed a project agreement.','Ortak makaleler, araştırma tasarımı ve bilimsel iletişim alanlarında süren akademik bağlantılar burada toplanmıştır. Kişisel profiller başvuruları, kavramsal çalışmaları ve tamamlanan projeleri ayırır; kurumların tamamının resmî proje anlaşması imzaladığı iddia edilmez.'),lang)+'</p>'
-  if gid=='project-researchers':intro='<p>'+pick(('Roles follow the supplied team roster. AÜB application-team roles are labelled separately; inclusion is not a statement of a funding award.','Görevler paylaşılan ekip listesine göre sunulur. AÜB başvuru ekibindeki roller ayrıca etiketlenmiştir; listelenmek destek kararı alındığı anlamına gelmez.'),lang)+'</p>'
   if gid=='alumni':
    intro='<p>'+pick(('Completed master’s degrees supervised by Hüseyin Ateş.','Hüseyin Ateş danışmanlığında tamamlanan yüksek lisans tezleri.'),lang)+'</p>'
    ipek_role=pick(('Master’s graduate · 2022','Yüksek lisans mezunu · 2022'),lang)
    ipek_topic=pick(('Distance education and technology adoption','Uzaktan eğitim ve teknoloji benimseme'),lang)
    ipek='<article class="person-card" data-person="ipek-oz-alumna"><div class="person-top"><div><p class="micro-label">'+ipek_role+'</p><h3>İpek Öz</h3></div></div><p class="person-topic">'+ipek_topic+'</p>'+affiliations(['kaeu'],lang,alumni=True)+link(pick(('View master’s alumna profile','Yüksek lisans mezunu profilini incele'),lang),'person-ipek-oz.html')+'</article>'
    groups[gid].append('ipek-oz-alumna');cards['ipek-oz-alumna']=fragment(ipek).article
-  block='<h2>'+pick(title,lang)+'</h2>'+intro+'<div class="people-grid">'+''.join(str(cards[slug]) for slug in groups[gid])+'</div>'
+  if gid=='project-researchers':
+   intro='<p>'+pick(('Project records are shown separately. Only verified members of a named application are grouped together; researchers without a specified project are not assigned to that application.','Proje ve başvuru kayıtları ayrı gösterilir. Yalnızca adı belirtilen başvuruda yer aldığı doğrulanan kişiler aynı ekipte toplanır; proje eşleştirmesi belirtilmeyen araştırmacılar bu ekibe dâhil edilmez.'),lang)+'</p>'
+   blocks=[project_team_block(project,cards,lang) for project in DATA.get('project_teams',[])]
+   unknown=[slug for slug in groups[gid] if slug not in project_people]
+   blocks.append(project_roles_block('project-team-unassigned',('Other researchers · project not specified','Diğer araştırmacılar · proje belirtilmemiş'),('These are individual researcher records. The available roster does not identify a specific study for each person, so no shared project or grant is implied.','Bu kişiler ayrı araştırmacı kayıtlarıdır. Mevcut ekip listesinde her kişinin hangi çalışmada görev aldığı belirtilmediğinden ortak proje veya destek ilişkisi varsayılmamıştır.'),unknown,cards,lang))
+   block='<h2>'+pick(title,lang)+'</h2>'+intro+'<div class="project-team-stack">'+''.join(blocks)+'</div>'
+  elif gid=='project-contributors':
+   intro='<p>'+pick(('School-based research roles and academic advisory roles are listed independently, not as one common project team.','Okul temelli araştırma görevleri ve akademik danışmanlık rolleri tek bir proje ekibi gibi değil, birbirinden bağımsız olarak listelenir.'),lang)+'</p>'
+   remaining=[slug for slug in groups[gid] if slug not in project_people]
+   school=[slug for slug in remaining if slug in ('serbay-durmaz','ipek-oz')]
+   advisers=[slug for slug in remaining if slug in ('ibrahim-delen',)]
+   other=[slug for slug in remaining if slug not in set(school+advisers)]
+   blocks=[
+    project_roles_block('project-school-practice',('School-based research roles','Okul temelli araştırma rolleri'),('Each researcher is listed by their own role; a joint project assignment has not been specified.','Her araştırmacı kendi göreviyle listelenir; ortak bir projede görev aldıkları belirtilmemiştir.'),school,cards,lang),
+    project_roles_block('project-advisers',('Academic advisory role','Akademik danışmanlık rolü'),('The advisory relationship is recorded without assigning the adviser to an otherwise unverified project.','Danışmanlık ilişkisi, doğrulanmamış bir projeye atama yapılmadan gösterilir.'),advisers,cards,lang),
+    project_roles_block('project-other-roles',('Other research roles','Diğer araştırma rolleri'),('No specific shared project is attributed to these people.','Bu kişilere ortak bir proje atfedilmemiştir.'),other,cards,lang)
+   ]
+   block='<h2>'+pick(title,lang)+'</h2>'+intro+'<div class="project-team-stack">'+''.join(blocks)+'</div>'
+  else:
+   block='<h2>'+pick(title,lang)+'</h2>'+intro+'<div class="people-grid">'+''.join(str(cards[slug]) for slug in groups[gid])+'</div>'
   body+=section(block,gid,'muted' if i%2==0 else 'white')
  body+=research_interest(lang)+network_intro(lang)
  sethtml(s.main,body);metadata(s,'team.html',lang)

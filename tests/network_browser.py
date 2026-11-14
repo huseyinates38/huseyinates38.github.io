@@ -55,6 +55,19 @@ def main():
       page.evaluate('async()=>{await Promise.all([...document.images].map(i=>i.decode().catch(()=>null)))}')
       assert page.evaluate('document.documentElement.scrollWidth <= innerWidth+1'),(pre,name,width)
       assert page.locator('h1').count()==1
+      if name=='team.html':
+       for group_id,expected in [('project-team-aub-stem',3),('project-team-unassigned',3),('project-school-practice',2),('project-advisers',1)]:
+        assert page.locator('#'+group_id+' .person-card').count()==expected,(pre,group_id)
+       for institution in ['surrey','twente']:
+        logo=page.locator('.institution-mark.dark img[src$="'+institution+'.png"]').first
+        assert logo.count()==1,(pre,institution)
+        assert logo.evaluate('(img)=>getComputedStyle(img.parentElement).backgroundColor')=='rgb(23, 55, 70)',(pre,institution)
+        if not OFFLINE:assert logo.evaluate('(img)=>img.complete && img.naturalWidth>0'),(pre,institution)
+       if width==1440:
+        page.locator('#people-query').fill('Kibar Gül')
+        assert page.locator('#project-team-aub-stem').is_visible()
+        assert page.locator('#project-team-unassigned').is_hidden()
+        page.locator('#people-reset').click()
       report['layout_checks']+=1
       if width in [390,1440] and pre=='tr/' and name in ['person-gokhan-ince.html','person-marc-romero-carbonell.html','resource-use.html']:
        page.evaluate('window.scrollTo(0,0)')

@@ -8,7 +8,10 @@
   const empty=document.getElementById(inputId==='people-query'?'people-no-results':'network-no-results');
   const update=()=>{const terms=clean(q.value).trim().split(/\s+/).filter(Boolean);let n=0;
    for(const card of all){const value=clean(card.textContent);card.hidden=!terms.every(t=>value.includes(t));if(!card.hidden)n++;}
-   if(groups)for(const group of groups)group.hidden=!!terms.length&&![...group.querySelectorAll(selector)].some(card=>!card.hidden);
+   if(groups){
+    for(const subgroup of document.querySelectorAll('[data-project-team]'))subgroup.hidden=!!terms.length&&![...subgroup.querySelectorAll(selector)].some(card=>!card.hidden);
+    for(const group of groups)group.hidden=!!terms.length&&![...group.querySelectorAll(selector)].some(card=>!card.hidden);
+   }
    if(count){const country=inputId==='network-query';count.textContent=tr?`${n} / ${all.length} ${country?'ülke':'kayıt'} gösteriliyor`:`Showing ${n} of ${all.length} ${country?'countries':'entries'}`;}
    if(empty)empty.hidden=n!==0;
   };

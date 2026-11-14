@@ -807,5 +807,33 @@
         "Curtin University"
       ]
     ]
+  ],
+  "project_teams": [
+    {
+      "id": "aub-stem",
+      "title": [
+        "Türkiye–UAE STEM education proposal",
+        "Türkiye–BAE STEM eğitimi proje başvurusu"
+      ],
+      "stage": [
+        "Submitted AÜB application · funding decision pending",
+        "AÜB başvurusu yapıldı · destek kararı bekleniyor"
+      ],
+      "description": [
+        "This is the named application team for the Türkiye–UAE study on generative-AI guidance and independent STEM instructional design. It is not presented as a funded project.",
+        "Üretken yapay zekâ rehberliği ve bağımsız STEM öğretim tasarımı üzerine Türkiye–BAE çalışması için adı belirtilen başvuru ekibidir. Desteklenmiş proje olarak gösterilmemektedir."
+      ],
+      "note": [
+        "The application also names Hüseyin Ateş as coordinator and Ahmet Sami Konca (UAEU) as a team member. Their participation here does not imply that other listed researchers are part of this proposal.",
+        "Başvuruda Hüseyin Ateş yürütücü, Ahmet Sami Konca (UAEU) ise ekip üyesi olarak da yer alır. Bu ekipte bulunmaları, sayfadaki diğer araştırmacıların aynı başvuruda görev aldığı anlamına gelmez."
+      ],
+      "related_profile": "person-ahmet-sami-konca.html",
+      "people": [
+        "kibar-gul",
+        "naciye-somuncu-demir",
+        "yesim-taktat-ates"
+      ],
+      "url": "proposal-turkiye-uae-stem.html"
+    }
   ]
 }

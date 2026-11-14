@@ -110,6 +110,8 @@
 .design-v49 .person-top{padding:18px 22px;background:linear-gradient(125deg,#e2f3fd,#f7fbff);margin:-24px -24px 20px;min-height:108px;border-bottom:1px solid #d8e8f3}
 .design-v49 .person-top h3{font-size:22px!important}.design-v49 .person-card .person-topic{border:0;padding:0;margin:12px 0 18px;min-height:45px;font-size:15px;color:#244b68}
 .design-v49 .institution-mark{border-radius:8px;background:#fff;border:1px solid #e4edf4;min-height:64px;min-width:90px}
+/* White institutional wordmarks require a contrasting background. */
+.design-v49 .institution-mark.dark{background:#173746;border-color:#173746}
 .design-v49 .institution-mark img{object-fit:contain;image-rendering:auto}.design-v49 .institution-name{font-size:13px!important;line-height:1.45;color:#194f73}.design-v49 .country-tag{font-size:11px;background:#edf5fb;border-color:#d0e1ed;border-radius:15px;padding:3px 9px}
 .design-v49 .team-leader{background:linear-gradient(135deg,#e4f4ff,#f7fbff);border:1px solid #c6dfef;border-radius:14px;box-shadow:var(--shadow);padding:32px;display:grid;grid-template-columns:minmax(0,1.8fr) minmax(230px,1fr);gap:35px}
 .design-v49 .team-leader h2{font-size:32px!important}.design-v49 .team-leader .affiliation-list{background:#fff;border:1px solid #d7e9f5;border-radius:10px;padding:18px;align-self:center}
