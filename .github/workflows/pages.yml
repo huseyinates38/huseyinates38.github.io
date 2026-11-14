@@ -65,6 +65,12 @@ jobs:
         run: |
           python scripts/build_assistant.py
           python tests/assistant_browser.py
+      - name: Build and test question-specific public-record answers
+        run: |
+          python scripts/build_assistant_quality.py
+          node --check _site/assets/academic-assistant.js
+          node --check _site/assets/academic-answer-engine.js
+          python tests/assistant_quality_browser.py
       - name: Retain browser and quality reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -80,6 +86,9 @@ jobs:
             record-review-report.json
             record-review-browser-report.json
             assistant-browser-report.json
+            assistant-quality-build.json
+            assistant-quality-report.json
+            assistant-quality-previews/
             assistant-previews/
             profile-previews/
             design-previews/
@@ -104,6 +113,6 @@ jobs:
         run: python scripts/verify_site.py --live
       - name: Record release
         run: |
-          echo '## Academic website — opt-in on-device AI assistant' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Bilingual chat, public source context, explicit AI identity, no API key and no remote chat storage. Existing research records and dates are preserved.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'UI and source tests passed. Inference protocol tests are mocked; the real runtime and model configuration are checked separately. These are not model-quality or WCAG certification.' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Academic website — question-specific public-record answers' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Structured factual answers, bilingual follow-ups, complete team membership and sentence-ranked retrieval. The small on-device generative model remains experimental.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Actual factual-answer and UI tests passed. Real generative-answer quality is not validated; no cloud model has been connected.' >> "$GITHUB_STEP_SUMMARY"
