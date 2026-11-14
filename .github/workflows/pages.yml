@@ -61,6 +61,10 @@ jobs:
           python tests/audit_browser.py
           python tests/network_browser.py
           python tests/record_review_browser.py
+      - name: Add and validate opt-in academic AI conversation
+        run: |
+          python scripts/build_assistant.py
+          python tests/assistant_browser.py
       - name: Retain browser and quality reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -75,6 +79,8 @@ jobs:
             network-browser-report.json
             record-review-report.json
             record-review-browser-report.json
+            assistant-browser-report.json
+            assistant-previews/
             profile-previews/
             design-previews/
             _site/quality-report.json
@@ -98,6 +104,6 @@ jobs:
         run: python scripts/verify_site.py --live
       - name: Record release
         run: |
-          echo '## Academic website 5.2 — explicit record dates, verified school links and project context' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Shared visual system preserved. Page/CV dates are separate; proposal-status dates remain explicit reviewed records.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Browser and live-file tests passed. These tests are not WCAG certification or academic fact verification.' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Academic website — opt-in on-device AI assistant' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Bilingual chat, public source context, explicit AI identity, no API key and no remote chat storage. Existing research records and dates are preserved.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'UI and source tests passed. Inference protocol tests are mocked; the real runtime and model configuration are checked separately. These are not model-quality or WCAG certification.' >> "$GITHUB_STEP_SUMMARY"
