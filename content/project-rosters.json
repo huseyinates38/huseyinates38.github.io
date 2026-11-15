@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "editorial_updated": "2026-11-15",
+  "policy": "Project participants are rendered as roster entries, never as membership notes. This final registry overrides historical roster snapshots. It does not change funding decisions or status-review dates.",
+  "projects": [
+    {
+      "id": "3501",
+      "page": "project-robot-virtual-agent.html",
+      "section_id": "proposal-3501-team",
+      "heading": ["TÜBİTAK 3501 team", "TÜBİTAK 3501 ekibi"],
+      "members": [
+        {"slug": "gokhan-ince", "role": ["Researcher", "Araştırmacı"]},
+        {"slug": "zeynep-aydemir", "role": ["Researcher", "Araştırmacı"]},
+        {"slug": "ahmet-salih-simsek", "role": ["Researcher", "Araştırmacı"]},
+        {"slug": "serbay-durmaz", "role": ["Researcher · Expert teacher", "Araştırmacı · Uzman öğretmen"]},
+        {"slug": "ipek-oz", "role": ["Researcher · Expert teacher", "Araştırmacı · Uzman öğretmen"]},
+        {"slug": "ibrahim-delen", "role": ["Research adviser", "Araştırma danışmanı"]},
+        {"slug": "yesim-taktat-ates", "role": ["Independent researcher", "Bağımsız araştırmacı"]}
+      ]
+    },
+    {
+      "id": "aub-stem",
+      "page": "proposal-turkiye-uae-stem.html",
+      "section_id": "proposal-team",
+      "heading": ["Türkiye–UAE AÜB team", "Türkiye–BAE AÜB ekibi"],
+      "members": [
+        {"slug": "ahmet-sami-konca", "role": ["Researcher", "Araştırmacı"]},
+        {"slug": "kibar-gul", "role": ["Researcher", "Araştırmacı"]},
+        {"slug": "naciye-somuncu-demir", "role": ["Researcher", "Araştırmacı"]},
+        {"slug": "yesim-taktat-ates", "role": ["Independent researcher", "Bağımsız araştırmacı"]}
+      ]
+    }
+  ],
+  "evidence": "The published AÜB proposal already names Ahmet Sami Konca as a team member; the site owner explicitly requested a roster card rather than an additional-member note. Existing 3501 membership, advisory and teaching roles are preserved. Hüseyin Ateş remains identified in the leadership and proposal-lead fields."
+}

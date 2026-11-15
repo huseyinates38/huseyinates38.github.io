@@ -61,6 +61,8 @@ jobs:
           python tests/audit_browser.py
           python tests/network_browser.py
           python tests/record_review_browser.py
+      - name: Render complete project rosters and profile memberships
+        run: python scripts/complete_project_rosters.py
       - name: Add and validate opt-in academic AI conversation
         run: |
           python scripts/build_assistant.py
@@ -78,6 +80,8 @@ jobs:
           node --check _site/assets/assistant-conversation.js
           node --test assistant-service/test/*.test.mjs | tee assistant-service-test.tap
           python tests/assistant_v3_browser.py
+      - name: Validate final rosters, assistant data and responsive member cards
+        run: python tests/project_rosters_browser.py
       - name: Retain browser and quality reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -97,6 +101,9 @@ jobs:
             assistant-quality-report.json
             assistant-v3-browser-report.json
             assistant-service-test.tap
+            project-roster-report.json
+            project-roster-browser-report.json
+            project-roster-previews/
             assistant-v3-previews/
             assistant-quality-previews/
             assistant-previews/
@@ -123,6 +130,6 @@ jobs:
         run: python scripts/verify_site.py --live
       - name: Record release
         run: |
-          echo '## Academic website — server-ready conversation architecture' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Trusted public sources, bounded conversation history, explicit consent and fail-closed usage quotas. No small browser model is loaded by the final interface.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Cloud remains inactive until an owner-authorised service is configured. Transport and source tests do not certify real model answer quality.' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Academic website — complete project rosters' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Confirmed participants appear as member cards, not additional-member notes. Team, project, profile and assistant records use the same roster.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Existing project statuses and review dates are unchanged. Cloud conversation remains inactive until an owner-authorised service is configured.' >> "$GITHUB_STEP_SUMMARY"
