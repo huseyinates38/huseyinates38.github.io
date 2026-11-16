@@ -37,7 +37,7 @@ STAGES={
  'guido-makransky':('Research design discussions','Araştırma tasarımı görüşmeleri'),
  'moritz-krell':('Research proposal development','Araştırma önerisi geliştirme'),
  'georgios-lampropoulos':('Ongoing manuscript collaboration','Devam eden makale iş birliği'),
- 'naomi-winstone':('Manuscript development · 2219 decision pending','Makale hazırlığı · 2219 kararı bekleniyor'),
+ 'naomi-winstone':('Proposed academic host · 2219 decision pending','Önerilen akademik ev sahibi · 2219 kararı bekleniyor'),
  'ahmet-sami-konca':('Joint research · AÜB decision pending','Ortak araştırma · AÜB kararı bekleniyor'),
  'juan-david-murillo-egurrola':('Instrument adaptation and pilot preparation','Ölçme aracı uyarlama ve pilot hazırlığı'),
  'bui-van-hong':('Academic contact · VR–STEM project completed','Akademik iletişim · VR–STEM projesi tamamlandı'),

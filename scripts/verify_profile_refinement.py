@@ -38,6 +38,14 @@ def main():
    if slug in { 'omid-noroozi', 'mohammadreza-farrokhnia', 'kazem-banihashem', 'guido-makransky', 'georgios-lampropoulos', 'ahmet-sami-konca', 'juan-david-murillo-egurrola', 'naomi-winstone' }:
     assert len(s.select('p[data-profile-contribution]'))==1
     assert not any('Ongoing academic work' in x.get_text(' ',strip=True) or 'Devam eden akademik çalışmalar' in x.get_text(' ',strip=True) for x in s.select('#ongoing-research h2')),slug
+  # Naomi Winstone is solely the proposed academic host for TÜBİTAK 2219.
+  naomi=read(pre+'person-naomi-winstone.html')
+  page_text=naomi.main.get_text(' ',strip=True).lower()
+  card=team.select_one('[data-person="naomi-winstone"]')
+  assert card and naomi.select_one('a[href="proposal-feedback-fading.html"]'),pre
+  assert '2219' in page_text and 'surrey' in page_text,pre
+  assert not any(w in page_text for w in ('manuscript','makale','co-author','coauthor')),pre
+  assert not any(w in card.get_text(' ',strip=True).lower() for w in ('manuscript','makale')),pre
   marc_topic=team.select_one('[data-person="marc-romero-carbonell"] .person-topic')
   assert marc_topic
   assert marc_topic.get_text(' ',strip=True)==('Üretken yapay zekâyla öğrenme üzerine tematik koleksiyon önerisi' if tr else 'Proposed thematic collection on learning with GenAI')

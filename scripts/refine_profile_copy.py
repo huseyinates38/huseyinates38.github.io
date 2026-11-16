@@ -123,16 +123,16 @@ COPY.update({
   'contribution': ('The collaboration covers the research framework, questionnaire refinement, translation reconciliation, discipline-based sampling and preparation for cognitive interviews and piloting. Fieldwork arrangements are still being coordinated; comparative findings are not yet available.',
                    'Çalışmada araştırma çerçevesi, anketin geliştirilmesi, çeviri uzlaştırması, disiplin temelli örnekleme ve bilişsel görüşme ile pilot uygulama hazırlıkları yürütülmektedir. Saha çalışmasının koordinasyonu sürmekte olup henüz karşılaştırmalı bulgular bulunmamaktadır.')},
  'naomi-winstone': {
-  'role': ('Research collaborator and proposed academic host',
-           'Araştırma ortağı ve önerilen akademik ev sahibi'),
-  'focus': ('Feedback processes, evaluative judgement and learner agency',
-            'Geri bildirim süreçleri, değerlendirme yargısı ve öğrencinin etkin özne olması'),
-  'stage': ('Manuscript development; TÜBİTAK 2219 decision pending',
-            'Makale hazırlığı; TÜBİTAK 2219 kararı bekleniyor'),
-  'intro': ('Collaborates with Hüseyin Ateş on the conceptual framing and interpretation of a generative-AI research manuscript.',
-            'Hüseyin Ateş ile üretken yapay zekâ üzerine bir araştırma makalesinin kavramsal çerçevesini ve yorumlanmasını geliştirmektedir.'),
-  'contribution': ('She has also provided a formal invitation to act as academic host for the submitted TÜBİTAK 2219 proposal at the University of Surrey. That proposal examines scheduled fading of AI feedback and independent scientific argumentation. The proposed May 2027–May 2028 visit remains conditional on funding and institutional arrangements, separately from the manuscript collaboration.',
-                   'Ayrıca Surrey Üniversitesinde TÜBİTAK 2219 başvurusu kapsamında akademik ev sahipliği için resmî davet sağlamıştır. Önerilen araştırma, yapay zekâ geri bildiriminin kademeli azaltılmasını ve bağımsız bilimsel argümantasyonu incelemektedir. Mayıs 2027–Mayıs 2028 için planlanan ziyaret, makale iş birliğinden ayrı olup destek kararına ve kurumsal düzenlemelere bağlıdır.')}
+  'role': ('Proposed academic host · TÜBİTAK 2219',
+           'Önerilen akademik ev sahibi · TÜBİTAK 2219'),
+  'focus': ('Gradual reduction of AI feedback, evaluative judgement and independent scientific argumentation',
+            'Yapay zekâ geri bildiriminin aşamalı azaltılması, değerlendirme yargısı ve bağımsız bilimsel argümantasyon'),
+  'stage': ('Submitted TÜBİTAK 2219 application · funding decision pending',
+            'TÜBİTAK 2219 başvurusu sunuldu · destek kararı bekleniyor'),
+  'intro': ('Prof. Naomi Winstone is the proposed academic host for Hüseyin Ateş’s TÜBİTAK 2219 research visit at the University of Surrey.',
+            'Prof. Naomi Winstone, Hüseyin Ateş’in TÜBİTAK 2219 araştırma ziyareti için University of Surrey’de önerilen akademik ev sahibidir.'),
+  'contribution': ('A formal academic host invitation has been provided for the submitted application. The planned 12-month research visit (May 2027–May 2028) is conditional on the funding decision and institutional arrangements. The project concerns gradual reduction of generative-AI feedback and independent scientific argumentation.',
+                   'Sunulan başvuru için resmî akademik ev sahipliği daveti sağlanmıştır. Önerilen 12 aylık araştırma ziyareti (Mayıs 2027–Mayıs 2028), destek kararına ve kurumsal düzenlemelere bağlıdır. Proje, üretken yapay zekâ geri bildiriminin aşamalı azaltılmasını ve bağımsız bilimsel argümantasyonu incelemektedir.')}
 })
 
 def set_text(node, value):
@@ -170,9 +170,9 @@ def compact_person(s, slug, tr):
  links=layout.select_one('.profile-links').extract()
  target=layout.select_one('h2').parent
  target.clear()
- heading=s.new_tag('h2');heading.string=('Editoryal katkı' if tr else 'Editorial contribution') if slug=='marc-romero-carbonell' else ('Araştırma katkısı' if tr else 'Research contribution')
+ heading=s.new_tag('h2');heading.string=('Editoryal katkı' if tr else 'Editorial contribution') if slug=='marc-romero-carbonell' else (('Önerilen akademik ev sahipliği' if tr else 'Proposed academic host role') if slug=='naomi-winstone' else ('Araştırma katkısı' if tr else 'Research contribution'))
  p=s.new_tag('p',attrs={'class':'lead','data-profile-contribution':'true'});p.string=d['contribution'][i]
- sub=s.new_tag('h3');sub.string='İlgili çalışmalar' if tr else 'Related work'
+ sub=s.new_tag('h3');sub.string=(('İlgili başvuru' if tr else 'Related proposal') if slug=='naomi-winstone' else ('İlgili çalışmalar' if tr else 'Related work'))
  target.extend([heading,p,sub,links])
  for old in list(s.select('#ongoing-research')):
   if layout not in old.descendants: old.decompose()
