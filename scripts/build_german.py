@@ -167,8 +167,9 @@ def assistant_data(docs, original, strings):
                  reviewed=plain(s.select_one('.proposal-side time')),lead=strings.get(p.get('lead',''),p.get('lead','')),
                  duration=f.get('Vorgesehene Dauer / Aufenthalt',''))
         if k=='1002':
-            note=s.select_one('#funding-decision-note p')
-            if note:p['stage']=plain(note)
+            stage=plain(s.select_one('.project-meta .funding-stage span'))
+            if not stage:raise ValueError('Missing German 1002 funding-stage metadata')
+            p['stage']=stage
         group=team.select_one('#project-team-'+('aub-stem' if k=='aub' else k))
         if group:
             p['members']=[{'name':data['people'][a['data-person']]['name'],'role':plain(a.select_one('.micro-label')),'slug':a['data-person']} for a in group.select('.person-card[data-person]')]

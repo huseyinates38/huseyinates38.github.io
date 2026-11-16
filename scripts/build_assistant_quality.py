@@ -54,8 +54,8 @@ def records(docs,lang):
         date=s.select_one('.proposal-side time')
         status=text(s.select_one('.pagehero .status-pill')) or field(f,'Destek durumu','Funding status','Güncel durum','Current status')
         if key=='1002':
-            note=s.select_one('#funding-decision-note')
-            status=text(note.select_one('p')) if note else status
+            status=text(s.select_one('.project-meta .funding-stage span'))
+            if not status:raise ValueError('Missing 1002 funding stage in public project metadata')
         projects[key]={'title':text(s.main.h1),'url':page,'summary':text(s.select_one('.pagehero p.lead')),
                        'stage':status,'reviewed':text(date),'members':people,
                        'lead':field(f,'Araştırma sorumlusu / rol','Research lead / role','Lead / role','Principal investigator'),

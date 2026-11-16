@@ -61,7 +61,13 @@ def static_checks():
             ids = [n['id'] for n in s.select('[id]')]
             assert len(ids) == len(set(ids)), (lang, name, 'duplicate id')
         team = docs['team.html'].select_one('#project-team-1002')
-        project = docs[CFG['page']].select_one('#'+CFG['section_id'])
+        project_page = docs[CFG['page']]
+        assert project_page.select_one('#funding-decision-note') is None, lang
+        assert not any(x in project_page.main.get_text(' ', strip=True)
+                       for x in ('Destek kararı kaydı', 'Funding decision evidence',
+                                 'Nachweis der Förderentscheidung', 'SOBAG karar yazısı',
+                                 'SOBAG decision letter', 'SOBAG-Schreiben')), lang
+        project = project_page.select_one('#'+CFG['section_id'])
         for node in (team, project):
             assert [x['data-person'] for x in node.select('.person-card')] == SLUGS
             assert len(node.select('.institution-mark img[src*="kaeu.png"]')) == 4
@@ -81,6 +87,7 @@ def static_checks():
         assert '2219' in naomi and 'surrey' in naomi
         facts = json.loads(docs['assistant.html'].select_one('#assistant-facts').string)
         assert [m['slug'] for m in facts['projects']['1002']['members']] == SLUGS
+        assert facts['projects']['1002']['stage'] == project_page.select_one('.project-meta .funding-stage span').get_text(' ',strip=True),lang
         assert '2026' in facts['projects']['1002']['stage']
         assert facts['projects']['1002']['lead'] == CFG['principal_investigator']
         for member in CFG['members']:
