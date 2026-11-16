@@ -32,7 +32,8 @@ def validate():
     parsed={}; errors=[]
     for name in manifest['pages']:
         document=Document(); text=(ROOT/name).read_text(encoding='utf-8');document.feed(text);parsed[name]=document
-        if document.h1!=1 or not document.title or document.lang!=('tr' if name.startswith('tr/') else 'en'):errors.append(name+': heading/title/language check')
+        expected_lang=name.split('/',1)[0] if name.startswith(('tr/','de/')) else 'en'
+        if document.h1!=1 or not document.title or document.lang!=expected_lang:errors.append(name+': heading/title/language check')
         if document.duplicates:errors.append(name+': duplicate IDs '+str(document.duplicates))
         if 'id="main-content"' not in text or 'href="team.html"' not in text or 'href="resources.html"' not in text:errors.append(name+': missing navigation or main landmark')
     for name,document in parsed.items():

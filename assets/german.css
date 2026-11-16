@@ -1,0 +1,21 @@
+/* German text and the three-language switch; no changes to research content. */
+.site-language{flex-shrink:0;white-space:nowrap}
+html[lang="de"] body{overflow-wrap:break-word}
+html[lang="de"] main h1,html[lang="de"] main h2,html[lang="de"] main h3{hyphens:auto;overflow-wrap:break-word}
+html[lang="de"] .pagehero h1{font-size:clamp(2rem,4.6vw,4rem);line-height:1.1}
+html[lang="de"] .showcase-hero h1{font-size:clamp(2.1rem,4.5vw,4.15rem)}
+html[lang="de"] .showcase-overline{line-height:1.55}
+html[lang="de"] .brand small{font-size:9px;letter-spacing:.03em}
+html[lang="de"] .person-card,html[lang="de"] .project-team,html[lang="de"] .profile-facts>div,html[lang="de"] .ai-card,html[lang="de"] .ai-side{min-width:0}
+html[lang="de"] .profile-facts dd,html[lang="de"] .project-team-head,html[lang="de"] .chat-message-text{overflow-wrap:anywhere}
+html[lang="de"] .showcase-topic strong,html[lang="de"] .showcase-topic span{hyphens:auto}
+html[lang="de"] .chat-toolbar{flex-wrap:wrap}
+html[lang="de"] .chat-compose-row{gap:12px;flex-wrap:wrap}
+@media(max-width:600px){
+ .site-language a{padding-inline:7px!important}
+ html[lang="de"] .showcase-hero h1{font-size:2.15rem}
+ html[lang="de"] .showcase-btn{white-space:normal;text-align:center}
+ html[lang="de"] .profile-facts{grid-template-columns:1fr}
+ html[lang="de"] .brand small{font-size:8px}
+ html[lang="de"] .chat-toolbar button{white-space:normal}
+}

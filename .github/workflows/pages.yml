@@ -1,4 +1,4 @@
-name: Publish Bilingual Academic Website
+name: Publish Multilingual Academic Website
 on:
   push:
     branches: [main]
@@ -82,6 +82,15 @@ jobs:
           python tests/assistant_v3_browser.py
       - name: Validate final rosters, assistant data and responsive member cards
         run: python tests/project_rosters_browser.py
+      - name: Build and validate German edition
+        run: |
+          set -euo pipefail
+          python scripts/build_german.py
+          node --check _site/assets/german-controls.js
+          node --check _site/assets/german-directory.js
+          node --check _site/assets/german-guide.js
+          node --check _site/assets/german-conversation.js
+          python tests/german_browser.py
       - name: Retain browser and quality reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -109,6 +118,9 @@ jobs:
             assistant-previews/
             profile-previews/
             design-previews/
+            german-build-report.json
+            german-test-report.json
+            german-previews/
             _site/quality-report.json
             overflow-smoke.png
           if-no-files-found: warn
@@ -130,6 +142,6 @@ jobs:
         run: python scripts/verify_site.py --live
       - name: Record release
         run: |
-          echo '## Academic website — complete project rosters' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Confirmed participants appear as member cards, not additional-member notes. Team, project, profile and assistant records use the same roster.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Existing project statuses and review dates are unchanged. Cloud conversation remains inactive until an owner-authorised service is configured.' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Academic website — English, Turkish and German editions' >> "$GITHUB_STEP_SUMMARY"
+          echo '70 pages per language; three-way page/section navigation, German search and interface controls. Confirmed project rosters and source-language publications/downloads are preserved.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Academic review dates and project statuses are unchanged. German website-guide answers are deterministic; no cloud service has been activated or evaluated by this release.' >> "$GITHUB_STEP_SUMMARY"
