@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "updated": "2026-11-16",
+  "project_id": "1002",
+  "project_code": "226K999",
+  "page": "project-space-debris.html",
+  "section_id": "project-1002-team",
+  "principal_investigator": "Hüseyin Ateş",
+  "evidence": "Team and roles checked against the project's work-package/team-contribution matrix and the August 2026 ethics application, section F.3. Only names, academic status, institutional affiliation and project responsibilities are published. Private document links, signatures and contact details are not included.",
+  "locales": {
+    "en": {
+      "title": "TÜBİTAK 1002-A · Space-pollution problem solving",
+      "heading": "TÜBİTAK 1002-A project team",
+      "summary": "A classroom pilot comparing two pedagogical scaffolding approaches to problem solving.",
+      "project_link": "View project",
+      "profile_link": "View profile",
+      "role_link": "Project responsibilities",
+      "study_label": "Related project",
+      "contribution_label": "TÜBİTAK 1002-A responsibilities"
+    },
+    "tr": {
+      "title": "TÜBİTAK 1002-A · Uzay kirliliği problem çözme",
+      "heading": "TÜBİTAK 1002-A proje ekibi",
+      "summary": "Problem çözme öğretiminde iki pedagojik iskele yaklaşımını karşılaştıran sınıf içi pilot çalışma.",
+      "project_link": "Projeyi incele",
+      "profile_link": "Profili incele",
+      "role_link": "Projedeki görevleri",
+      "study_label": "İlgili proje",
+      "contribution_label": "TÜBİTAK 1002-A görevleri"
+    },
+    "de": {
+      "title": "TÜBİTAK 1002-A · Problemlösen zur Weltraumverschmutzung",
+      "heading": "Projektteam TÜBİTAK 1002-A",
+      "summary": "Unterrichtspilot zum Vergleich zweier didaktischer Unterstützungsansätze beim Problemlösen.",
+      "project_link": "Projekt ansehen",
+      "profile_link": "Profil ansehen",
+      "role_link": "Aufgaben im Projekt",
+      "study_label": "Zugehöriges Projekt",
+      "contribution_label": "Aufgaben im Projekt TÜBİTAK 1002-A"
+    }
+  },
+  "members": [
+    {
+      "slug": "abdulkadir-aydin",
+      "name": "Abdulkadir Aydın",
+      "profile": "person-abdulkadir-aydin.html",
+      "role": {
+        "en": "Doctoral researcher · Measurement and quantitative analysis",
+        "tr": "Doktora araştırmacısı · Ölçme ve nicel analiz",
+        "de": "Promovierender · Messinstrumente und quantitative Analyse"
+      },
+      "contribution": {
+        "en": "Assessment instruments, rubric scoring, quantitative data cleaning and analysis, and inter-rater agreement.",
+        "tr": "Ölçme araçları, rubrik puanlama, nicel veri temizleme ve analiz ile puanlayıcılar arası uyum.",
+        "de": "Erhebungsinstrumente, Bewertung anhand von Rubriken, Bereinigung und Analyse quantitativer Daten sowie Beurteilerübereinstimmung."
+      }
+    },
+    {
+      "slug": "tugce-unsal",
+      "name": "Tuğçe Ünsal",
+      "profile": "person-tugce-unsal.html",
+      "discovery_excluded": true,
+      "role": {
+        "en": "Master’s researcher · Classroom implementation",
+        "tr": "Yüksek lisans araştırmacısı · Sınıf içi uygulama",
+        "de": "Forschung im Masterstudium · Durchführung im Unterricht"
+      },
+      "contribution": {
+        "en": "Classroom implementation, school scheduling, participant and consent tracking, student work and process forms.",
+        "tr": "Sınıf içi uygulama, okul takvimi, katılımcı ve onam takibi, öğrenci ürünleri ve süreç formları.",
+        "de": "Durchführung im Unterricht, schulische Terminplanung, Verwaltung von Teilnahme und Einwilligungen sowie Schülerarbeiten und Prozessbögen."
+      }
+    },
+    {
+      "slug": "mercan-oz",
+      "name": "Mercan Öz",
+      "role": {
+        "en": "Master’s researcher · Qualitative data and process monitoring",
+        "tr": "Yüksek lisans araştırmacısı · Nitel veri ve süreç izleme",
+        "de": "Forschung im Masterstudium · Qualitative Daten und Prozessbegleitung"
+      },
+      "contribution": {
+        "en": "Student interviews, transcript checking, qualitative coding, codebook development and thematic analysis.",
+        "tr": "Öğrenci görüşmeleri, transkript kontrolü, nitel kodlama, kod kitabı geliştirme ve tematik analiz.",
+        "de": "Interviews mit Schülerinnen und Schülern, Transkriptprüfung, qualitative Kodierung, Entwicklung des Kodierhandbuchs und thematische Analyse."
+      }
+    },
+    {
+      "slug": "merve-nur-ozkan",
+      "name": "Merve Nur Özkan",
+      "role": {
+        "en": "Master’s researcher · Materials and data management",
+        "tr": "Yüksek lisans araştırmacısı · Materyal ve veri yönetimi",
+        "de": "Forschung im Masterstudium · Materialien und Datenmanagement"
+      },
+      "contribution": {
+        "en": "Preparation of materials, participant coding, data entry, filing, backups and anonymisation.",
+        "tr": "Materyallerin düzenlenmesi, katılımcı kodlama, veri girişi, dosyalama, yedekleme ve anonimleştirme.",
+        "de": "Aufbereitung der Materialien, Teilnehmendenkodierung, Dateneingabe, Ablage, Datensicherung und Anonymisierung."
+      }
+    }
+  ]
+}

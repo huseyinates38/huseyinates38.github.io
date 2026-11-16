@@ -91,6 +91,10 @@ jobs:
           node --check _site/assets/german-guide.js
           node --check _site/assets/german-conversation.js
           python tests/german_browser.py
+      - name: Add source-verified 1002 team in all three languages
+        run: |
+          python scripts/add_1002_team.py
+          python tests/project_1002_browser.py
       - name: Retain browser and quality reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -121,6 +125,9 @@ jobs:
             german-build-report.json
             german-test-report.json
             german-previews/
+            project-1002-build-report.json
+            project-1002-test-report.json
+            project-1002-previews/
             _site/quality-report.json
             overflow-smoke.png
           if-no-files-found: warn
@@ -142,6 +149,6 @@ jobs:
         run: python scripts/verify_site.py --live
       - name: Record release
         run: |
-          echo '## Academic website — English, Turkish and German editions' >> "$GITHUB_STEP_SUMMARY"
-          echo '70 pages per language; three-way page/section navigation, German search and interface controls. Confirmed project rosters and source-language publications/downloads are preserved.' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Academic review dates and project statuses are unchanged. German website-guide answers are deterministic; no cloud service has been activated or evaluated by this release.' >> "$GITHUB_STEP_SUMMARY"
+          echo '## Academic website — complete 1002 project team in EN/TR/DE' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Source-verified team cards and responsibilities, existing profile links, search and assistant records. No private document links or personal contact data are published.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Academic review dates and project funding/contract statuses are unchanged. No cloud service has been activated by this release.' >> "$GITHUB_STEP_SUMMARY"
