@@ -1,4 +1,23 @@
-## Version 4.8
+## Current academic update — 25 November 2026
+
+The final multilingual pass adds the new *Computers & Education* article (2027,
+volume 258, article 105805), CA25177 ENDUeAI WG1/WG6 membership and four current
+TÜBİTAK 2221 applications in preparation. The selected bibliography now contains
+24 records. English and Turkish public CVs contain four pages with the latest
+publication, academic service and separate visiting-researcher plans.
+
+For these records, `content/academic-updates.json` and
+`content/visiting-2221.json` supersede the older statements below and in historical
+templates. `scripts/apply_academic_updates.py` runs after the three-language and
+1002 passes. Follow the **full current build order in
+`.github/workflows/pages.yml`**; shorter historical build snippets below are not
+complete release commands. The final gate is `tests/academic_updates.py --browser`.
+
+Daily source review follows `content/ACADEMIC_MONITORING.md`. Google Scholar is
+excluded from monitoring. Publisher DOI records, accessible Scopus/Web of Science
+records, official academic sources and authorized project records inform updates.
+
+## Version 4.8 (historical)
 
 The Turkish and English homepages now use the owner-approved full-width illustrated hero, five research topics, five editorial cards, functional Tally QR, and factual counters. Vietnam-related STEM and circulatory-system VR BAP projects are both listed as completed. TÜBİTAK 2221 is a submitted application; TÜBİTAK 3501 has been resubmitted and is awaiting a funding decision. The build uses `scripts/apply_v48.py` after the bilingual directory/visual steps.
 

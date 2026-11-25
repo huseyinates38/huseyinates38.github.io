@@ -1,0 +1,19 @@
+/* Current research additions share the site's existing visual vocabulary. */
+.academic-update-grid,.visiting-plan-grid,.working-group-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
+.academic-update-card,.visiting-plan-card,.working-group-card{min-width:0;border:1px solid var(--line,#d8e2e5);border-radius:1rem;background:#fff;padding:1.5rem}
+.academic-update-card h3,.visiting-plan-card h3,.visiting-plan-card h4{overflow-wrap:anywhere;line-height:1.35}
+.academic-update-card h3{font-size:clamp(1.12rem,1.8vw,1.45rem);margin:.6rem 0 1rem}
+.academic-update-card p,.visiting-plan-card p{font-size:1rem;line-height:1.7}
+.visiting-plan-card h3{font-size:1.5rem;margin:.8rem 0 .4rem}
+.visiting-plan-card h4{font-size:1.12rem;margin:1.25rem 0 .75rem}
+.visiting-plan-card .status-pill{max-width:100%;white-space:normal}
+.visiting-plan-card .plan-institution,.academic-record-date{color:var(--muted,#536a72);font-size:.9rem}
+.visiting-plan-card .plan-visit{padding-top:.8rem;border-top:1px solid var(--line,#d8e2e5);font-weight:600}
+.working-group-card strong{display:block;color:var(--teal,#187886);font-size:1.15rem;margin-bottom:.5rem}
+.working-group-card p{margin:0;font-size:1rem}
+.academic-current-links{display:flex;flex-wrap:wrap;gap:.8rem 1.5rem;margin-top:1.4rem}
+.academic-current-links a{overflow-wrap:anywhere}
+.publication .publication-update{margin-top:.8rem;font-size:.9rem;color:var(--muted,#536a72)}
+[data-visiting-plan-link]{padding-top:.75rem;border-top:1px solid var(--line,#d8e2e5);margin-top:.75rem}
+#latest-academic-updates{padding-block:2.75rem}
+@media(max-width:700px){.academic-update-grid,.visiting-plan-grid,.working-group-grid{grid-template-columns:1fr}.academic-update-card,.visiting-plan-card,.working-group-card{padding:1.25rem}}

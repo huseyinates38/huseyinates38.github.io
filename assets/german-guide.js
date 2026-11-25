@@ -12,12 +12,14 @@ function create(data,corpus){
  const people=Object.entries(data.people).map(([slug,v])=>({slug,v,words:clean(v.name).split(' ').filter(x=>!['dr','prof','assoc','assist','ates'].includes(x))}));
  function matches(q){const qs=clean(q).split(' ');const found=people.map(x=>({...x,score:x.words.filter(w=>w.length>2&&qs.some(k=>k===w||(k.startsWith(w)&&k.length-w.length<4))).length}));const max=Math.max(0,...found.map(x=>x.score));return max?found.filter(x=>x.score===max):[];}
  function project(q){
+  if(/sciepi/.test(q))return 'cost';
+  if(data.projects.endueai&&/\bca\s?25177\b|\bendueai\b|\bwg\s?[16]\b/.test(q))return 'endueai';
   if(/3501|humanoid|virtuell.*agent|physisch.*robot/.test(q))return '3501';
   if(/\baub\b|\bvae\b|\buae\b|emirat|anadolu.*verband/.test(q))return 'aub';
   if(/1002|226k999|weltraum/.test(q))return '1002';
   if(/2219|surrey|verringerung.*feedback|feedback.*verringerung/.test(q))return '2219';
   if(/2221|gastforsch/.test(q))return '2221';
-  if(/\berc\b|reclaim/.test(q))return 'erc';if(/\bcost\b|sciepi/.test(q))return 'cost';if(/\bdfg\b|krell.*konzept/.test(q))return 'dfg';return null;
+  if(/\berc\b|reclaim/.test(q))return 'erc';if(/\bcost\b/.test(q))return 'cost';if(/\bdfg\b|krell.*konzept/.test(q))return 'dfg';return null;
  }
  function answer(question){
   const q=clean(question),found=matches(q),key=project(q);
@@ -33,10 +35,20 @@ function create(data,corpus){
   if(/kontakt|e mail|email|erreich|termin|nachricht.*(senden|schicken)/.test(q)&&!found.length)return result(`Sie erreichen Hüseyin Ateş unter ${data.email}. Beschreiben Sie bei einer Kooperationsanfrage kurz Ihr Thema und den vorgesehenen Beitrag. Dieser Chat versendet keine Nachrichten und vereinbart keine Termine.`,[ref('Kontakt','contact.html')]);
   if(/zusammenarbeit|kooperat|mitmachen|gruppe.*beitret/.test(q)&&!found.length&&!key)return result('Teilen Sie Ihre Forschungsfrage, Ihren Hintergrund und Ihren möglichen Beitrag über das Interessenformular auf der Website. Das Formular ist eine Interessenbekundung, keine Zulassung oder Stellenzusage.',[ref('Zusammenarbeit','join.html'),ref('Kontakt','contact.html')]);
   if(/(master|promotion|doktor).*(bewerb|zulass|platz)|stipendium.*bekomm/.test(q)&&!found.length&&!key)return result('Die Zulassung erfolgt nach den offiziellen Verfahren der Universität. Die Website bestätigt keine aktuelle freie Stelle oder individuelle Zulassung. Die fachliche Passung Ihres Vorhabens können Sie direkt mit Hüseyin Ateş besprechen.',[ref('Anfragen','join.html'),ref('Kontakt','contact.html')]);
+  if(data.projects.endueai&&data.projects.cost&&/\bcost\b/.test(q)&&!/sciepi|\bca\s?25177\b|\bendueai\b|\bwg\s?[16]\b/.test(q)&&!found.length){
+   lastPerson=null;lastProject=null;const network=data.projects.endueai,proposal=data.projects.cost;
+   const groups=(network.groups||[]).map(g=>g.code+': '+g.title).join('; ');
+   return result(`COST-Aktivitäten:\n\n• ${network.title}: ${network.stage}.${groups?'\n'+groups+'.':''}\n\n• ${proposal.title}: ${proposal.stage}.`,[ref(network.title,network.url),ref(proposal.title,proposal.url)]);
+  }
   if(found.length>1)return result('Welche Person meinen Sie? '+found.map(x=>x.v.name).join(' / '),found.slice(0,4).map(x=>ref(x.v.name,x.v.url)));
   const person=found.length===1?found[0]:(!key&&follow&&lastPerson?{slug:lastPerson,v:data.people[lastPerson]}:null);
   if(person){
    lastPerson=person.slug;lastProject=null;const r=person.v,refs=[ref(r.name,r.url),...r.studies.map(x=>ref(x.title,x.url))];
+   if(r.visiting_2221&&(key==='2221'||(!key&&/\bbesuch\w*|aufenthalt\w*|\bvisit\w*/.test(q)))){
+    const visit=r.visiting_2221,study=r.studies.find(x=>x.url.split('#')[0]==='proposal-visiting-researchers-2221.html');
+    const visitSource=study?ref(study.title,study.url):ref('TÜBİTAK 2221','proposal-visiting-researchers-2221.html');
+    return result(`${r.name} · TÜBİTAK 2221\n${visit.stage}.\n\n${visit.scope}\n\nGeplanter Aufenthalt: ${visit.planned_visit}.`,[visitSource,refs[0]]);
+   }
    if(person.slug==='naomi-winstone'&&/artikel|manuskript|publikat|autor/.test(q))return result('Für Naomi Winstone ist die vorgesehene akademische Gastbetreuung im TÜBİTAK-2219-Vorhaben an der University of Surrey dokumentiert. Eine Manuskriptmitwirkung wird auf der Website nicht ausgewiesen.',[ref(r.name,r.url),ref('TÜBİTAK-2219-Antrag','proposal-feedback-fading.html')]);
    if(task)return result(r.contribution?`${r.name}: ${r.contribution}`:`${r.name} wird mit der Rolle „${r.role}“ geführt. Eine detaillierte Zuweisung technischer, analytischer oder methodischer Aufgaben ist im öffentlichen Profil nicht angegeben.`,refs);
    if(affiliation)return result(r.institutions.length?`${r.name}: ${r.institutions.join('; ')}.`:`${r.name} wird als unabhängig forschende Person ohne aktuelle institutionelle Zugehörigkeit geführt.`,[refs[0]]);
@@ -47,6 +59,7 @@ function create(data,corpus){
   const pk=key||(!lastPerson&&follow?lastProject:null);
   if(pk&&data.projects[pk]){
    lastProject=pk;lastPerson=null;const r=data.projects[pk],refs=[ref(r.title,r.url)];
+   if(pk==='endueai')return result(`${r.title}\n${r.lead||'Hüseyin Ateş'}\n${r.stage}.\n\n${(r.groups||[]).map(g=>'• '+g.code+': '+g.title).join('\n')}${r.duration?'\n\nLaufzeit der COST-Aktion: '+r.duration+'.':''}`,refs);
    if(roster){if(!r.members.length)return result('Für dieses Vorhaben ist keine namentliche Teamliste veröffentlicht. Die Projektangaben finden Sie im verlinkten Eintrag.',refs);
     return result(`${r.title}\nProjektleitung: Hüseyin Ateş.\n\n${r.members.map(x=>'• '+x.name+' – '+x.role).join('\n')}\n\n${r.stage}.`,[...refs,ref('Projektteams','team.html#project-researchers')]);}
    if(stage)return result(`${r.title}: ${r.stage}.${r.reviewed?'\nLetzte Prüfung des Statuseintrags: '+r.reviewed+'.':''}${/laufzeit/.test(q)&&r.duration?'\n'+r.duration:''}`,refs);

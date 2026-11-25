@@ -1,0 +1,168 @@
+{
+  "program": "2221",
+  "reviewed": "2026-11-25",
+  "status_code": "in_preparation",
+  "host_name": "Hüseyin Ateş",
+  "host_institution": {
+    "en": "Kırşehir Ahi Evran University",
+    "tr": "Kırşehir Ahi Evran Üniversitesi",
+    "de": "Kırşehir Ahi Evran Universität"
+  },
+  "official_program_url": "https://tubitak.gov.tr/tr/burslar/uluslararasi/arastirma-burs-programlari/2221-konuk-veya-akademik-izinli-sabbatical-bilim-insani-destekleme-p",
+  "source_provenance": "Reviewed with owner-authorized current application planning records on 25 November 2026",
+  "locales": {
+    "en": {
+      "page_title": "TÜBİTAK 2221 visiting researcher plans",
+      "summary": "Four visiting researcher applications are being prepared with Hüseyin Ateş at Kırşehir Ahi Evran University. The proposed collaborations focus on AI in STEM education, feedback use and scientific reasoning. Visits are planned for 2027 and remain subject to funding approval.",
+      "status_label": "Application in preparation",
+      "proposed_visit_label": "Proposed visit",
+      "research_scope_label": "Research focus",
+      "profile_label": "Researcher profile",
+      "planned_year": "Planned for 2027"
+    },
+    "tr": {
+      "page_title": "TÜBİTAK 2221 konuk araştırmacı planları",
+      "summary": "Kırşehir Ahi Evran Üniversitesinde Hüseyin Ateş'in ev sahipliğinde dört konuk araştırmacı başvurusu hazırlanıyor. Önerilen iş birlikleri STEM eğitiminde yapay zekâ, geri bildirim kullanımı ve bilimsel akıl yürütmeye odaklanıyor. Ziyaretler 2027 için planlanıyor ve destek kararına bağlı.",
+      "status_label": "Başvuru hazırlığında",
+      "proposed_visit_label": "Planlanan ziyaret",
+      "research_scope_label": "Araştırma odağı",
+      "profile_label": "Araştırmacı profili",
+      "planned_year": "2027 için planlanıyor"
+    },
+    "de": {
+      "page_title": "Geplante Forschungsaufenthalte im Programm TÜBİTAK 2221",
+      "summary": "Vier Anträge für Gastforschungsaufenthalte bei Hüseyin Ateş an der Kırşehir Ahi Evran Universität werden vorbereitet. Die geplanten Kooperationen befassen sich mit KI in der MINT-Bildung, der Nutzung von Feedback und wissenschaftlichem Denken. Die Aufenthalte sind für 2027 geplant und stehen unter dem Vorbehalt einer Förderzusage.",
+      "status_label": "Antrag in Vorbereitung",
+      "proposed_visit_label": "Geplanter Aufenthalt",
+      "research_scope_label": "Forschungsschwerpunkt",
+      "profile_label": "Forschungsprofil",
+      "planned_year": "Für 2027 geplant"
+    }
+  },
+  "members": [
+    {
+      "slug": "juan-garzon",
+      "name": "Juan Fernando Garzón Álvarez",
+      "profile": "person-juan-garzon.html",
+      "institution": {
+        "en": "Universidad Católica de Oriente, Colombia",
+        "tr": "Universidad Católica de Oriente, Kolombiya",
+        "de": "Universidad Católica de Oriente, Kolumbien"
+      },
+      "title": {
+        "en": "From Evidence to Practice: Investigating the Impact of Artificial Intelligence on Education and Its Application in STEM Education",
+        "tr": "Kanıttan Uygulamaya: Yapay Zekânın Eğitim Üzerindeki Etkisinin ve STEM Eğitimindeki Uygulamasının İncelenmesi",
+        "de": "Von der Evidenz zur Praxis: Untersuchung der Wirkung künstlicher Intelligenz auf Bildung und ihrer Anwendung in der MINT-Bildung"
+      },
+      "summary": {
+        "en": "The proposed collaboration combines an evidence map and meta-analysis of AI-supported learning with a sustainability-focused STEM prototype. It examines how assessment conditions affect evidence of independent scientific reasoning.",
+        "tr": "Önerilen iş birliği, yapay zekâ destekli öğrenmeye ilişkin kanıt haritası ve meta-analizi sürdürülebilirlik odaklı bir STEM prototipiyle birleştiriyor. Değerlendirme koşullarının bağımsız bilimsel akıl yürütmeye ilişkin kanıtları nasıl etkilediğini inceliyor.",
+        "de": "Die geplante Zusammenarbeit verbindet eine Evidenzkarte und Meta-Analyse zum KI-gestützten Lernen mit einem MINT-Prototyp zum Thema Nachhaltigkeit. Untersucht wird, wie Prüfungsbedingungen die Aussagekraft von Belegen für eigenständiges wissenschaftliches Denken beeinflussen."
+      },
+      "planned_visit": {
+        "en": "31 May–4 July 2027 · 35 calendar days · subject to funding approval",
+        "tr": "31 Mayıs–4 Temmuz 2027 · 35 takvim günü · destek kararına bağlı",
+        "de": "31. Mai–4. Juli 2027 · 35 Kalendertage · vorbehaltlich einer Förderzusage"
+      },
+      "role": {
+        "en": "Proposed visiting researcher",
+        "tr": "Planlanan konuk araştırmacı",
+        "de": "Vorgesehener Gastforscher"
+      }
+    },
+    {
+      "slug": "mohammadreza-farrokhnia",
+      "name": "Mohammadreza Farrokhnia",
+      "profile": "person-mohammadreza-farrokhnia.html",
+      "institution": {
+        "en": "University of Twente, Netherlands",
+        "tr": "Twente Üniversitesi, Hollanda",
+        "de": "Universität Twente, Niederlande"
+      },
+      "title": {
+        "en": "Designing and tracing feedback in a science simulation",
+        "tr": "Simülasyon Temelli Fen Öğreniminde İnsan ve Yapay Zekâ Geri Bildiriminin Tasarımı ve Kullanımının İzlenmesi",
+        "de": "Gestaltung und Nachverfolgung von Feedback in einer naturwissenschaftlichen Simulation"
+      },
+      "summary": {
+        "en": "The proposed activity traces initial explanations, feedback, revision decisions and final responses in a science simulation. Planned outputs include a feedback decision table, data dictionary and protocol for a later pilot.",
+        "tr": "Önerilen etkinlik, bir fen simülasyonunda ilk açıklamaları, geri bildirimi, revizyon kararlarını ve son yanıtları birbirine bağlayarak izliyor. Geri bildirim karar tablosu, veri sözlüğü ve sonraki bir pilot çalışma için protokol hazırlanması planlanıyor.",
+        "de": "Die geplante Aufgabe verknüpft erste Erklärungen, Feedback, Überarbeitungsentscheidungen und abschließende Antworten in einer naturwissenschaftlichen Simulation. Vorgesehen sind eine Entscheidungstabelle, ein Datenwörterbuch und ein Protokoll für eine spätere Pilotstudie."
+      },
+      "planned_visit": {
+        "en": "23 April–2 May 2027 · 10 calendar days · subject to funding approval",
+        "tr": "23 Nisan–2 Mayıs 2027 · 10 takvim günü · destek kararına bağlı",
+        "de": "23. April–2. Mai 2027 · 10 Kalendertage · vorbehaltlich einer Förderzusage"
+      },
+      "role": {
+        "en": "Proposed visiting researcher",
+        "tr": "Planlanan konuk araştırmacı",
+        "de": "Vorgesehener Gastforscher"
+      }
+    },
+    {
+      "slug": "omid-noroozi",
+      "name": "Omid Noroozi",
+      "profile": "person-omid-noroozi.html",
+      "institution": {
+        "en": "Wageningen University & Research, Netherlands",
+        "tr": "Wageningen Üniversitesi ve Araştırma Merkezi, Hollanda",
+        "de": "Wageningen University & Research, Niederlande"
+      },
+      "title": {
+        "en": "Reasoned revision of scientific arguments",
+        "tr": "Geri Bildirim Sonrasında Gözden Geçirilen Bilimsel Argümanların Niteliğinin Değerlendirilmesi",
+        "de": "Begründete Überarbeitung wissenschaftlicher Argumente"
+      },
+      "summary": {
+        "en": "The proposed collaboration examines reasoned changes in scientific arguments after feedback. A bilingual task, scoring guide, worked examples and a protocol for a later pilot will support assessment of claims, evidence, reasoning and alternative explanations.",
+        "tr": "Önerilen iş birliği, geri bildirim sonrasında bilimsel argümanlarda yapılan gerekçeli değişiklikleri inceliyor. İddia, kanıt, gerekçelendirme ve alternatif açıklamaların değerlendirilmesi için iki dilli görev, puanlama rehberi, açıklamalı örnekler ve pilot protokolü hazırlanması planlanıyor.",
+        "de": "Die geplante Zusammenarbeit untersucht begründete Veränderungen wissenschaftlicher Argumente nach Feedback. Eine zweisprachige Aufgabe, ein Bewertungsleitfaden, kommentierte Beispiele und ein Pilotprotokoll sollen die Bewertung von Behauptungen, Belegen, Begründungen und alternativen Erklärungen unterstützen."
+      },
+      "planned_visit": {
+        "en": "23 April–9 May 2027 · 17 calendar days · subject to funding approval",
+        "tr": "23 Nisan–9 Mayıs 2027 · 17 takvim günü · destek kararına bağlı",
+        "de": "23. April–9. Mai 2027 · 17 Kalendertage · vorbehaltlich einer Förderzusage"
+      },
+      "role": {
+        "en": "Proposed visiting researcher",
+        "tr": "Planlanan konuk araştırmacı",
+        "de": "Vorgesehener Gastforscher"
+      }
+    },
+    {
+      "slug": "kazem-banihashem",
+      "name": "Seyyed Kazem Banihashem",
+      "profile": "person-kazem-banihashem.html",
+      "institution": {
+        "en": "Maastricht University, Netherlands",
+        "tr": "Maastricht Üniversitesi, Hollanda",
+        "de": "Universität Maastricht, Niederlande"
+      },
+      "title": {
+        "en": "How future science teachers use feedback on scientific explanations",
+        "tr": "Fen Bilgisi Öğretmen Adaylarının Bilimsel Açıklamalarında Geri Bildirim Kullanımının ve Gerekçelerinin Değerlendirilmesi",
+        "de": "Wie angehende Lehrkräfte für Naturwissenschaften Feedback zu wissenschaftlichen Erklärungen nutzen"
+      },
+      "summary": {
+        "en": "The proposed bilingual coding guide identifies how preservice science teachers accept, adapt or reject feedback. Scientific justifications and the quality of final explanations are assessed separately, with annotated examples and a protocol for a later pilot.",
+        "tr": "Önerilen iki dilli kodlama rehberi, fen bilgisi öğretmen adaylarının geri bildirimi nasıl kabul ettiğini, uyarladığını veya reddettiğini belirlemeyi amaçlıyor. Bilimsel gerekçeler ve son açıklamaların niteliği ayrı değerlendirilecek; açıklamalı örnekler ve pilot protokolü hazırlanacak.",
+        "de": "Der geplante zweisprachige Kodierleitfaden erfasst, wie angehende Lehrkräfte Feedback annehmen, anpassen oder zurückweisen. Wissenschaftliche Begründungen und die Qualität abschließender Erklärungen werden getrennt bewertet; kommentierte Beispiele und ein Pilotprotokoll ergänzen den Leitfaden."
+      },
+      "planned_visit": {
+        "en": "March 2027 · visit timing is being clarified · subject to funding approval",
+        "tr": "Mart 2027 · ziyaret takvimi netleştiriliyor · destek kararına bağlı",
+        "de": "März 2027 · genauer Besuchszeitraum wird abgestimmt · vorbehaltlich einer Förderzusage"
+      },
+      "role": {
+        "en": "Proposed visiting researcher",
+        "tr": "Planlanan konuk araştırmacı",
+        "de": "Vorgesehener Gastforscher"
+      }
+    }
+  ],
+  "closed_2027_profile_slugs": [
+    "moritz-krell",
+    "elena-novak"
+  ]
+}

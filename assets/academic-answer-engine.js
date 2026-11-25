@@ -22,12 +22,14 @@ function create(data,corpus){
   return best?scores.filter(x=>x.score===best):[];
  }
  function projectKey(n){
+  if(/sciepi/.test(n))return 'cost';
+  if(data.projects.endueai&&/\bca\s?25177\b|\bendueai\b|\bwg\s?[16]\b/.test(n))return 'endueai';
   if(/\b3501\b|fiziksel.*robot|insansi.*robot|humanoid|virtual agent|sanal ajan/.test(n))return '3501';
   if(/\baub\b|\bbae\b|\buae\b|anadolu univers|turkiye.*stem/.test(n))return 'aub';
   if(/\b1002\b|226k999|uzay kirlil|space pollution|space debris/.test(n))return '1002';
   for(const key of ['2219','2221','cost','erc','dfg'])if(new RegExp('\\b'+key+'\\b').test(n))return key;
   if(/surrey|fading|azaltil/.test(n))return '2219';
-  if(/sciepi/.test(n))return 'cost';if(/reclaim/.test(n))return 'erc';return null;
+  if(/reclaim/.test(n))return 'erc';return null;
  }
  function answer(question){
   const n=clean(question),explicitProject=projectKey(n),matches=personMatches(n);
@@ -54,12 +56,22 @@ function create(data,corpus){
    return result(p('Graduate admission follows the university’s official application process. The website does not establish a current vacancy or an admission decision for you. You can ask Hüseyin Ateş about research fit through the contact page.',
     'Lisansüstü kabul, üniversitenin resmî başvuru süreciyle yürütülür. Sitedeki bilgiler güncel kontenjan veya sizin için verilmiş bir kabul kararı göstermez. Araştırma konunuzun uygunluğunu iletişim sayfasından Hüseyin Ateş’e sorabilirsiniz.'),[source(p('Research enquiries','Araştırma talepleri'),'join.html'),contact()]);
   }
+  if(data.projects.endueai&&data.projects.cost&&/\bcost\b/.test(n)&&!/sciepi|\bca\s?25177\b|\bendueai\b|\bwg\s?[16]\b/.test(n)&&!matches.length){
+   lastPerson=null;lastProject=null;const network=data.projects.endueai,proposal=data.projects.cost;
+   const groups=(network.groups||[]).map(g=>g.code+': '+g.title).join('; ');
+   return result(p('COST activities:','COST çalışmaları:')+`\n\n• ${network.title}: ${network.stage}.${groups?'\n'+groups+'.':''}\n\n• ${proposal.title}: ${proposal.stage}.`,[source(network.title,network.url),source(proposal.title,proposal.url)]);
+  }
   if(matches.length>1 && !explicitProject){
    return result(p('Which researcher are you asking about? ','Hangi araştırmacıyı soruyorsunuz? ')+matches.map(x=>x.v.name).join(' / '),matches.slice(0,4).map(x=>source(x.v.name,x.v.url)));
   }
   const person=matches.length===1?matches[0]:(!explicitProject&&follow&&lastPerson?{slug:lastPerson,v:data.people[lastPerson]}:null);
   if(person){
    lastPerson=person.slug;lastProject=null;const r=person.v;const refs=[source(r.name,r.url),...r.studies.map(x=>source(x.title,x.url))];
+   if(r.visiting_2221&&(explicitProject==='2221'||(!explicitProject&&/\bvisit\w*|\bziyaret\w*/.test(n)))){
+    const visit=r.visiting_2221,study=r.studies.find(x=>x.url.split('#')[0]==='proposal-visiting-researchers-2221.html');
+    const visitSource=study?source(study.title,study.url):source('TÜBİTAK 2221','proposal-visiting-researchers-2221.html');
+    return result(`${r.name} · TÜBİTAK 2221\n${visit.stage}.\n\n${visit.scope}\n\n${p('Proposed visit','Planlanan ziyaret')}: ${visit.planned_visit}.`,[visitSource,refs[0]]);
+   }
    if(contribution){
     if(r.contribution)return result(`${r.name}: ${r.contribution}`,refs);
     return result(p(`${r.name} is listed as ${r.role.toLowerCase()}. A more detailed division of technical, measurement or analysis duties is not specified in the public profile; it would be inaccurate to assign one.`,
@@ -85,6 +97,7 @@ function create(data,corpus){
   const key=explicitProject||(!lastPerson&&follow?lastProject:null);
   if(key&&data.projects[key]){
    lastProject=key;lastPerson=null;const r=data.projects[key];const refs=[source(r.title,r.url),source(p('Project teams','Proje ekipleri'),'team.html#project-researchers')];
+   if(key==='endueai')return result(`${r.title}\n${r.lead||'Hüseyin Ateş'}\n${r.stage}.\n\n${(r.groups||[]).map(g=>'• '+g.code+': '+g.title).join('\n')}${r.duration?'\n\n'+p('Action period: ','Aksiyon dönemi: ')+r.duration+'.':''}`,[refs[0]]);
    if(contribution&&!roster)return result(p('The website provides the team’s roles, but does not assign every technical work package. Name a researcher to check their documented contribution.',
     'Site ekip üyelerinin rollerini gösteriyor; her teknik iş paketini ayrı ayrı atamıyor. Bir araştırmacının adını yazarak kayıtlı katkısını sorabilirsiniz.'),refs);
    if(roster){
@@ -135,7 +148,7 @@ function create(data,corpus){
   const ranked=compiled.map(r=>{
    let score=scoreText(r.text,keys)+2*scoreText(r.title,keys);
    if(named.length===1){if(r.url.split('#')[0]===named[0].v.url)score+=40;else score*=.3;}
-   if(specific){if(r.url.split('#')[0]===data.projects[specific].url)score+=20;}
+   if(specific&&data.projects[specific]){if(r.url.split('#')[0]===data.projects[specific].url.split('#')[0])score+=20;}
    const hits=keys.filter(k=>r.tokens.has(k)||[...r.tokens].some(w=>k.length>=4&&w.startsWith(k))).length;
    return {r,score,hits};
   }).filter(x=>x.hits>0&&x.score>=4).sort((a,b)=>b.score-a.score);

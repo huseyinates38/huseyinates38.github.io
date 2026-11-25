@@ -1,0 +1,116 @@
+{
+  "reviewed": "2026-11-25",
+  "publication": {
+    "author": "Hüseyin Ateş",
+    "citation_author": "Ateş, H.",
+    "title": "Comparing three instructional arrangements for immersive and desktop science learning: A multischool cluster-randomized trial of conceptual understanding and delayed transfer",
+    "year": 2027,
+    "journal": "Computers & Education",
+    "volume": "258",
+    "article_number": "105805",
+    "issue_month": "2027-03",
+    "doi": "10.1016/j.compedu.2026.105805",
+    "url": "https://doi.org/10.1016/j.compedu.2026.105805",
+    "publisher_url": "https://www.sciencedirect.com/science/article/pii/S0360131526002459",
+    "metadata_url": "https://api.crossref.org/works/10.1016/j.compedu.2026.105805",
+    "online_date": null,
+    "summary_basis": "Study scope from the published title; no unverified results or effect sizes.",
+    "summary": {
+      "en": "A multischool cluster-randomized study comparing three instructional arrangements for immersive and desktop science learning, with conceptual understanding and delayed transfer as outcomes.",
+      "tr": "Sürükleyici ve masaüstü fen öğrenmesinde üç öğretim düzenlemesini karşılaştıran; kavramsal anlama ve gecikmeli transferi inceleyen, birden fazla okulda yürütülmüş küme randomize çalışma.",
+      "de": "Eine schulübergreifende cluster-randomisierte Studie zu drei Unterrichtsarrangements für immersives und desktopbasiertes naturwissenschaftliches Lernen mit konzeptuellem Verständnis und verzögertem Transfer als Ergebnissen."
+    }
+  },
+  "cost": {
+    "code": "CA25177",
+    "acronym": "ENDUeAI",
+    "title": "European Network for Developing and Evaluating the Use of GenAI in Education",
+    "member_since": "2026-11",
+    "action_start": "2026-10-05",
+    "action_end": "2030-10-04",
+    "official_url": "https://www.cost.eu/actions/CA25177/",
+    "membership_source": "Owner-supplied academic CV and membership announcement, reviewed 25 November 2026",
+    "role": {
+      "en": "Working Group Member · November 2026–present",
+      "tr": "Çalışma Grubu Üyesi · Kasım 2026–günümüz",
+      "de": "Mitglied der Arbeitsgruppen · Seit November 2026"
+    },
+    "summary": {
+      "en": "Hüseyin Ateş contributes to the European network on the development and evaluation of generative AI in education through working groups on evaluation and metrics, pedagogy and critical GenAI literacy.",
+      "tr": "Hüseyin Ateş, eğitimde üretken yapay zekânın geliştirilmesi ve değerlendirilmesine odaklanan Avrupa araştırma ağına değerlendirme ve ölçütler ile pedagoji ve eleştirel üretken yapay zekâ okuryazarlığı çalışma gruplarında katkı sunuyor.",
+      "de": "Hüseyin Ateş beteiligt sich am europäischen Netzwerk zur Entwicklung und Bewertung generativer KI in der Bildung in den Arbeitsgruppen zu Bewertung und Messgrößen sowie zu Pädagogik und kritischer GenAI-Kompetenz."
+    },
+    "groups": [
+      {"code": "WG1", "title": {"en": "GenAI Evaluation and Metrics", "tr": "Üretken Yapay Zekânın Değerlendirilmesi ve Ölçütler", "de": "Bewertung generativer KI und Messgrößen"}},
+      {"code": "WG6", "title": {"en": "Pedagogy and Critical GenAI Literacy", "tr": "Pedagoji ve Eleştirel Üretken Yapay Zekâ Okuryazarlığı", "de": "Pädagogik und kritische Kompetenz im Umgang mit generativer KI"}}
+    ]
+  },
+  "locales": {
+    "en": {
+      "date": "25 November 2026",
+      "latest_heading": "Latest research and academic service",
+      "new_publication": "New publication",
+      "publication_link": "Read the publication",
+      "publication_issue": "Assigned issue: March 2027 · Volume 258 · Article 105805",
+      "cost_heading": "COST Action CA25177 · ENDUeAI",
+      "cost_link": "Explore the working groups",
+      "cost_official": "Official COST Action",
+      "host": "Host researcher",
+      "updated": "Record updated",
+      "dossiers_heading": "Four proposed research visits",
+      "four_applications": "Four applications in preparation",
+      "program_link": "Official TÜBİTAK 2221 programme",
+      "all_proposals": "All research proposals",
+      "visiting_profile_heading": "Proposed TÜBİTAK 2221 collaboration",
+      "visiting_link": "View the research plan",
+      "publication_description": "24 selected peer-reviewed publications by Hüseyin Ateş, with DOI links and citation exports.",
+      "publication_count": "24 selected publications",
+      "cv_description": "A public academic CV covering research, publications, academic service and separately identified research proposals.",
+      "cv_updated": "CV updated in both languages: 25 November 2026"
+    },
+    "tr": {
+      "date": "25 Kasım 2026",
+      "latest_heading": "Araştırma ve akademik görevlerde yenilikler",
+      "new_publication": "Yeni makale",
+      "publication_link": "Makaleyi incele",
+      "publication_issue": "Atandığı sayı: Mart 2027 · Cilt 258 · Makale 105805",
+      "cost_heading": "COST Aksiyonu CA25177 · ENDUeAI",
+      "cost_link": "Çalışma gruplarını incele",
+      "cost_official": "Resmî COST Aksiyon sayfası",
+      "host": "Ev sahibi araştırmacı",
+      "updated": "Kayıt güncellemesi",
+      "dossiers_heading": "Planlanan dört araştırma ziyareti",
+      "four_applications": "Dört başvuru hazırlanıyor",
+      "program_link": "Resmî TÜBİTAK 2221 programı",
+      "all_proposals": "Tüm araştırma başvuruları",
+      "visiting_profile_heading": "Planlanan TÜBİTAK 2221 iş birliği",
+      "visiting_link": "Çalışma planını incele",
+      "publication_description": "Hüseyin Ateş'in DOI bağlantıları ve kaynakça dosyalarıyla sunulan seçilmiş 24 hakemli yayını.",
+      "publication_count": "24 seçilmiş yayın",
+      "cv_description": "Araştırmaları, yayınları, akademik görevleri ve ayrı olarak belirtilen araştırma başvurularını içeren akademik öz geçmiş.",
+      "cv_updated": "Her iki dilde öz geçmiş güncellemesi: 25 Kasım 2026"
+    },
+    "de": {
+      "date": "25. November 2026",
+      "latest_heading": "Aktuelles aus Forschung und akademischem Engagement",
+      "new_publication": "Neue Publikation",
+      "publication_link": "Publikation ansehen",
+      "publication_issue": "Zugeordnete Ausgabe: März 2027 · Band 258 · Artikel 105805",
+      "cost_heading": "COST-Aktion CA25177 · ENDUeAI",
+      "cost_link": "Arbeitsgruppen ansehen",
+      "cost_official": "Offizielle COST-Aktionsseite",
+      "host": "Gastgebender Wissenschaftler",
+      "updated": "Eintrag aktualisiert",
+      "dossiers_heading": "Vier geplante Forschungsaufenthalte",
+      "four_applications": "Vier Anträge in Vorbereitung",
+      "program_link": "Offizielles TÜBİTAK-2221-Programm",
+      "all_proposals": "Alle Forschungsvorhaben",
+      "visiting_profile_heading": "Geplante Zusammenarbeit im Programm TÜBİTAK 2221",
+      "visiting_link": "Arbeitsplan ansehen",
+      "publication_description": "24 ausgewählte begutachtete Publikationen von Hüseyin Ateş mit DOI-Links und Literaturdateien.",
+      "publication_count": "24 ausgewählte Publikationen",
+      "cv_description": "Ein öffentlicher akademischer Lebenslauf mit Forschung, Publikationen, akademischem Engagement und gesondert aufgeführten Forschungsvorhaben.",
+      "cv_updated": "Lebensläufe in beiden Sprachen aktualisiert: 25. November 2026"
+    }
+  }
+}

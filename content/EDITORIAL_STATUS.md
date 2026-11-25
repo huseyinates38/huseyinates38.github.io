@@ -1,4 +1,11 @@
-# Current editorial record — 13 November 2026
+# Editorial record — 13 November 2026, with later overrides
+
+**25 November 2026 override:** the four current TÜBİTAK 2221 dossiers are in
+application preparation, as defined in `visiting-2221.json`; the older submitted
+classification below is historical. CA25177 ENDUeAI WG1/WG6 membership is a
+confirmed separate activity from the submitted SciEpi-Feedback proposal. The new
+publication and membership are defined in `academic-updates.json`. The final
+`apply_academic_updates.py` pass applies these reviewed records in all languages.
 
 Version 3.2 supersedes the earlier funding classification in preserved v3.1 input templates and historical notes. Only the final validated `_site` output is published.
 
