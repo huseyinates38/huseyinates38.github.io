@@ -7,6 +7,13 @@ confirmed separate activity from the submitted SciEpi-Feedback proposal. The new
 publication and membership are defined in `academic-updates.json`. The final
 `apply_academic_updates.py` pass applies these reviewed records in all languages.
 
+**25 November 2026 conference addition:** the owner-supplied BİLTEK 16 acceptance
+letter establishes acceptance of an abstract for oral presentation on
+23–28 January 2027 in Sharm El-Sheikh, Egypt. The public record is defined in
+`conference-biltek-2027.json`. It is an accepted conference contribution, separate
+from journal publications and funding applications; no attendance, completed
+presentation or proceedings publication is inferred.
+
 Version 3.2 supersedes the earlier funding classification in preserved v3.1 input templates and historical notes. Only the final validated `_site` output is published.
 
 The owner confirmed a renewed TÜBİTAK 3501 submission on 13 November 2026. The new application is submitted and its funding decision is pending. It is excluded from supported-project records and funded research in the CV.

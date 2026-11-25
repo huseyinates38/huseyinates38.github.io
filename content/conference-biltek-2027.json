@@ -1,0 +1,73 @@
+{
+  "slug": "biltek-2027",
+  "page": "conference-biltek-2027.html",
+  "reviewed": "2026-11-25",
+  "event_title": "BİLTEK 16th International Congress on Scientific Research and Current Developments",
+  "paper_title": "What can students do when AI support is removed? A comparison of three experiments in mathematics and science education",
+  "participant": "Hüseyin Ateş",
+  "date_start": "2027-01-23",
+  "date_end": "2027-01-28",
+  "status_code": "accepted_oral_presentation",
+  "source_basis": "Owner-supplied acceptance/invitation letter, reviewed 25 November 2026. The letter confirms acceptance of the abstract for oral presentation; the original signed document is not a public site asset.",
+  "dates": {
+    "en": "23–28 January 2027",
+    "tr": "23–28 Ocak 2027",
+    "de": "23.–28. Januar 2027"
+  },
+  "location": {
+    "en": "Sharm El-Sheikh, Egypt",
+    "tr": "Şarm El-Şeyh, Mısır",
+    "de": "Scharm El-Scheich, Ägypten"
+  },
+  "status": {
+    "en": "Accepted for oral presentation",
+    "tr": "Sözlü sunum için kabul edildi",
+    "de": "Für einen mündlichen Vortrag angenommen"
+  },
+  "summary": {
+    "en": "Hüseyin Ateş's abstract on what students can do when AI support is removed has been accepted for oral presentation at BİLTEK 16, taking place on 23–28 January 2027 in Sharm El-Sheikh, Egypt.",
+    "tr": "Hüseyin Ateş'in yapay zekâ desteği kaldırıldığında öğrencilerin neler yapabildiğini ele alan bildiri özeti, 23–28 Ocak 2027 tarihlerinde Şarm El-Şeyh, Mısır'da düzenlenecek BİLTEK 16'da sözlü sunum için kabul edildi.",
+    "de": "Hüseyin Ateşs Abstract zu der Frage, was Lernende nach dem Wegfall von KI-Unterstützung leisten können, wurde für einen mündlichen Vortrag beim BİLTEK 16 angenommen. Der Kongress findet vom 23. bis 28. Januar 2027 in Scharm El-Scheich, Ägypten, statt."
+  },
+  "locales": {
+    "en": {
+      "page_title": "BİLTEK 16 · Accepted conference contribution",
+      "eyebrow": "Conference contribution",
+      "accepted_heading": "Accepted conference contributions",
+      "paper_heading": "Accepted oral presentation",
+      "date_label": "Congress dates",
+      "location_label": "Location",
+      "participant_label": "Researcher",
+      "details_link": "View the conference contribution",
+      "publications_link": "Publications and conference contributions",
+      "other_conference": "ICCAI 2027 · Accepted oral presentation",
+      "scope": "The contribution compares three experiments in mathematics and science education to examine what students can do after AI support is removed."
+    },
+    "tr": {
+      "page_title": "BİLTEK 16 · Kabul edilen kongre bildirisi",
+      "eyebrow": "Kongre bildirisi",
+      "accepted_heading": "Kabul edilen kongre bildirileri",
+      "paper_heading": "Kabul edilen sözlü bildiri",
+      "date_label": "Kongre tarihleri",
+      "location_label": "Yer",
+      "participant_label": "Araştırmacı",
+      "details_link": "Kongre bildirisini incele",
+      "publications_link": "Yayınlar ve kongre bildirileri",
+      "other_conference": "ICCAI 2027 · Kabul edilen sözlü bildiri",
+      "scope": "Bildiri, yapay zekâ desteği kaldırıldıktan sonra öğrencilerin neler yapabildiğini matematik ve fen eğitimindeki üç deney üzerinden karşılaştırmalı olarak ele alıyor."
+    },
+    "de": {
+      "page_title": "BİLTEK 16 · Angenommener Kongressbeitrag",
+      "eyebrow": "Kongressbeitrag",
+      "accepted_heading": "Angenommene Kongressbeiträge",
+      "paper_heading": "Angenommener mündlicher Vortrag",
+      "date_label": "Kongressdaten",
+      "location_label": "Ort",
+      "participant_label": "Wissenschaftler",
+      "details_link": "Kongressbeitrag ansehen",
+      "publications_link": "Publikationen und Kongressbeiträge",
+      "other_conference": "ICCAI 2027 · Angenommener mündlicher Vortrag",
+      "scope": "Der Beitrag vergleicht drei Experimente in der Mathematik- und Naturwissenschaftsdidaktik zur Frage, was Lernende nach dem Wegfall von KI-Unterstützung leisten können."
+    }
+  }
+}

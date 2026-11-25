@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Release gate for reviewed publication, COST and visiting-researcher updates.
+"""Release gate for reviewed publication, conference, COST and visitor updates.
 
 Default: final HTML, downloads, search/assistant data and real JS answer engines.
---browser: additionally exercise 36 local page loads in Chromium for CI.
+--browser: additionally exercise 45 local page loads in Chromium for CI.
 No external requests, model downloads or source-building side effects are needed.
 """
 from __future__ import annotations
@@ -29,18 +29,21 @@ ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / '_site'
 CFG = json.loads((ROOT / 'content/academic-updates.json').read_text())
 VISITING = json.loads((ROOT / 'content/visiting-2221.json').read_text())
+CONFERENCE = json.loads((ROOT / 'content/conference-biltek-2027.json').read_text())
 LANGS = ('en', 'tr', 'de')
 DOI = '10.1016/j.compedu.2026.105805'
 VISITING_PAGE = 'proposal-visiting-researchers-2221.html'
+CONFERENCE_PAGE = 'conference-biltek-2027.html'
+CONFERENCE_TITLE = 'What can students do when AI support is removed? A comparison of three experiments in mathematics and science education'
 MEMBERS = VISITING['members']
 NAMES = [member['name'] for member in MEMBERS]
 SLUGS = [member['slug'] for member in MEMBERS]
 PRIVATE = re.compile(r'(?:drive\.google\.com/(?:file|drive)|docs\.google\.com/(?:document|spreadsheets|presentation)/d/|1059B\d{8,}|libfile_|file-inline-libfile_)', re.I)
 BAD_2221_STATUS = re.compile(r'\bsubmitted\b|\beingereicht\b|başvurusu yapıl|başvuru sunuldu|desteklenmektedir|funding awarded', re.I)
 QUESTIONS = {
-    'en': {'cost': 'COST activities', 'endueai': 'COST CA25177 ENDUeAI', 'sciepi': 'SciEpi-Feedback status', 'roster': 'Who is on the 2221 team?', 'paper': 'Show 2027 publications', 'kazem_visit': 'Kazem Banihashem visit', 'omid_visit': 'Omid Noroozi 2221 visit dates'},
-    'tr': {'cost': 'COST çalışmaları', 'endueai': 'COST CA25177 ENDUeAI', 'sciepi': 'SciEpi-Feedback durumu', 'roster': '2221 ekibinde kimler var?', 'paper': '2027 yayınlarını göster', 'kazem_visit': 'Kazem Banihashem ziyareti', 'omid_visit': 'Omid Noroozi 2221 ziyaret tarihleri'},
-    'de': {'cost': 'COST-Aktivitäten', 'endueai': 'COST CA25177 ENDUeAI', 'sciepi': 'SciEpi-Feedback Status', 'roster': 'Wer gehört zum 2221-Team?', 'paper': 'Publikationen 2027', 'kazem_visit': 'Kazem Banihashem Besuch', 'omid_visit': 'Omid Noroozi 2221 Besuchstermine'},
+    'en': {'cost': 'COST activities', 'endueai': 'COST CA25177 ENDUeAI', 'sciepi': 'SciEpi-Feedback status', 'roster': 'Who is on the 2221 team?', 'paper': 'Show 2027 publications', 'kazem_visit': 'Kazem Banihashem visit', 'omid_visit': 'Omid Noroozi 2221 visit dates', 'biltek': 'BILTEK 2027 presentation'},
+    'tr': {'cost': 'COST çalışmaları', 'endueai': 'COST CA25177 ENDUeAI', 'sciepi': 'SciEpi-Feedback durumu', 'roster': '2221 ekibinde kimler var?', 'paper': '2027 yayınlarını göster', 'kazem_visit': 'Kazem Banihashem ziyareti', 'omid_visit': 'Omid Noroozi 2221 ziyaret tarihleri', 'biltek': 'BİLTEK 2027 bildirisi'},
+    'de': {'cost': 'COST-Aktivitäten', 'endueai': 'COST CA25177 ENDUeAI', 'sciepi': 'SciEpi-Feedback Status', 'roster': 'Wer gehört zum 2221-Team?', 'paper': 'Publikationen 2027', 'kazem_visit': 'Kazem Banihashem Besuch', 'omid_visit': 'Omid Noroozi 2221 Besuchstermine', 'biltek': 'Biltek 2027 Vortrag'},
 }
 
 
@@ -106,7 +109,7 @@ def static_checks(report):
     for lang in LANGS:
         loc, base = CFG['locales'][lang], folder(lang)
         docs = {name: read(base / name) for name in (
-            'index.html', 'publications.html', VISITING_PAGE, 'research-network.html',
+            'index.html', 'publications.html', VISITING_PAGE, CONFERENCE_PAGE, 'research-network.html',
             'about.html', 'assistant.html', 'search.html', 'proposals.html',
             'proposal-sciepi-feedback.html', 'team.html', 'project-space-debris.html',
             'person-naomi-winstone.html', *[m['profile'] for m in MEMBERS],
@@ -126,6 +129,22 @@ def static_checks(report):
         assert re.search(r'\b24\b', text(pubs.select_one('#pub-count')))
         assert docs['index.html'].select_one('a[href="publications.html#' + item['id'] + '"]')
         assert docs['index.html'].select_one('#latest-academic-updates')
+
+        # An accepted abstract must remain distinct from the journal bibliography.
+        conference = docs[CONFERENCE_PAGE]
+        body = text(conference.main)
+        assert CONFERENCE['paper_title'] == CONFERENCE_TITLE
+        assert (CONFERENCE['date_start'], CONFERENCE['date_end']) == ('2027-01-23', '2027-01-28')
+        assert all(value in body for value in (CONFERENCE_TITLE, CONFERENCE['status'][lang],
+                                               CONFERENCE['dates'][lang], CONFERENCE['location'][lang]))
+        assert 'Hüseyin Ateş' in body and 'BİLTEK' in body
+        assert not any(CONFERENCE_TITLE in text(item) for item in pubs.select('.publication'))
+        for name in ('index.html', 'publications.html', 'about.html'):
+            assert docs[name].select_one(f'a[href="{CONFERENCE_PAGE}"]'), (lang, name, 'conference entry missing')
+        canonical = conference.select_one('link[rel="canonical"]')
+        expected_url = 'https://huseyinates38.github.io/' + ('' if lang == 'en' else lang + '/') + CONFERENCE_PAGE
+        assert canonical and canonical['href'] == expected_url, (lang, 'conference canonical')
+        assert expected_url in (SITE / 'sitemap.xml').read_text(), (lang, 'conference sitemap')
 
         page = docs[VISITING_PAGE]
         assert page.select_one('#visiting-researcher-plans')
@@ -177,6 +196,15 @@ def static_checks(report):
         facts = embedded(docs['assistant.html'], 'assistant-facts')
         kb = embedded(docs['assistant.html'], 'assistant-knowledge')
         search = embedded(docs['search.html'], 'site-search-data')
+        accepted = facts['conferences']['biltek-2027']
+        assert accepted['paper_title'] == CONFERENCE_TITLE and accepted['url'] == CONFERENCE_PAGE
+        assert accepted['stage'] == CONFERENCE['status'][lang]
+        assert accepted['date'] == CONFERENCE['dates'][lang]
+        assert accepted['location'] == CONFERENCE['location'][lang]
+        for corpus_name, rows in [('search', search), ('assistant', kb['records'])]:
+            conference_rows = [r for r in rows if r['url'].split('#')[0] == CONFERENCE_PAGE]
+            assert conference_rows, (lang, corpus_name, 'no conference source')
+            assert normalized(CONFERENCE_TITLE) in normalized(json.dumps(conference_rows, ensure_ascii=False))
         visit = facts['projects']['2221']
         assert [m['slug'] for m in visit['members']] == SLUGS
         assert [m['name'] for m in visit['members']] == NAMES
@@ -223,6 +251,7 @@ def download_checks(expected_dois, report):
     downloads = SITE / 'downloads'
     records = json.loads((downloads / 'publication-records.json').read_text())
     assert len(records) == 24 and {r['doi'].lower() for r in records} == expected_dois
+    assert all(record['title'] != CONFERENCE_TITLE for record in records)
     paper = next(r for r in records if r['doi'].lower() == DOI)
     assert (str(paper['year']), paper['volume'], paper['article_number']) == ('2027', '258', '105805')
     assert paper['title'] == CFG['publication']['title']
@@ -242,6 +271,8 @@ def download_checks(expected_dois, report):
         pages = [p.extract_text() for p in PdfReader(downloads / (stem + '.pdf')).pages]
         assert len(pages) == 4 and all(date in p for p in pages), (lang, 'CV pages/date')
         all_text = '\n'.join(pages)
+        assert normalized(CONFERENCE_TITLE) in normalized(' '.join(all_text.split())), (lang, 'conference missing from PDF CV')
+        assert normalized(CONFERENCE['status'][lang]) in normalized(all_text), (lang, 'accepted status missing from PDF CV')
         assert DOI in all_text and all(x in all_text for x in ('CA25177', 'WG1', 'WG6'))
         assert all(name in pages[3] for name in NAMES), (lang, 'four visiting CV records')
         assert '2221' not in pages[2], (lang, 'draft visits misclassified on submitted page')
@@ -257,6 +288,8 @@ def download_checks(expected_dois, report):
                 doc_pages[-1] += ' '.join(t.text or '' for t in paragraph.findall('.//w:t', ns)) + '\n'
             assert len(doc_pages) == 4, (lang, 'DOCX page breaks')
             joined = '\n'.join(doc_pages)
+            assert normalized(CONFERENCE_TITLE) in normalized(' '.join(joined.split())), (lang, 'conference missing from DOCX CV')
+            assert normalized(CONFERENCE['status'][lang]) in normalized(joined), (lang, 'accepted status missing from DOCX CV')
             assert DOI in joined and all(x in joined for x in ('CA25177', 'WG1', 'WG6'))
             assert all(name in doc_pages[3] for name in NAMES)
             assert '2221' not in doc_pages[2]
@@ -307,6 +340,10 @@ process.stdout.write(JSON.stringify(output));
         assert VISITING['locales'][lang]['status_label'] in roster
         assert_current_2221(roster, (lang, 'roster answer'))
         assert DOI in answers['paper']['text'] and '2027' in answers['paper']['text']
+        conference = answers['biltek']
+        assert all(value in conference['text'] for value in (CONFERENCE_TITLE, CONFERENCE['status'][lang],
+                                                              CONFERENCE['dates'][lang], CONFERENCE['location'][lang]))
+        assert CONFERENCE_PAGE in {s['url'] for s in conference['sources']}, (lang, 'conference answer source')
         for answer_key, slug in [('kazem_visit', 'kazem-banihashem'), ('omid_visit', 'omid-noroozi')]:
             person = facts_by_language[lang]['people'][slug]
             visit = person['visiting_2221']
@@ -344,7 +381,7 @@ def browser_checks(report):
                 page.set_viewport_size({'width': width, 'height': 1000})
                 for lang in LANGS:
                     pre = '' if lang == 'en' else lang + '/'
-                    for name in ('publications.html', VISITING_PAGE, 'research-network.html', 'assistant.html'):
+                    for name in ('publications.html', VISITING_PAGE, CONFERENCE_PAGE, 'research-network.html', 'assistant.html'):
                         page.goto(origin + pre + name, wait_until='load')
                         assert page.locator('h1').count() == 1
                         if name == 'publications.html':
@@ -358,17 +395,20 @@ def browser_checks(report):
                         elif name == VISITING_PAGE:
                             assert page.locator('.visiting-plan-card:visible').count() == 4
                         elif name == 'assistant.html':
-                            for key in ('cost', 'roster'):
+                            for key in ('cost', 'roster', 'biltek'):
                                 page.locator('#chat-clear').click()
                                 page.locator('#chat-question').fill(QUESTIONS[lang][key])
                                 page.locator('#chat-send').click()
                                 answer = page.locator('.chat-assistant').last
-                                expect(answer).to_contain_text('CA25177' if key == 'cost' else NAMES[0])
+                                expect(answer).to_contain_text('CA25177' if key == 'cost' else CONFERENCE_TITLE if key == 'biltek' else NAMES[0])
                                 value = answer.inner_text()
                                 if key == 'cost':
                                     assert all(x in value for x in ('CA25177', 'SciEpi', 'WG1', 'WG6'))
                                     assert answer.locator('a[href="research-network.html#cost-endueai"]').count() == 1
                                     assert answer.locator('a[href="proposal-sciepi-feedback.html"]').count() == 1
+                                elif key == 'biltek':
+                                    assert CONFERENCE['status'][lang] in value
+                                    assert answer.locator(f'a[href="{CONFERENCE_PAGE}"]').count() == 1
                                 else:
                                     assert all(n in value for n in NAMES)
                                     assert_current_2221(value, (lang, 'browser roster'))
@@ -379,7 +419,7 @@ def browser_checks(report):
     finally:
         server.shutdown()
         server.server_close()
-    assert report['browser_page_loads'] == 36
+    assert report['browser_page_loads'] == 45
     assert not report['errors'], report['errors']
 
 

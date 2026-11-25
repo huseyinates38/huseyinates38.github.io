@@ -21,6 +21,24 @@ function create(data,corpus){
   if(/2221|gastforsch/.test(q))return '2221';
   if(/\berc\b|reclaim/.test(q))return 'erc';if(/\bcost\b/.test(q))return 'cost';if(/\bdfg\b|krell.*konzept/.test(q))return 'dfg';return null;
  }
+ function conferenceAnswer(q,key,hasPerson){
+  const biltek=/\bbiltek\b|ai support (?:is )?removed|ki unterstutzung.*(?:entfall|entfern|wegfall|entzog)|(?:entfall|entfern|wegfall|entzug).*ki unterstutzung/.test(q);
+  const iccai=/\biccai\b|\bys1001\b/.test(q);
+  const general=/konferenz|kongress|tagung|mundlich.*vortrag|conference|congress/.test(q);
+  if(!biltek&&!iccai&&(!general||key||hasPerson))return null;
+  const rows=Object.entries(data.conferences||{}).filter(([slug])=>biltek?slug==='biltek-2027':iccai?slug==='iccai-2027':true).map(([,r])=>({
+   text:[r.title,r.paper_title,r.stage,[r.date,r.location].filter(Boolean).join(' · ')].filter(Boolean).join('\n'),
+   source:ref(r.title,r.url)
+  }));
+  // Keep ICCAI's accepted contribution separate from its funding application.
+  if(!biltek&&!rows.some(r=>r.source.url==='conference-iccai-2027.html')){
+   const records=(corpus.records||[]).filter(r=>r.url==='conference-iccai-2027.html');
+   if(records.length)rows.push({text:[...new Set(records.map(r=>r.text))].join('\n'),source:ref(records[0].title,records[0].url)});
+  }
+  if(!rows.length)return null;
+  lastPerson=null;lastProject=null;
+  return result(rows.map(r=>r.text).join('\n\n'),rows.map(r=>r.source));
+ }
  function answer(question){
   const q=clean(question),found=matches(q),key=project(q);
   const follow=/^(und|was ist mit|wie sieht|seine|ihre|dessen|deren|dazu|dabei|es|sie|er)\b|status|institution|universitat|beitrag|aufgabe|forderung/.test(q);
@@ -32,6 +50,7 @@ function create(data,corpus){
   if(/wer bist|wer sind sie|bist du huseyin|sind sie huseyin/.test(q))return result('Ich bin der Website-Wegweiser, nicht Hüseyin Ateş. Ich nutze veröffentlichte Einträge und übermittle ihm keine Nachrichten.');
   if(/^(danke|vielen dank|besten dank)/.test(q))return result('Gern. Was möchten Sie noch über die Forschung erfahren?');
   if(/passwort|api schlussel|system prompt|ignoriere.*anweisung/.test(q))return result('Bitte teilen Sie keine Passwörter oder privaten Daten. Ich helfe bei Fragen zu öffentlichen Forschungseinträgen.');
+  const conference=conferenceAnswer(q,key,found.length);if(conference)return conference;
   if(/kontakt|e mail|email|erreich|termin|nachricht.*(senden|schicken)/.test(q)&&!found.length)return result(`Sie erreichen Hüseyin Ateş unter ${data.email}. Beschreiben Sie bei einer Kooperationsanfrage kurz Ihr Thema und den vorgesehenen Beitrag. Dieser Chat versendet keine Nachrichten und vereinbart keine Termine.`,[ref('Kontakt','contact.html')]);
   if(/zusammenarbeit|kooperat|mitmachen|gruppe.*beitret/.test(q)&&!found.length&&!key)return result('Teilen Sie Ihre Forschungsfrage, Ihren Hintergrund und Ihren möglichen Beitrag über das Interessenformular auf der Website. Das Formular ist eine Interessenbekundung, keine Zulassung oder Stellenzusage.',[ref('Zusammenarbeit','join.html'),ref('Kontakt','contact.html')]);
   if(/(master|promotion|doktor).*(bewerb|zulass|platz)|stipendium.*bekomm/.test(q)&&!found.length&&!key)return result('Die Zulassung erfolgt nach den offiziellen Verfahren der Universität. Die Website bestätigt keine aktuelle freie Stelle oder individuelle Zulassung. Die fachliche Passung Ihres Vorhabens können Sie direkt mit Hüseyin Ateş besprechen.',[ref('Anfragen','join.html'),ref('Kontakt','contact.html')]);

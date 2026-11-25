@@ -4,7 +4,13 @@ The final multilingual pass adds the new *Computers & Education* article (2027,
 volume 258, article 105805), CA25177 ENDUeAI WG1/WG6 membership and four current
 TÜBİTAK 2221 applications in preparation. The selected bibliography now contains
 24 records. English and Turkish public CVs contain four pages with the latest
-publication, academic service and separate visiting-researcher plans.
+publication, academic service, separate visiting-researcher plans and the accepted
+BİLTEK 16 oral presentation (23–28 January 2027, Sharm El-Sheikh, Egypt).
+
+`content/conference-biltek-2027.json` records the owner-supplied acceptance letter.
+The contribution has its own page in all three languages, appears on the homepage
+and in a separate conference section of Publications, and is searchable through
+the site and academic assistant. It is not part of the 24 journal DOI records.
 
 For these records, `content/academic-updates.json` and
 `content/visiting-2221.json` supersede the older statements below and in historical

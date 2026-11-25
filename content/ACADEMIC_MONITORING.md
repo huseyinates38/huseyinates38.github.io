@@ -41,6 +41,7 @@ The final, authoritative delta registries are:
 
 - `content/academic-updates.json`: new publication and CA25177 membership.
 - `content/visiting-2221.json`: four current visiting-researcher application plans.
+- `content/conference-biltek-2027.json`: accepted BİLTEK 16 oral presentation.
 
 These override older values for the same records in historical input templates,
 translation catalogs, proposal JSON and CV source arrays. The final pass is
@@ -88,6 +89,23 @@ conflict, so only March 2027 is public until the visit timing is reconciled.
 
 Moritz Krell and Elena Novak are not active members of these four 2027 visit
 plans. Preserve their unrelated research profiles and collaborations.
+
+### BİLTEK 16 conference contribution
+
+The owner-supplied acceptance/invitation letter confirms that the abstract
+"What can students do when AI support is removed? A comparison of three
+experiments in mathematics and science education" was accepted for oral
+presentation at the BİLTEK 16th International Congress on Scientific Research
+and Current Developments, 23–28 January 2027, Sharm El-Sheikh, Egypt.
+The letter is addressed to Hüseyin Ateş. Do not infer a complete author list,
+paper number, proceedings publication, travel funding or completed presentation.
+Passing the event date alone does not establish attendance or delivery.
+
+Preserve `conference-biltek-2027.html` in EN/TR/DE and
+`facts.conferences['biltek-2027']`. Keep accepted contributions separate from
+journal articles and their DOI exports. The original signed acceptance letter
+remains outside the public repository. Existing ICCAI 2027 records and their
+separate 2224-A application remain unchanged.
 
 ## Update and verify
 

@@ -172,7 +172,7 @@ def _baseline_cv_pages():
     return originals
 
 
-def _cv_pages(publication, visiting, cost, reviewed, lang, baseline):
+def _cv_pages(publication, visiting, cost, reviewed, lang, baseline, conference):
     """Retain approved CV content while keeping four draft visits separate."""
     pages = copy.deepcopy(baseline[lang])
     if len(pages) != 3:
@@ -224,7 +224,7 @@ def _cv_pages(publication, visiting, cost, reviewed, lang, baseline):
     pages[0].extend(pages[1][methods:end])
     del pages[1][methods:end]
 
-    title = 'Visiting researcher applications' if lang == 'en' else 'Konuk araştırmacı başvuruları'
+    title = 'Research visits & conferences' if lang == 'en' else 'Araştırma ziyaretleri ve kongreler'
     intro = (
         'TÜBİTAK 2221 | Four applications in preparation. Host researcher: Hüseyin Ateş, '
         'Kırşehir Ahi Evran University. Proposed visits are planned for 2027 and are subject to funding approval.'
@@ -241,6 +241,14 @@ def _cv_pages(publication, visiting, cost, reviewed, lang, baseline):
         ])
     visit_page.append(('small', ('Public research plans: ' if lang == 'en' else 'Araştırma planları: ') +
                        documents.BASE + ('' if lang == 'en' else 'tr/') + 'proposal-visiting-researchers-2221.html'))
+    visit_page.extend([
+        ('h', 'Accepted conference contributions' if lang == 'en' else 'Kabul edilen kongre bildirileri'),
+        ('p', conference['paper_title'] + '.'),
+        ('p', conference['event_title'] + '. ' + _localized(conference['dates'], lang) + '; ' +
+         _localized(conference['location'], lang) + '. ' + _localized(conference['status'], lang) + '.'),
+        ('small', ('Conference record: ' if lang == 'en' else 'Kongre kaydı: ') +
+         documents.BASE + ('' if lang == 'en' else 'tr/') + conference['page']),
+    ])
     pages.append(visit_page)
     return pages
 
@@ -312,6 +320,7 @@ def update_downloads(publication, visiting, cost, reviewed='2026-11-25'):
     if cost['code'] != 'CA25177' or cost.get('member_since') != '2026-11':
         raise ValueError('Review the COST service dates for a different action or membership period')
     records = _bibliography(publication)
+    conference = json.loads((ROOT / 'content/conference-biltek-2027.json').read_text(encoding='utf-8'))
     stems = {
         'en': 'Huseyin_Ates_Public_Academic_CV',
         'tr': 'Huseyin_Ates_Akademik_Ozgecmis_TR',
@@ -321,7 +330,7 @@ def update_downloads(publication, visiting, cost, reviewed='2026-11-25'):
     baseline = _baseline_cv_pages()
     with _dated_export(reviewed):
         for lang, stem in stems.items():
-            blocks = _cv_pages(publication, visiting, cost, reviewed, lang, baseline)
+            blocks = _cv_pages(publication, visiting, cost, reviewed, lang, baseline, conference)
             documents.export_document(
                 stem, blocks,
                 'Hüseyin Ateş — Public academic CV' if lang == 'en' else 'Hüseyin Ateş — Akademik Özgeçmiş',

@@ -16,4 +16,14 @@
 .publication .publication-update{margin-top:.8rem;font-size:.9rem;color:var(--muted,#536a72)}
 [data-visiting-plan-link]{padding-top:.75rem;border-top:1px solid var(--line,#d8e2e5);margin-top:.75rem}
 #latest-academic-updates{padding-block:2.75rem}
+.conference-announcement{grid-column:1/-1;border-left:4px solid var(--teal,#187886)}
+.conference-detail-grid{display:grid;grid-template-columns:minmax(0,2fr) minmax(15rem,1fr);gap:2rem;align-items:start}
+.conference-paper-title{font-size:clamp(1.3rem,2.3vw,1.9rem);line-height:1.4;overflow-wrap:anywhere;margin:1.2rem 0}
+.conference-event-name{font-weight:600}
+.conference-details{background:var(--surface,#f1f7f7);border:1px solid var(--line,#d8e2e5);border-radius:1rem;padding:1.5rem}
+.conference-details dl{margin:0}.conference-details dl>div+div{margin-top:1.25rem}
+.conference-details dt{font-size:.9rem;color:var(--muted,#536a72)}
+.conference-details dd{margin:.4rem 0 0;font-weight:600;font-size:1rem}
+#conference-biltek .status-pill{max-width:100%;white-space:normal}
+@media(max-width:700px){.conference-detail-grid{grid-template-columns:1fr}}
 @media(max-width:700px){.academic-update-grid,.visiting-plan-grid,.working-group-grid{grid-template-columns:1fr}.academic-update-card,.visiting-plan-card,.working-group-card{padding:1.25rem}}

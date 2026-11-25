@@ -95,7 +95,7 @@ jobs:
         run: |
           python scripts/add_1002_team.py
           python tests/project_1002_browser.py
-      - name: Apply and verify current publications, COST membership and four 2221 plans
+      - name: Apply and verify current publications, conferences, COST and 2221 plans
         run: |
           python scripts/apply_academic_updates.py
           node --check _site/assets/academic-answer-engine.js
@@ -159,5 +159,5 @@ jobs:
       - name: Record release
         run: |
           echo '## Academic website — current research and academic service in EN/TR/DE' >> "$GITHUB_STEP_SUMMARY"
-          echo 'Added the publisher-verified Computers & Education paper, CA25177 ENDUeAI WG1/WG6 membership and four current TÜBİTAK 2221 application plans. Search, assistant records, citation exports and public EN/TR CVs are synchronized.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Includes the publisher-verified Computers & Education paper, accepted BİLTEK 16 oral presentation, CA25177 ENDUeAI WG1/WG6 membership and four current TÜBİTAK 2221 application plans. Search, assistant records, citation exports and public EN/TR CVs are synchronized.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Private application documents are excluded. The 1002 roster and existing funding boundaries remain intact. No cloud conversation service has been activated.' >> "$GITHUB_STEP_SUMMARY"

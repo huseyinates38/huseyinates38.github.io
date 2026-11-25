@@ -31,6 +31,25 @@ function create(data,corpus){
   if(/surrey|fading|azaltil/.test(n))return '2219';
   if(/reclaim/.test(n))return 'erc';return null;
  }
+ function conferenceAnswer(n,explicitProject,hasPerson){
+  const biltek=/\bbiltek\b|ai support (?:is )?removed|(?:yapay zeka|yz) destegi.*kaldir/.test(n);
+  const iccai=/\biccai\b|\bys1001\b/.test(n);
+  const general=/conference|congress|kongre|konferans|bildiri|oral presentation|sozlu sunum/.test(n);
+  if(!biltek&&!iccai&&(!general||explicitProject||hasPerson))return null;
+  const rows=Object.entries(data.conferences||{}).filter(([key])=>biltek?key==='biltek-2027':iccai?key==='iccai-2027':true).map(([,r])=>({
+   text:[r.title,r.paper_title,r.stage,[r.date,r.location].filter(Boolean).join(' · ')].filter(Boolean).join('\n'),
+   source:source(r.title,r.url)
+  }));
+  // Reuse the accepted ICCAI contribution; its separate funding record must not
+  // be attached to another conference or copied into an unrelated answer.
+  if(!biltek&&!rows.some(r=>r.source.url==='conference-iccai-2027.html')){
+   const records=corpus.records.filter(r=>r.url==='conference-iccai-2027.html');
+   if(records.length)rows.push({text:[...new Set(records.map(r=>r.text))].join('\n'),source:source(records[0].title,records[0].url)});
+  }
+  if(!rows.length)return null;
+  lastPerson=null;lastProject=null;
+  return result(rows.map(r=>r.text).join('\n\n'),rows.map(r=>r.source));
+ }
  function answer(question){
   const n=clean(question),explicitProject=projectKey(n),matches=personMatches(n);
   const follow=/^(peki|ya |and |what about|how about|onun|bu |bunun|o |onlar)|katki|gorevi|kurumu|hangi kurum|ne is|hangi proje|durumu|destek|sonuc|ekibi|funded|contribut|affiliat|status/.test(n);
@@ -42,6 +61,7 @@ function create(data,corpus){
   if(/ignore.*instruct|onceki.*talimat|sistem.*prompt|api.*anahtar|api.*key|sifre/.test(n))return result(p('Please do not share passwords or private data. I can answer questions about the public research records.','Lütfen şifre veya özel bilgi paylaşmayın. Açık araştırma kayıtları hakkında yardımcı olabilirim.'));
   if(/^(tesekkur|sag ol|thanks|thank you)/.test(n))return result(p('You’re welcome. What else would you like to know about the research?','Rica ederim. Araştırmalarla ilgili başka ne öğrenmek istersiniz?'));
   if(/^(nasilsin|how are you)/.test(n))return result(p('I’m ready to help. We can discuss the research, projects or collaboration options.','Yardımcı olmaya hazırım. Araştırmalar, projeler veya iş birliği seçenekleri hakkında konuşabiliriz.'));
+  const conference=conferenceAnswer(n,explicitProject,matches.length);if(conference)return conference;
   // Do not substitute a generic contact disclaimer for an actual email-address question.
   if(/iletisim|e posta|eposta|email|e mail|mail adres|nasil.*ulas|contact/.test(n)&&!matches.length){
    const address=data.email;

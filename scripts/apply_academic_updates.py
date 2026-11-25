@@ -199,6 +199,56 @@ def update_about(docs, cfg, lang):
                 date['datetime'] = cfg['reviewed']; date.string = labels['date']
 
 
+def conference_sections(docs, conference, lang):
+    """Add the accepted abstract without treating it as a journal publication."""
+    c = conference; loc = c['locales'][lang]
+    # Reuse the established conference shell, including responsive navigation.
+    s = Soup(str(docs['conference-iccai-2027.html']).replace(
+        'conference-iccai-2027.html', c['page']), 'html.parser')
+    hero = copy.deepcopy(s.select_one('.pagehero'))
+    hero.select_one('.eyebrow').string = loc['eyebrow']
+    hero.h1.string = loc['page_title']
+    hero.select_one('.lead').string = c['summary'][lang]
+    s.main.clear(); s.main.append(hero)
+    metadata = ''.join(
+        f'<div><dt>{e(label)}</dt><dd>{e(value)}</dd></div>'
+        for label, value in ((loc['date_label'], c['dates'][lang]),
+                             (loc['location_label'], c['location'][lang]),
+                             (loc['participant_label'], c['participant'])))
+    body = (f'<div class="conference-detail-grid"><div><p class="status-pill status-accepted">{e(c["status"][lang])}</p>'
+            f'<h3 class="conference-paper-title" lang="en">{e(c["paper_title"])}</h3>'
+            f'<p>{e(loc["scope"])}</p><p class="conference-event-name" lang="en">{e(c["event_title"])}</p></div>'
+            f'<aside class="conference-details"><dl>{metadata}</dl></aside></div>'
+            f'<div class="academic-current-links">{anchor(loc["publications_link"], "publications.html#accepted-conference-contributions")}'
+            f'{anchor(loc["other_conference"], "conference-iccai-2027.html")}</div>')
+    s.main.append(section(loc['paper_heading'], body, 'conference-biltek'))
+    s.title.string = loc['page_title'] + ' | Hüseyin Ateş'
+    for meta in s.select('meta[name="description"],meta[property="og:description"],meta[name="twitter:description"]'):
+        meta['content'] = c['summary'][lang]
+    docs[c['page']] = s
+
+    card = (f'<article class="academic-update-card" data-conference="{c["slug"]}">'
+            f'<p class="micro-label">BİLTEK 16 · {e(c["status"][lang])}</p>'
+            f'<h3 lang="en">{e(c["paper_title"])}</h3><p>{e(c["dates"][lang])} · {e(c["location"][lang])}</p>'
+            f'{anchor(loc["details_link"], c["page"])}</article>')
+    home_card = fragment(card).article
+    home_card['class'].append('conference-announcement')
+    docs['index.html'].select_one('#latest-academic-updates .academic-update-grid').append(home_card)
+
+    # Keep accepted conference work in its own section, outside journal filters.
+    iccai = docs['conference-iccai-2027.html']
+    iccai_card = (f'<article class="academic-update-card"><p class="micro-label">ICCAI 2027</p>'
+                  f'<h3>{e(loc["other_conference"])}</h3>'
+                  f'<p lang="en">{e(text(iccai.select_one(".profile-summary p[lang=en]")))}</p>'
+                  f'<p>{e(text(iccai.select_one(".conference-date-place")))}</p>'
+                  f'{anchor(loc["details_link"], "conference-iccai-2027.html")}</article>')
+    replace_section(docs['publications.html'], section(loc['accepted_heading'],
+        '<div class="academic-update-grid">' + card + iccai_card + '</div>', 'accepted-conference-contributions', 'section muted'))
+    replace_section(docs['about.html'], section(loc['paper_heading'],
+        f'<h3 lang="en">{e(c["paper_title"])}</h3><p>{e(c["summary"][lang])}</p>' +
+        anchor(loc['details_link'], c['page']), 'biltek-conference', 'section white'))
+
+
 def update_metadata(s, name, lang, reviewed):
     title = text(s.main.h1); desc = text(s.select_one('.pagehero .lead'))
     if not desc:
@@ -216,7 +266,7 @@ def update_metadata(s, name, lang, reviewed):
         script.string = encoded(walk(data))
 
 
-def refresh_derived(docs, cfg, visiting, lang, pub_id):
+def refresh_derived(docs, cfg, visiting, conference, lang, pub_id):
     labels = cfg['locales'][lang]; v = visiting['locales'][lang]
     assistant = docs['assistant.html']; facts = json.loads(assistant.select_one('#assistant-facts').string)
     facts['projects']['2221'] = {
@@ -231,6 +281,12 @@ def refresh_derived(docs, cfg, visiting, lang, pub_id):
         'title': labels['cost_heading'], 'url': NETWORK_PAGE + '#cost-endueai', 'summary': cost['summary'][lang],
         'stage': cost['role'][lang], 'reviewed': labels['date'], 'members': [], 'lead': 'Hüseyin Ateş · WG1 / WG6',
         'duration': '2026–2030', 'groups': [{'code': g['code'], 'title': g['title'][lang]} for g in cost['groups']]
+    }
+    facts.setdefault('conferences', {})[conference['slug']] = {
+        'title': conference['event_title'], 'paper_title': conference['paper_title'],
+        'url': conference['page'], 'summary': conference['summary'][lang],
+        'stage': conference['status'][lang], 'date': conference['dates'][lang],
+        'location': conference['location'][lang], 'reviewed': labels['date']
     }
     for m in visiting['members']:
         person = facts['people'][m['slug']]
@@ -253,6 +309,8 @@ def refresh_derived(docs, cfg, visiting, lang, pub_id):
         structured.append({'title': p['name'], 'url': p['url'], 'text': encoded({k: val for k, val in p.items() if k not in ('name', 'url')})})
     for p in facts['projects'].values():
         structured.append({'title': p['title'], 'url': p['url'], 'text': encoded({k: val for k, val in p.items() if k not in ('title', 'url')})})
+    for p in facts.get('conferences', {}).values():
+        structured.append({'title': p['title'], 'url': p['url'], 'text': encoded({k: val for k, val in p.items() if k not in ('title', 'url')})})
     kb['records'] = structured + kb['records']
     assistant.select_one('#assistant-knowledge').string = encoded(kb)
     search = docs['search.html'].select_one('#site-search-data'); rows = json.loads(search.string)
@@ -270,6 +328,11 @@ def refresh_derived(docs, cfg, visiting, lang, pub_id):
     rows.insert(0, {'title': pub['title'], 'url': rurl, 'category': 'publications', 'label': labels_search[lang],
                     'summary': f'{pub["citation_author"]} ({pub["year"]}). {pub["journal"]}, {pub["volume"]}, {pub["article_number"]}.',
                     'key': normalized(' '.join([pub['title'], pub['doi'], pub['journal'], str(pub['year']), pub['summary'][lang]]))})
+    rows = [r for r in rows if r['url'] != conference['page']]
+    rows.insert(0, {'title': conference['locales'][lang]['page_title'], 'url': conference['page'],
+                   'category': 'publications', 'label': conference['locales'][lang]['accepted_heading'],
+                   'summary': conference['summary'][lang],
+                   'key': normalized(text(docs[conference['page']].main))})
     search.string = encoded(rows)
     return {'records': kb['records'], 'names': list(dict.fromkeys(p['name'] for p in facts['people'].values()))}
 
@@ -277,6 +340,7 @@ def refresh_derived(docs, cfg, visiting, lang, pub_id):
 def main():
     cfg = json.loads((ROOT / 'content/academic-updates.json').read_text())
     visiting = json.loads((ROOT / 'content/visiting-2221.json').read_text())
+    conference = json.loads((ROOT / 'content/conference-biltek-2027.json').read_text())
     context = json.loads((SITE / 'assets/assistant-context.json').read_text())
     all_docs = {}; all_originals = {}; changed = []
     for lang in ('en', 'tr', 'de'):
@@ -288,7 +352,8 @@ def main():
         cost_sections(docs, cfg, lang)
         homepage(docs, cfg, visiting, lang, pub_id)
         update_about(docs, cfg, lang)
-        bundle = refresh_derived(docs, cfg, visiting, lang, pub_id)
+        conference_sections(docs, conference, lang)
+        bundle = refresh_derived(docs, cfg, visiting, conference, lang, pub_id)
         if lang in context: context[lang] = bundle
         all_docs[lang] = docs; all_originals[lang] = originals
 
@@ -310,11 +375,11 @@ def main():
                 if asset in ('academic-answer-engine.js', 'german-guide.js'):
                     digest = hashlib.sha256((SITE / 'assets' / asset).read_bytes()).hexdigest()[:12]
                     js['src'] = pre + 'assets/' + asset + '?v=' + digest
-            if s.select('#latest-academic-updates,#visiting-researcher-plans,#cost-endueai,#cost-membership,#visiting-2221'):
+            if s.select('#latest-academic-updates,#visiting-researcher-plans,#cost-endueai,#cost-membership,#visiting-2221,#conference-biltek,#accepted-conference-contributions,#biltek-conference'):
                 for old in s.select('link[data-academic-updates]'): old.decompose()
                 css = s.new_tag('link', rel='stylesheet', href=pre + 'assets/academic-updates.css', attrs={'data-academic-updates': 'true'})
                 s.head.append(css)
-            if dom(s) != all_originals[lang][name]:
+            if dom(s) != all_originals[lang].get(name):
                 update_metadata(s, name, lang, cfg['reviewed'])
                 (folder / name).write_text(dom(s))
                 changed.append((folder / name).relative_to(SITE).as_posix())
@@ -326,15 +391,30 @@ def main():
     for name in ('deployment.json', 'quality-report.json'):
         path = SITE / name; value = json.loads(path.read_text()); value.pop('files', None)
         value.update(academic_update_date=cfg['reviewed'], selected_publications=count,
-                     visiting_2221_applications=len(visiting['members']), assistant_context_revision=context['revision'])
+                     visiting_2221_applications=len(visiting['members']), assistant_context_revision=context['revision'],
+                     accepted_biltek_2027=True)
+        if name == 'deployment.json':
+            value['pages'] = sorted(p.relative_to(SITE).as_posix() for p in SITE.rglob('*.html'))
+            value['page_count'] = len(value['pages'])
         path.write_text(json.dumps(value, ensure_ascii=False, indent=2))
     sitemap = Soup((SITE / 'sitemap.xml').read_text(), 'xml')
     for row in sitemap.find_all('url'):
         if row.loc and text(row.loc).removeprefix(BASE) in changed:
             if row.lastmod: row.lastmod.string = cfg['reviewed']
+    existing_urls = {text(n) for n in sitemap.find_all('loc')}
+    for lang in ('en', 'tr', 'de'):
+        url = BASE + ('' if lang == 'en' else lang + '/') + conference['page']
+        if url in existing_urls: continue
+        row = sitemap.new_tag('url'); loc = sitemap.new_tag('loc'); loc.string = url; row.append(loc)
+        for alt in ('en', 'tr', 'de', 'x-default'):
+            href = BASE + ('' if alt in ('en', 'x-default') else alt + '/') + conference['page']
+            row.append(sitemap.new_tag('xhtml:link', attrs={'rel': 'alternate', 'hreflang': alt, 'href': href}))
+        date = sitemap.new_tag('lastmod'); date.string = conference['reviewed']; row.append(date)
+        sitemap.urlset.append(row)
     (SITE / 'sitemap.xml').write_text(str(sitemap))
     report = {'result': 'built', 'reviewed': cfg['reviewed'], 'languages': ['en', 'tr', 'de'],
               'selected_publications': count, 'visiting_2221_applications': len(visiting['members']),
+              'accepted_conference': conference['slug'],
               'cost_action': cfg['cost']['code'], 'exports': exports, 'changed_pages': changed}
     (ROOT / 'academic-updates-build.json').write_text(json.dumps(report, ensure_ascii=False, indent=2))
     print(json.dumps(report, ensure_ascii=False))
