@@ -41,8 +41,22 @@
       "de": "Hüseyin Ateş beteiligt sich am europäischen Netzwerk zur Entwicklung und Bewertung generativer KI in der Bildung in den Arbeitsgruppen zu Bewertung und Messgrößen sowie zu Pädagogik und kritischer GenAI-Kompetenz."
     },
     "groups": [
-      {"code": "WG1", "title": {"en": "GenAI Evaluation and Metrics", "tr": "Üretken Yapay Zekânın Değerlendirilmesi ve Ölçütler", "de": "Bewertung generativer KI und Messgrößen"}},
-      {"code": "WG6", "title": {"en": "Pedagogy and Critical GenAI Literacy", "tr": "Pedagoji ve Eleştirel Üretken Yapay Zekâ Okuryazarlığı", "de": "Pädagogik und kritische Kompetenz im Umgang mit generativer KI"}}
+      {
+        "code": "WG1",
+        "title": {
+          "en": "GenAI Evaluation and Metrics",
+          "tr": "Üretken Yapay Zekânın Değerlendirilmesi ve Ölçütler",
+          "de": "Bewertung generativer KI und Messgrößen"
+        }
+      },
+      {
+        "code": "WG6",
+        "title": {
+          "en": "Pedagogy and Critical GenAI Literacy",
+          "tr": "Pedagoji ve Eleştirel Üretken Yapay Zekâ Okuryazarlığı",
+          "de": "Pädagogik und kritische Kompetenz im Umgang mit generativer KI"
+        }
+      }
     ]
   },
   "locales": {
@@ -57,16 +71,16 @@
       "cost_official": "Official COST Action",
       "host": "Host researcher",
       "updated": "Record updated",
-      "dossiers_heading": "Four proposed research visits",
-      "four_applications": "Four applications in preparation",
+      "dossiers_heading": "Four submitted applications",
+      "four_applications": "Four applications submitted · decisions pending",
       "program_link": "Official TÜBİTAK 2221 programme",
       "all_proposals": "All research proposals",
-      "visiting_profile_heading": "Proposed TÜBİTAK 2221 collaboration",
-      "visiting_link": "View the research plan",
+      "visiting_profile_heading": "TÜBİTAK 2221 application",
+      "visiting_link": "View application details",
       "publication_description": "24 selected peer-reviewed publications by Hüseyin Ateş, with DOI links and citation exports.",
       "publication_count": "24 selected publications",
       "cv_description": "A public academic CV covering research, publications, academic service and separately identified research proposals.",
-      "cv_updated": "CV updated in both languages: 25 November 2026"
+      "cv_updated": "CV updated in both languages: 27 November 2026"
     },
     "tr": {
       "date": "25 Kasım 2026",
@@ -79,16 +93,16 @@
       "cost_official": "Resmî COST Aksiyon sayfası",
       "host": "Ev sahibi araştırmacı",
       "updated": "Kayıt güncellemesi",
-      "dossiers_heading": "Planlanan dört araştırma ziyareti",
-      "four_applications": "Dört başvuru hazırlanıyor",
+      "dossiers_heading": "Başvurusu yapılan dört çalışma",
+      "four_applications": "Dört başvuru yapıldı · sonuçlar bekleniyor",
       "program_link": "Resmî TÜBİTAK 2221 programı",
       "all_proposals": "Tüm araştırma başvuruları",
-      "visiting_profile_heading": "Planlanan TÜBİTAK 2221 iş birliği",
-      "visiting_link": "Çalışma planını incele",
+      "visiting_profile_heading": "TÜBİTAK 2221 başvurusu",
+      "visiting_link": "Başvuru ayrıntılarını incele",
       "publication_description": "Hüseyin Ateş'in DOI bağlantıları ve kaynakça dosyalarıyla sunulan seçilmiş 24 hakemli yayını.",
       "publication_count": "24 seçilmiş yayın",
       "cv_description": "Araştırmaları, yayınları, akademik görevleri ve ayrı olarak belirtilen araştırma başvurularını içeren akademik öz geçmiş.",
-      "cv_updated": "Her iki dilde öz geçmiş güncellemesi: 25 Kasım 2026"
+      "cv_updated": "Her iki dilde öz geçmiş güncellemesi: 27 Kasım 2026"
     },
     "de": {
       "date": "25. November 2026",
@@ -101,16 +115,16 @@
       "cost_official": "Offizielle COST-Aktionsseite",
       "host": "Gastgebender Wissenschaftler",
       "updated": "Eintrag aktualisiert",
-      "dossiers_heading": "Vier geplante Forschungsaufenthalte",
-      "four_applications": "Vier Anträge in Vorbereitung",
+      "dossiers_heading": "Vier eingereichte Anträge",
+      "four_applications": "Vier Anträge eingereicht · Entscheidungen ausstehend",
       "program_link": "Offizielles TÜBİTAK-2221-Programm",
       "all_proposals": "Alle Forschungsvorhaben",
-      "visiting_profile_heading": "Geplante Zusammenarbeit im Programm TÜBİTAK 2221",
-      "visiting_link": "Arbeitsplan ansehen",
+      "visiting_profile_heading": "TÜBİTAK-2221-Antrag",
+      "visiting_link": "Antragsdetails ansehen",
       "publication_description": "24 ausgewählte begutachtete Publikationen von Hüseyin Ateş mit DOI-Links und Literaturdateien.",
       "publication_count": "24 ausgewählte Publikationen",
       "cv_description": "Ein öffentlicher akademischer Lebenslauf mit Forschung, Publikationen, akademischem Engagement und gesondert aufgeführten Forschungsvorhaben.",
-      "cv_updated": "Lebensläufe in beiden Sprachen aktualisiert: 25. November 2026"
+      "cv_updated": "Lebensläufe in beiden Sprachen aktualisiert: 27. November 2026"
     }
   }
 }

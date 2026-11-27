@@ -90,7 +90,7 @@ function create(data,corpus){
    if(r.visiting_2221&&(explicitProject==='2221'||(!explicitProject&&/\bvisit\w*|\bziyaret\w*/.test(n)))){
     const visit=r.visiting_2221,study=r.studies.find(x=>x.url.split('#')[0]==='proposal-visiting-researchers-2221.html');
     const visitSource=study?source(study.title,study.url):source('TÜBİTAK 2221','proposal-visiting-researchers-2221.html');
-    return result(`${r.name} · TÜBİTAK 2221\n${visit.stage}.\n\n${visit.scope}\n\n${p('Proposed visit','Planlanan ziyaret')}: ${visit.planned_visit}.`,[visitSource,refs[0]]);
+    return result(`${r.name} · TÜBİTAK 2221\n${visit.stage}.\n\n${visit.scope}\n\n${visit.period_label||p('Proposed activity period','Planlanan çalışma dönemi')}: ${visit.planned_visit}.`,[visitSource,refs[0]]);
    }
    if(contribution){
     if(r.contribution)return result(`${r.name}: ${r.contribution}`,refs);

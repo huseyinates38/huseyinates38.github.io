@@ -1,11 +1,14 @@
 # Editorial record — 13 November 2026, with later overrides
 
-**25 November 2026 override:** the four current TÜBİTAK 2221 dossiers are in
-application preparation, as defined in `visiting-2221.json`; the older submitted
-classification below is historical. CA25177 ENDUeAI WG1/WG6 membership is a
-confirmed separate activity from the submitted SciEpi-Feedback proposal. The new
-publication and membership are defined in `academic-updates.json`. The final
-`apply_academic_updates.py` pass applies these reviewed records in all languages.
+**27 November 2026 override:** the owner confirmed submission of all four current
+TÜBİTAK 2221 applications in the 2026/4 call, supported by the four supplied
+application forms. `visiting-2221.json` now records submitted applications with
+decisions pending, superseding the 25 November preparation baseline. The planned
+2027 activity periods remain conditional on funding. The Banihashem workshop
+programme covers 15–25 March, with 22–25 March activities led by the host.
+CA25177 ENDUeAI WG1/WG6 membership and the publication record remain as reviewed
+in `academic-updates.json`. The final `apply_academic_updates.py` pass applies
+these records in all languages and places 2221 in the submitted-applications CV section.
 
 **25 November 2026 conference addition:** the owner-supplied BİLTEK 16 acceptance
 letter establishes acceptance of an abstract for oral presentation on
@@ -22,7 +25,7 @@ The owner confirmed a renewed TÜBİTAK 3501 submission on 13 November 2026. The
 
 - Supported projects: TÜBİTAK 1002-A 226K999; KAEÜ BAP EGT.A3.26.001; KAEÜ BAP EGT.A3.25.001, based on the supplied CV.
 - Submitted proposals, decisions pending: TÜBİTAK 2219 (proposed host Naomi Winstone, Surrey); COST SciEpi-Feedback; ERC RECLAIM; AÜB International BAP (with Ahmet Sami Konca).
-- Submitted application, decision pending: TÜBİTAK 2221 visiting-researcher activity. Funding and visit arrangements remain separate decisions.
+- Four submitted applications, decisions pending: TÜBİTAK 2221 visiting-scientist activities (2026/4). Funding and visit arrangements remain separate decisions.
 - Resubmitted proposal, decision pending: TÜBİTAK 3501 robot–virtual-agent comparison.
 - Ongoing collaboration: Türkiye–Colombia GenAI literacy study, at instrument-adaptation and pilot-preparation stage. Not listed as an external grant award.
 - ETHE collection proposal: in development, subject to journal approval. Not an open call, approved special issue or Editorial Board appointment.

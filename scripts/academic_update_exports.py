@@ -3,8 +3,8 @@
 
 This helper deliberately does not call ``build_v3.publication_tools``: that
 historical builder also rewrites study citations by their original list index.
-Only the final English publication list is read here. Historical source CVs
-remain untouched; the current, source-verified records are applied in memory.
+Only the final English publication list is read here. The current,
+source-verified records are applied to the public CVs in memory.
 """
 from __future__ import annotations
 
@@ -173,7 +173,7 @@ def _baseline_cv_pages():
 
 
 def _cv_pages(publication, visiting, cost, reviewed, lang, baseline, conference):
-    """Retain approved CV content while keeping four draft visits separate."""
+    """Retain approved content and classify the four submitted applications."""
     pages = copy.deepcopy(baseline[lang])
     if len(pages) != 3:
         raise ValueError('Review CV page structure before applying the academic update')
@@ -188,10 +188,10 @@ def _cv_pages(publication, visiting, cost, reviewed, lang, baseline, conference)
             if value.startswith(('This public selection excludes manuscripts', 'This public selection omits unpublished',
                                  'Unpublished manuscripts are omitted.')):
                 value = ('Publication records: ' + documents.BASE + 'publications.html. '
-                         'Submitted applications and proposed visits are listed separately on pages 3 and 4.')
+                         'Submitted applications are listed on page 3; research development and conferences on page 4.')
             elif value.startswith('Bu seçki yayımlanmamış makale ayrıntılarını içermez.'):
                 value = ('Yayınlar: ' + documents.BASE + 'tr/publications.html. '
-                         'Sunulmuş başvurular ve planlanan ziyaretler 3. ve 4. sayfalarda ayrı listelenmiştir.')
+                         'Sunulmuş başvurular 3. sayfada; araştırma geliştirme ve kongreler 4. sayfada listelenmiştir.')
             clean.append((kind, value))
         pages[index] = clean
 
@@ -224,24 +224,36 @@ def _cv_pages(publication, visiting, cost, reviewed, lang, baseline, conference)
     pages[0].extend(pages[1][methods:end])
     del pages[1][methods:end]
 
-    title = 'Research visits & conferences' if lang == 'en' else 'Araştırma ziyaretleri ve kongreler'
-    intro = (
-        'TÜBİTAK 2221 | Four applications in preparation. Host researcher: Hüseyin Ateş, '
-        'Kırşehir Ahi Evran University. Proposed visits are planned for 2027 and are subject to funding approval.'
-        if lang == 'en' else
-        'TÜBİTAK 2221 | Dört başvuru hazırlığında. Ev sahibi araştırmacı: Hüseyin Ateş, '
-        'Kırşehir Ahi Evran Üniversitesi. Ziyaretler 2027 için planlanıyor ve destek kararına bağlı.'
-    )
-    visit_page = [('title', title), ('subtitle', 'Hüseyin Ateş · ' + current_date), ('p', intro)]
+    # The four dossiers now belong with submitted applications. Move the
+    # existing development/editorial sections to page 4 instead of shrinking
+    # text or silently leaving the submissions in a preparation section.
+    development_heading = ('Ongoing international research' if lang == 'en'
+                           else 'Uluslararası araştırma geliştirme')
+    development = next(i for i, (kind, value) in enumerate(pages[2])
+                       if kind == 'h' and value == development_heading)
+    development_blocks = pages[2][development:]
+    pages[2] = pages[2][:development]
+
+    labels = visiting['locales'][lang]
+    call = visiting.get('application_call')
+    application_heading = 'TÜBİTAK 2221' + (' · ' + call if call else '')
+    pages[2].extend([
+        ('h', application_heading),
+        ('p', labels['status_label'] + '. ' + labels['summary']),
+    ])
     for member in visiting['members']:
-        visit_page.extend([
-            ('h', member['name']),
-            ('p', _localized(member['institution'], lang) + '. ' + _localized(member['title'], lang) + '.'),
+        pages[2].extend([
+            ('p', member['name'] + ' | ' + _localized(member['title'], lang) + '.'),
             ('small', _localized(member['planned_visit'], lang)),
         ])
-    visit_page.append(('small', ('Public research plans: ' if lang == 'en' else 'Araştırma planları: ') +
-                       documents.BASE + ('' if lang == 'en' else 'tr/') + 'proposal-visiting-researchers-2221.html'))
-    visit_page.extend([
+    pages[2].append(('small', ('Application records: ' if lang == 'en' else 'Başvuru kayıtları: ') +
+                     documents.BASE + ('' if lang == 'en' else 'tr/') + 'proposal-visiting-researchers-2221.html'))
+
+    title = ('Research development & conferences' if lang == 'en'
+             else 'Araştırma geliştirme ve kongreler')
+    development_page = [('title', title), ('subtitle', 'Hüseyin Ateş · ' + current_date)]
+    development_page.extend(development_blocks)
+    development_page.extend([
         ('h', 'Accepted conference contributions' if lang == 'en' else 'Kabul edilen kongre bildirileri'),
         ('p', conference['paper_title'] + '.'),
         ('p', conference['event_title'] + '. ' + _localized(conference['dates'], lang) + '; ' +
@@ -249,7 +261,7 @@ def _cv_pages(publication, visiting, cost, reviewed, lang, baseline, conference)
         ('small', ('Conference record: ' if lang == 'en' else 'Kongre kaydı: ') +
          documents.BASE + ('' if lang == 'en' else 'tr/') + conference['page']),
     ])
-    pages.append(visit_page)
+    pages.append(development_page)
     return pages
 
 
@@ -313,7 +325,7 @@ def update_downloads(publication, visiting, cost, reviewed='2026-11-25'):
     owns page metadata/search refresh and the subsequent release checksum pass.
     """
     date.fromisoformat(reviewed)
-    if str(visiting.get('program')) != '2221' or visiting.get('status_code') != 'in_preparation':
+    if str(visiting.get('program')) != '2221' or visiting.get('status_code') != 'submitted':
         raise ValueError('Review the CV classifications for a changed 2221 status')
     if len(visiting['members']) != 4 or len({m['slug'] for m in visiting['members']}) != 4:
         raise ValueError('The current update requires four distinct 2221 dossiers')
@@ -328,9 +340,11 @@ def update_downloads(publication, visiting, cost, reviewed='2026-11-25'):
     pages = {}
     documents.fonts()
     baseline = _baseline_cv_pages()
-    with _dated_export(reviewed):
+    cv_reviewed = visiting.get('reviewed', reviewed)
+    date.fromisoformat(cv_reviewed)
+    with _dated_export(cv_reviewed):
         for lang, stem in stems.items():
-            blocks = _cv_pages(publication, visiting, cost, reviewed, lang, baseline, conference)
+            blocks = _cv_pages(publication, visiting, cost, cv_reviewed, lang, baseline, conference)
             documents.export_document(
                 stem, blocks,
                 'Hüseyin Ateş — Public academic CV' if lang == 'en' else 'Hüseyin Ateş — Akademik Özgeçmiş',
@@ -341,10 +355,11 @@ def update_downloads(publication, visiting, cost, reviewed='2026-11-25'):
             if pages[lang] != 4:
                 raise ValueError(f'Review {lang} CV layout: expected 4 pages, rendered {pages[lang]}')
             for page in reader.pages:
-                if _date_label(reviewed, lang) not in page.extract_text():
+                if _date_label(cv_reviewed, lang) not in page.extract_text():
                     raise ValueError(f'Missing current {lang} CV footer date')
     return {
         'reviewed': reviewed,
+        'cv_reviewed': cv_reviewed,
         'publication_count': len(records),
         'cv_pages': pages,
         'downloads': ['selected-publications.bib', 'selected-publications.ris', 'publication-records.json'] +

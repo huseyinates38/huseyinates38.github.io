@@ -52,8 +52,8 @@ def anchor(label, url):
     return f'<a class="textlink" href="{e(url, quote=True)}">{e(label)}</a>'
 
 
-def record_date(labels, date):
-    return f'<p class="academic-record-date">{e(labels["updated"])}: <time datetime="{date}">{e(labels["date"])}</time></p>'
+def record_date(labels, date, display_date=None):
+    return f'<p class="academic-record-date">{e(labels["updated"])}: <time datetime="{date}">{e(display_date or labels["date"])}</time></p>'
 
 
 def add_publication(docs, cfg, lang):
@@ -97,20 +97,21 @@ def visiting_page(docs, cfg, visiting, lang):
     hero.select_one('h1').string = v['page_title']
     hero.select_one('.lead').string = v['summary']
     pill = hero.select_one('.status-pill')
-    pill['class'] = ['status-pill', 'status-planned']; pill.string = v['status_label']
+    pill['class'] = ['status-pill', 'status-submitted']; pill.string = v['status_label']
     s.main.clear(); s.main.append(hero)
     members = []
     for m in visiting['members']:
         members.append(
             f'<article class="visiting-plan-card" id="visit-{m["slug"]}" data-visiting-researcher="{m["slug"]}">'
-            f'<span class="status-pill status-planned">{e(v["status_label"])}</span>'
+            f'<span class="status-pill status-submitted">{e(v["status_label"])}</span>'
             f'<h3>{e(m["name"])}</h3><p class="plan-institution">{e(m["institution"][lang])}</p>'
             f'<h4>{e(m["title"][lang])}</h4><p>{e(m["summary"][lang])}</p>'
             f'<p class="plan-visit">{e(v["proposed_visit_label"])}: {e(m["planned_visit"][lang])}</p>'
             f'{anchor(v["profile_label"], m["profile"])}</article>')
     body = (f'<p>{e(labels["host"])}: <strong>{e(visiting["host_name"])}</strong> · '
-            f'{e(visiting["host_institution"][lang])}</p><div class="visiting-plan-grid">' + ''.join(members) + '</div>' +
-            record_date(labels, visiting['reviewed']) + '<div class="academic-current-links">' +
+            f'{e(visiting["host_institution"][lang])}</p><p>{e(v["call_label"])}: {e(visiting["application_call"])}</p>'
+            '<div class="visiting-plan-grid">' + ''.join(members) + '</div>' +
+            record_date(labels, visiting['reviewed'], v['reviewed_date']) + '<div class="academic-current-links">' +
             anchor(labels['program_link'], visiting['official_program_url']) + anchor(labels['all_proposals'], 'proposals.html') + '</div>')
     s.main.append(section(labels['dossiers_heading'], body, 'visiting-researcher-plans'))
     s.title.string = v['page_title'] + ' | Hüseyin Ateş'
@@ -126,18 +127,18 @@ def visiting_page(docs, cfg, visiting, lang):
                 a.decompose(); continue
             card = a.find_parent('article', class_='pipeline-card')
             if card:
-                card['data-proposal-state'] = 'planned'
-                card.select_one('.status-pill')['class'] = ['status-pill', 'status-planned']
+                card['data-proposal-state'] = 'submitted'
+                card.select_one('.status-pill')['class'] = ['status-pill', 'status-submitted']
                 card.select_one('.status-pill').string = v['status_label']
                 card.h3.string = v['page_title']
                 para = card.h3.find_next_sibling('p')
                 if para: para.string = v['summary']
                 time = card.select_one('time')
-                if time: time['datetime'] = visiting['reviewed']; time.string = labels['date']
+                if time: time['datetime'] = visiting['reviewed']; time.string = v['reviewed_date']
             news = a.find_parent('article', class_='showcase-news-card')
             if news:
                 news.select_one('.showcase-card-copy > p').string = labels['four_applications']
-                news.select_one('.showcase-status').string = v['planned_year']
+                news.select_one('.showcase-status').string = v['status_label']
                 for img_link in news.select('.showcase-card-img'):
                     img_link['aria-label'] = 'TÜBİTAK 2221 · ' + labels['four_applications']
             if '2221' in text(a) and not news:
@@ -145,7 +146,7 @@ def visiting_page(docs, cfg, visiting, lang):
         # The heading says latest review; retain older dates on the other records.
         if name == 'proposals.html':
             for t in doc.select('.pagehero time'):
-                t['datetime'] = visiting['reviewed']; t.string = labels['date']
+                t['datetime'] = visiting['reviewed']; t.string = v['reviewed_date']
 
     team = docs['team.html']
     for m in visiting['members']:
@@ -187,7 +188,7 @@ def homepage(docs, cfg, visiting, lang, pub_id):
     replace_section(s, section(labels['latest_heading'], body, 'latest-academic-updates'), s.select_one('.showcase-news'))
 
 
-def update_about(docs, cfg, lang):
+def update_about(docs, cfg, visiting, lang):
     labels = cfg['locales'][lang]; s = docs['about.html']
     cv_link = s.select_one('a[href*="Huseyin_Ates_Public_Academic_CV.pdf"]')
     if cv_link:
@@ -196,7 +197,7 @@ def update_about(docs, cfg, lang):
         for kind in ('page', 'cv'):
             date = sec.select_one(f'[data-record-date="{kind}"] time')
             if date:
-                date['datetime'] = cfg['reviewed']; date.string = labels['date']
+                date['datetime'] = visiting['reviewed']; date.string = visiting['locales'][lang]['reviewed_date']
 
 
 def conference_sections(docs, conference, lang):
@@ -271,7 +272,8 @@ def refresh_derived(docs, cfg, visiting, conference, lang, pub_id):
     assistant = docs['assistant.html']; facts = json.loads(assistant.select_one('#assistant-facts').string)
     facts['projects']['2221'] = {
         'title': v['page_title'], 'url': VISITING_PAGE, 'summary': v['summary'], 'stage': v['status_label'],
-        'reviewed': labels['date'], 'lead': visiting['host_name'], 'duration': v['planned_year'],
+        'reviewed': v['reviewed_date'], 'lead': visiting['host_name'], 'duration': v['planned_year'],
+        'application_call': visiting['application_call'],
         'members': [{'slug': m['slug'], 'name': m['name'], 'role': m['role'][lang]} for m in visiting['members']],
         'visits': [{'name': m['name'], 'title': m['title'][lang], 'scope': m['summary'][lang], 'planned_visit': m['planned_visit'][lang],
                     'url': VISITING_PAGE + '#visit-' + m['slug']} for m in visiting['members']]
@@ -292,7 +294,8 @@ def refresh_derived(docs, cfg, visiting, conference, lang, pub_id):
         person = facts['people'][m['slug']]
         person['studies'] = [x for x in person.get('studies', []) if x['url'].split('#')[0] != VISITING_PAGE]
         person['studies'].append({'title': 'TÜBİTAK 2221 · ' + m['title'][lang], 'url': VISITING_PAGE + '#visit-' + m['slug']})
-        person['visiting_2221'] = {'stage': v['status_label'], 'planned_visit': m['planned_visit'][lang], 'scope': m['summary'][lang]}
+        person['visiting_2221'] = {'stage': v['status_label'], 'planned_visit': m['planned_visit'][lang],
+                                 'period_label': v['proposed_visit_label'], 'scope': m['summary'][lang]}
     for slug in visiting['closed_2027_profile_slugs']:
         p = facts['people'].get(slug)
         if p:
@@ -341,6 +344,10 @@ def main():
     cfg = json.loads((ROOT / 'content/academic-updates.json').read_text())
     visiting = json.loads((ROOT / 'content/visiting-2221.json').read_text())
     conference = json.loads((ROOT / 'content/conference-biltek-2027.json').read_text())
+    release_reviewed = max(cfg['reviewed'], visiting['reviewed'], conference['reviewed'])
+    visiting_pages = {VISITING_PAGE, 'index.html', 'proposals.html', 'team.html',
+                      'about.html', 'assistant.html', 'search.html',
+                      *[m['profile'] for m in visiting['members']]}
     context = json.loads((SITE / 'assets/assistant-context.json').read_text())
     all_docs = {}; all_originals = {}; changed = []
     for lang in ('en', 'tr', 'de'):
@@ -351,7 +358,7 @@ def main():
         visiting_page(docs, cfg, visiting, lang)
         cost_sections(docs, cfg, lang)
         homepage(docs, cfg, visiting, lang, pub_id)
-        update_about(docs, cfg, lang)
+        update_about(docs, cfg, visiting, lang)
         conference_sections(docs, conference, lang)
         bundle = refresh_derived(docs, cfg, visiting, conference, lang, pub_id)
         if lang in context: context[lang] = bundle
@@ -380,7 +387,8 @@ def main():
                 css = s.new_tag('link', rel='stylesheet', href=pre + 'assets/academic-updates.css', attrs={'data-academic-updates': 'true'})
                 s.head.append(css)
             if dom(s) != all_originals[lang].get(name):
-                update_metadata(s, name, lang, cfg['reviewed'])
+                reviewed = visiting['reviewed'] if name in visiting_pages else cfg['reviewed']
+                update_metadata(s, name, lang, reviewed)
                 (folder / name).write_text(dom(s))
                 changed.append((folder / name).relative_to(SITE).as_posix())
     payload = {k: val for k, val in context.items() if k != 'revision'}
@@ -390,7 +398,7 @@ def main():
     if service.is_dir(): (service / 'knowledge.json').write_text(encoded(context))
     for name in ('deployment.json', 'quality-report.json'):
         path = SITE / name; value = json.loads(path.read_text()); value.pop('files', None)
-        value.update(academic_update_date=cfg['reviewed'], selected_publications=count,
+        value.update(academic_update_date=release_reviewed, selected_publications=count,
                      visiting_2221_applications=len(visiting['members']), assistant_context_revision=context['revision'],
                      accepted_biltek_2027=True)
         if name == 'deployment.json':
@@ -400,7 +408,9 @@ def main():
     sitemap = Soup((SITE / 'sitemap.xml').read_text(), 'xml')
     for row in sitemap.find_all('url'):
         if row.loc and text(row.loc).removeprefix(BASE) in changed:
-            if row.lastmod: row.lastmod.string = cfg['reviewed']
+            if row.lastmod:
+                name = text(row.loc).rsplit('/', 1)[-1]
+                row.lastmod.string = visiting['reviewed'] if name in visiting_pages else cfg['reviewed']
     existing_urls = {text(n) for n in sitemap.find_all('loc')}
     for lang in ('en', 'tr', 'de'):
         url = BASE + ('' if lang == 'en' else lang + '/') + conference['page']
@@ -412,7 +422,7 @@ def main():
         date = sitemap.new_tag('lastmod'); date.string = conference['reviewed']; row.append(date)
         sitemap.urlset.append(row)
     (SITE / 'sitemap.xml').write_text(str(sitemap))
-    report = {'result': 'built', 'reviewed': cfg['reviewed'], 'languages': ['en', 'tr', 'de'],
+    report = {'result': 'built', 'reviewed': release_reviewed, 'languages': ['en', 'tr', 'de'],
               'selected_publications': count, 'visiting_2221_applications': len(visiting['members']),
               'accepted_conference': conference['slug'],
               'cost_action': cfg['cost']['code'], 'exports': exports, 'changed_pages': changed}

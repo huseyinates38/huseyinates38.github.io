@@ -39,7 +39,12 @@ MEMBERS = VISITING['members']
 NAMES = [member['name'] for member in MEMBERS]
 SLUGS = [member['slug'] for member in MEMBERS]
 PRIVATE = re.compile(r'(?:drive\.google\.com/(?:file|drive)|docs\.google\.com/(?:document|spreadsheets|presentation)/d/|1059B\d{8,}|libfile_|file-inline-libfile_)', re.I)
-BAD_2221_STATUS = re.compile(r'\bsubmitted\b|\beingereicht\b|başvurusu yapıl|başvuru sunuldu|desteklenmektedir|funding awarded', re.I)
+BAD_2221_STATUS = re.compile(r'application(?:s)? in preparation|applications? are being prepared|başvuru hazırlığında|başvuru(?:lar)? hazırlanıyor|Antr(?:ag|äge) in Vorbereitung|werden vorbereitet|desteklenmektedir|funding awarded|funding approved|Förderung bewilligt', re.I)
+SUBMITTED_2221 = {
+    'en': re.compile(r'\bsubmitted\b', re.I),
+    'tr': re.compile(r'başvuru(?:su|lar|ları)? (?:yapıldı|yapılan|sunuldu)', re.I),
+    'de': re.compile(r'\beingereicht\w*\b', re.I),
+}
 QUESTIONS = {
     'en': {'cost': 'COST activities', 'endueai': 'COST CA25177 ENDUeAI', 'sciepi': 'SciEpi-Feedback status', 'roster': 'Who is on the 2221 team?', 'paper': 'Show 2027 publications', 'kazem_visit': 'Kazem Banihashem visit', 'omid_visit': 'Omid Noroozi 2221 visit dates', 'biltek': 'BILTEK 2027 presentation'},
     'tr': {'cost': 'COST çalışmaları', 'endueai': 'COST CA25177 ENDUeAI', 'sciepi': 'SciEpi-Feedback durumu', 'roster': '2221 ekibinde kimler var?', 'paper': '2027 yayınlarını göster', 'kazem_visit': 'Kazem Banihashem ziyareti', 'omid_visit': 'Omid Noroozi 2221 ziyaret tarihleri', 'biltek': 'BİLTEK 2027 bildirisi'},
@@ -83,6 +88,7 @@ def publication_dois(doc):
 
 def assert_current_2221(value, label):
     assert not BAD_2221_STATUS.search(value), (label, 'incorrect 2221 status')
+    assert SUBMITTED_2221[label[0]].search(value), (label, 'submitted 2221 status missing')
     assert not re.search(r'Moritz\s+Krell|Elena\s+Novak', value, re.I), (label, 'closed 2027 visitor')
     assert not PRIVATE.search(value), (label, 'private record leaked')
 
@@ -152,7 +158,11 @@ def static_checks(report):
         cards = page.select('.visiting-plan-card')
         assert [c['data-visiting-researcher'] for c in cards] == SLUGS
         assert len(cards) == 4
+        assert VISITING['status_code'] == 'submitted' and VISITING['application_call'] == '2026/4'
         assert_current_2221(text(page.main), (lang, VISITING_PAGE))
+        record_date = page.select_one('#visiting-researcher-plans time')
+        assert record_date['datetime'] == VISITING['reviewed']
+        assert text(record_date) == VISITING['locales'][lang]['reviewed_date']
         for card, member in zip(cards, MEMBERS):
             assert card['id'] == 'visit-' + member['slug']
             assert text(card.h3) == member['name']
@@ -168,19 +178,23 @@ def static_checks(report):
         for slug in VISITING['closed_2027_profile_slugs']:
             assert not docs['person-' + slug + '.html'].select(f'a[href^="{VISITING_PAGE}"]')
         pipeline = [a for a in docs['proposals.html'].select('.pipeline-card') if a.select_one(f'a[href="{VISITING_PAGE}"]')]
-        assert len(pipeline) == 1 and pipeline[0]['data-proposal-state'] == 'planned'
+        assert len(pipeline) == 1 and pipeline[0]['data-proposal-state'] == 'submitted'
+        assert 'status-submitted' in pipeline[0].select_one('.status-pill')['class']
+        home_2221 = docs['index.html'].select_one(f'.showcase-news-card a[href="{VISITING_PAGE}"]').find_parent('article')
+        assert VISITING['locales'][lang]['status_label'] in text(home_2221)
 
         cost = docs['research-network.html'].select_one('#cost-endueai')
         assert cost and all(x in text(cost) for x in ('CA25177', 'ENDUeAI', 'WG1', 'WG6'))
         assert CFG['cost']['role'][lang] in text(cost)
         assert {text(c.strong) for c in cost.select('.working-group-card')} == {'WG1', 'WG6'}
         assert cost.select_one('a[href="' + CFG['cost']['official_url'] + '"]')
+        assert cost.select_one('time')['datetime'] == CFG['reviewed'], (lang, 'unchanged COST review date advanced')
         assert docs['about.html'].select_one('#cost-membership')
         assert 'SciEpi' in text(docs['proposal-sciepi-feedback.html'].main)
         assert 'CA25177' not in text(docs['proposal-sciepi-feedback.html'].select_one('.pagehero'))
         for kind in ('page', 'cv'):
             date = docs['about.html'].select_one(f'[data-record-date="{kind}"] time')
-            assert date and date['datetime'] == '2026-11-25' and text(date) == loc['date']
+            assert date and date['datetime'] == VISITING['reviewed'] and text(date) == VISITING['locales'][lang]['reviewed_date']
 
         # Protect the earlier roster and editorial corrections after the new final pass.
         assert len(docs['team.html'].select('#project-team-1002 .person-card')) == 4
@@ -209,6 +223,7 @@ def static_checks(report):
         assert [m['slug'] for m in visit['members']] == SLUGS
         assert [m['name'] for m in visit['members']] == NAMES
         assert visit['stage'] == VISITING['locales'][lang]['status_label']
+        assert visit['reviewed'] == VISITING['locales'][lang]['reviewed_date']
         assert len(visit['visits']) == 4
         assert_current_2221(json.dumps(visit, ensure_ascii=False), (lang, 'assistant 2221'))
         for member in MEMBERS:
@@ -267,16 +282,16 @@ def download_checks(expected_dois, report):
     ns = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main',
           'dcterms': 'http://purl.org/dc/terms/'}
     for lang, stem in [('en', 'Huseyin_Ates_Public_Academic_CV'), ('tr', 'Huseyin_Ates_Akademik_Ozgecmis_TR')]:
-        date = CFG['locales'][lang]['date']
+        date = VISITING['locales'][lang]['reviewed_date']
         pages = [p.extract_text() for p in PdfReader(downloads / (stem + '.pdf')).pages]
         assert len(pages) == 4 and all(date in p for p in pages), (lang, 'CV pages/date')
         all_text = '\n'.join(pages)
         assert normalized(CONFERENCE_TITLE) in normalized(' '.join(all_text.split())), (lang, 'conference missing from PDF CV')
         assert normalized(CONFERENCE['status'][lang]) in normalized(all_text), (lang, 'accepted status missing from PDF CV')
         assert DOI in all_text and all(x in all_text for x in ('CA25177', 'WG1', 'WG6'))
-        assert all(name in pages[3] for name in NAMES), (lang, 'four visiting CV records')
-        assert '2221' not in pages[2], (lang, 'draft visits misclassified on submitted page')
-        assert '2221' in pages[3]
+        assert all(name in pages[2] for name in NAMES), (lang, 'four submitted CV records')
+        assert '2221' in pages[2] and VISITING['locales'][lang]['status_label'] in pages[2]
+        assert '2221' not in pages[3], (lang, 'submitted applications left on development page')
         assert not PRIVATE.search(all_text)
         with ZipFile(downloads / (stem + '.docx')) as archive:
             doc = ET.fromstring(archive.read('word/document.xml'))
@@ -291,13 +306,14 @@ def download_checks(expected_dois, report):
             assert normalized(CONFERENCE_TITLE) in normalized(' '.join(joined.split())), (lang, 'conference missing from DOCX CV')
             assert normalized(CONFERENCE['status'][lang]) in normalized(joined), (lang, 'accepted status missing from DOCX CV')
             assert DOI in joined and all(x in joined for x in ('CA25177', 'WG1', 'WG6'))
-            assert all(name in doc_pages[3] for name in NAMES)
-            assert '2221' not in doc_pages[2]
+            assert all(name in doc_pages[2] for name in NAMES)
+            assert '2221' in doc_pages[2] and VISITING['locales'][lang]['status_label'] in doc_pages[2]
+            assert '2221' not in doc_pages[3]
             footer_text = ' '.join(' '.join(t.text or '' for t in ET.fromstring(archive.read(n)).findall('.//w:t', ns))
                                    for n in archive.namelist() if re.fullmatch(r'word/footer\d+\.xml', n))
             assert date in footer_text, (lang, 'DOCX date')
             modified = ET.fromstring(archive.read('docProps/core.xml')).find('dcterms:modified', ns)
-            assert modified is not None and modified.text.startswith('2026-11-25')
+            assert modified is not None and modified.text.startswith(VISITING['reviewed'])
         report['cv_pages'][lang] = 4
     report['publication_exports'] = 24
 

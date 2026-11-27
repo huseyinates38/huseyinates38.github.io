@@ -35,12 +35,12 @@ from the relevant database actually read, with a measurement date. An inaccessib
 Scopus or Web of Science profile is an access limit, not evidence of no change.
 Do not bypass access controls or imply a blocked source was checked.
 
-## Current baseline — 25 November 2026
+## Current baseline — 27 November 2026
 
 The final, authoritative delta registries are:
 
 - `content/academic-updates.json`: new publication and CA25177 membership.
-- `content/visiting-2221.json`: four current visiting-researcher application plans.
+- `content/visiting-2221.json`: four submitted visiting-scientist applications in the 2026/4 call.
 - `content/conference-biltek-2027.json`: accepted BİLTEK 16 oral presentation.
 
 These override older values for the same records in historical input templates,
@@ -80,12 +80,22 @@ activities; explicit SciEpi or CA25177 questions select the appropriate record.
 
 ### TÜBİTAK 2221
 
-The current four preparation dossiers are Juan Fernando Garzón Álvarez,
-Mohammadreza Farrokhnia, Omid Noroozi and Seyyed Kazem Banihashem. The latest
-owner-authorized tracking records supersede the earlier generic submitted status.
-They establish application preparation, not submission, an award or a completed
-visit. Dates remain proposed and funding-dependent. Kazem's source schedules
-conflict, so only March 2027 is public until the visit timing is reconciled.
+The owner explicitly confirmed on 27 November 2026 that all four applications
+were submitted in the 2026/4 call: Juan Fernando Garzón Álvarez, Mohammadreza
+Farrokhnia, Omid Noroozi and Seyyed Kazem Banihashem. The four owner-supplied
+application forms establish the person/title/period mapping. This supersedes the
+25 November preparation baseline. Use submitted / decision pending in EN/TR/DE,
+proposal filters, profiles, search, assistant data and the public CVs.
+
+The forms' 27 November footer dates are document-generation dates, not a verified
+submission timestamp. Use 27 November as the record-review date. Funding approval
+and completed visits are not established. Activity periods remain proposed and
+funding-dependent: Garzón 31 May–4 July 2027, Farrokhnia 23 April–2 May 2027,
+Noroozi 23 April–9 May 2027, and Banihashem 15–25 March 2027. Banihashem's
+22–25 March activities are led by the host; label the full interval as an activity
+period rather than his confirmed physical visit. The current forms resolve the
+previous ambiguous March schedule. Raw PDFs and submission identifiers remain
+private and are not website assets.
 
 Moritz Krell and Elena Novak are not active members of these four 2027 visit
 plans. Preserve their unrelated research profiles and collaborations.

@@ -1,7 +1,7 @@
 {
   "program": "2221",
-  "reviewed": "2026-11-25",
-  "status_code": "in_preparation",
+  "reviewed": "2026-11-27",
+  "status_code": "submitted",
   "host_name": "Hüseyin Ateş",
   "host_institution": {
     "en": "Kırşehir Ahi Evran University",
@@ -9,34 +9,40 @@
     "de": "Kırşehir Ahi Evran Universität"
   },
   "official_program_url": "https://tubitak.gov.tr/tr/burslar/uluslararasi/arastirma-burs-programlari/2221-konuk-veya-akademik-izinli-sabbatical-bilim-insani-destekleme-p",
-  "source_provenance": "Reviewed with owner-authorized current application planning records on 25 November 2026",
+  "source_provenance": "Four owner-supplied 2026/4 application forms and explicit owner confirmation of submission, reviewed 27 November 2026. Funding decisions are pending.",
   "locales": {
     "en": {
-      "page_title": "TÜBİTAK 2221 visiting researcher plans",
-      "summary": "Four visiting researcher applications are being prepared with Hüseyin Ateş at Kırşehir Ahi Evran University. The proposed collaborations focus on AI in STEM education, feedback use and scientific reasoning. Visits are planned for 2027 and remain subject to funding approval.",
-      "status_label": "Application in preparation",
-      "proposed_visit_label": "Proposed visit",
+      "page_title": "TÜBİTAK 2221 visiting-scientist applications",
+      "summary": "Four applications under the 2026/4 TÜBİTAK 2221 call have been submitted for research and workshop activities hosted by Hüseyin Ateş at Kırşehir Ahi Evran University. The proposed collaborations focus on AI in STEM education, feedback use and scientific reasoning. Activities are planned for 2027; funding decisions are pending.",
+      "status_label": "Application submitted · decision pending",
+      "proposed_visit_label": "Proposed activity period",
       "research_scope_label": "Research focus",
       "profile_label": "Researcher profile",
-      "planned_year": "Planned for 2027"
+      "planned_year": "Planned for 2027",
+      "reviewed_date": "27 November 2026",
+      "call_label": "Application call"
     },
     "tr": {
-      "page_title": "TÜBİTAK 2221 konuk araştırmacı planları",
-      "summary": "Kırşehir Ahi Evran Üniversitesinde Hüseyin Ateş'in ev sahipliğinde dört konuk araştırmacı başvurusu hazırlanıyor. Önerilen iş birlikleri STEM eğitiminde yapay zekâ, geri bildirim kullanımı ve bilimsel akıl yürütmeye odaklanıyor. Ziyaretler 2027 için planlanıyor ve destek kararına bağlı.",
-      "status_label": "Başvuru hazırlığında",
-      "proposed_visit_label": "Planlanan ziyaret",
+      "page_title": "TÜBİTAK 2221 konuk bilim insanı başvuruları",
+      "summary": "2026/4 TÜBİTAK 2221 döneminde, Kırşehir Ahi Evran Üniversitesinde Hüseyin Ateş'in ev sahipliğinde yürütülmesi planlanan araştırma ve çalıştay etkinlikleri için dört başvuru yapıldı. Önerilen iş birlikleri STEM eğitiminde yapay zekâ, geri bildirim kullanımı ve bilimsel akıl yürütmeye odaklanıyor. Çalışmalar 2027 için planlanıyor; başvuru sonuçları bekleniyor.",
+      "status_label": "Başvuru yapıldı · sonuç bekleniyor",
+      "proposed_visit_label": "Planlanan çalışma dönemi",
       "research_scope_label": "Araştırma odağı",
       "profile_label": "Araştırmacı profili",
-      "planned_year": "2027 için planlanıyor"
+      "planned_year": "2027 için planlanıyor",
+      "reviewed_date": "27 Kasım 2026",
+      "call_label": "Başvuru dönemi"
     },
     "de": {
-      "page_title": "Geplante Forschungsaufenthalte im Programm TÜBİTAK 2221",
-      "summary": "Vier Anträge für Gastforschungsaufenthalte bei Hüseyin Ateş an der Kırşehir Ahi Evran Universität werden vorbereitet. Die geplanten Kooperationen befassen sich mit KI in der MINT-Bildung, der Nutzung von Feedback und wissenschaftlichem Denken. Die Aufenthalte sind für 2027 geplant und stehen unter dem Vorbehalt einer Förderzusage.",
-      "status_label": "Antrag in Vorbereitung",
-      "proposed_visit_label": "Geplanter Aufenthalt",
+      "page_title": "TÜBİTAK-2221-Anträge für Gastwissenschaftler",
+      "summary": "Für die Ausschreibungsrunde 2026/4 des Programms TÜBİTAK 2221 wurden vier Anträge für Forschungs- und Workshopaktivitäten bei Hüseyin Ateş an der Kırşehir Ahi Evran Universität eingereicht. Die geplanten Kooperationen befassen sich mit KI in der MINT-Bildung, der Nutzung von Feedback und wissenschaftlichem Denken. Die Aktivitäten sind für 2027 geplant; die Förderentscheidungen stehen aus.",
+      "status_label": "Antrag eingereicht · Entscheidung ausstehend",
+      "proposed_visit_label": "Geplanter Arbeitszeitraum",
       "research_scope_label": "Forschungsschwerpunkt",
       "profile_label": "Forschungsprofil",
-      "planned_year": "Für 2027 geplant"
+      "planned_year": "Für 2027 geplant",
+      "reviewed_date": "27. November 2026",
+      "call_label": "Ausschreibungsrunde"
     }
   },
   "members": [
@@ -80,9 +86,9 @@
         "de": "Universität Twente, Niederlande"
       },
       "title": {
-        "en": "Designing and tracing feedback in a science simulation",
+        "en": "Designing and Tracing the Use of Human and AI Feedback in Simulation-Based Science Learning",
         "tr": "Simülasyon Temelli Fen Öğreniminde İnsan ve Yapay Zekâ Geri Bildiriminin Tasarımı ve Kullanımının İzlenmesi",
-        "de": "Gestaltung und Nachverfolgung von Feedback in einer naturwissenschaftlichen Simulation"
+        "de": "Gestaltung und Nachverfolgung der Nutzung menschlichen und KI-generierten Feedbacks beim simulationsbasierten naturwissenschaftlichen Lernen"
       },
       "summary": {
         "en": "The proposed activity traces initial explanations, feedback, revision decisions and final responses in a science simulation. Planned outputs include a feedback decision table, data dictionary and protocol for a later pilot.",
@@ -110,9 +116,9 @@
         "de": "Wageningen University & Research, Niederlande"
       },
       "title": {
-        "en": "Reasoned revision of scientific arguments",
+        "en": "Assessing the Quality of Scientific Arguments Revised after Feedback",
         "tr": "Geri Bildirim Sonrasında Gözden Geçirilen Bilimsel Argümanların Niteliğinin Değerlendirilmesi",
-        "de": "Begründete Überarbeitung wissenschaftlicher Argumente"
+        "de": "Bewertung der Qualität wissenschaftlicher Argumente nach einer Überarbeitung auf Grundlage von Feedback"
       },
       "summary": {
         "en": "The proposed collaboration examines reasoned changes in scientific arguments after feedback. A bilingual task, scoring guide, worked examples and a protocol for a later pilot will support assessment of claims, evidence, reasoning and alternative explanations.",
@@ -140,9 +146,9 @@
         "de": "Universität Maastricht, Niederlande"
       },
       "title": {
-        "en": "How future science teachers use feedback on scientific explanations",
+        "en": "Assessing Preservice Science Teachers’ Use of Feedback and Their Justifications in Scientific Explanations",
         "tr": "Fen Bilgisi Öğretmen Adaylarının Bilimsel Açıklamalarında Geri Bildirim Kullanımının ve Gerekçelerinin Değerlendirilmesi",
-        "de": "Wie angehende Lehrkräfte für Naturwissenschaften Feedback zu wissenschaftlichen Erklärungen nutzen"
+        "de": "Bewertung der Feedbacknutzung und ihrer Begründungen in wissenschaftlichen Erklärungen angehender Lehrkräfte für Naturwissenschaften"
       },
       "summary": {
         "en": "The proposed bilingual coding guide identifies how preservice science teachers accept, adapt or reject feedback. Scientific justifications and the quality of final explanations are assessed separately, with annotated examples and a protocol for a later pilot.",
@@ -150,9 +156,9 @@
         "de": "Der geplante zweisprachige Kodierleitfaden erfasst, wie angehende Lehrkräfte Feedback annehmen, anpassen oder zurückweisen. Wissenschaftliche Begründungen und die Qualität abschließender Erklärungen werden getrennt bewertet; kommentierte Beispiele und ein Pilotprotokoll ergänzen den Leitfaden."
       },
       "planned_visit": {
-        "en": "March 2027 · visit timing is being clarified · subject to funding approval",
-        "tr": "Mart 2027 · ziyaret takvimi netleştiriliyor · destek kararına bağlı",
-        "de": "März 2027 · genauer Besuchszeitraum wird abgestimmt · vorbehaltlich einer Förderzusage"
+        "en": "15–25 March 2027 · activities on 22–25 March led by the host · subject to funding approval",
+        "tr": "15–25 Mart 2027 · 22–25 Mart çalışmalarını ev sahibi yürütecek · destek kararına bağlı",
+        "de": "15.–25. März 2027 · Aktivitäten vom 22.–25. März unter Leitung des Gastgebers · vorbehaltlich einer Förderzusage"
       },
       "role": {
         "en": "Proposed visiting researcher",
@@ -164,5 +170,6 @@
   "closed_2027_profile_slugs": [
     "moritz-krell",
     "elena-novak"
-  ]
+  ],
+  "application_call": "2026/4"
 }

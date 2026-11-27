@@ -1,10 +1,10 @@
-## Current academic update — 25 November 2026
+## Current academic update — 27 November 2026
 
 The final multilingual pass adds the new *Computers & Education* article (2027,
 volume 258, article 105805), CA25177 ENDUeAI WG1/WG6 membership and four current
-TÜBİTAK 2221 applications in preparation. The selected bibliography now contains
+TÜBİTAK 2221 applications submitted in the 2026/4 call; decisions are pending. The selected bibliography now contains
 24 records. English and Turkish public CVs contain four pages with the latest
-publication, academic service, separate visiting-researcher plans and the accepted
+publication, academic service, the four submitted 2221 applications and the accepted
 BİLTEK 16 oral presentation (23–28 January 2027, Sharm El-Sheikh, Egypt).
 
 `content/conference-biltek-2027.json` records the owner-supplied acceptance letter.

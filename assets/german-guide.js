@@ -66,7 +66,7 @@ function create(data,corpus){
    if(r.visiting_2221&&(key==='2221'||(!key&&/\bbesuch\w*|aufenthalt\w*|\bvisit\w*/.test(q)))){
     const visit=r.visiting_2221,study=r.studies.find(x=>x.url.split('#')[0]==='proposal-visiting-researchers-2221.html');
     const visitSource=study?ref(study.title,study.url):ref('TÜBİTAK 2221','proposal-visiting-researchers-2221.html');
-    return result(`${r.name} · TÜBİTAK 2221\n${visit.stage}.\n\n${visit.scope}\n\nGeplanter Aufenthalt: ${visit.planned_visit}.`,[visitSource,refs[0]]);
+    return result(`${r.name} · TÜBİTAK 2221\n${visit.stage}.\n\n${visit.scope}\n\n${visit.period_label||'Geplanter Arbeitszeitraum'}: ${visit.planned_visit}.`,[visitSource,refs[0]]);
    }
    if(person.slug==='naomi-winstone'&&/artikel|manuskript|publikat|autor/.test(q))return result('Für Naomi Winstone ist die vorgesehene akademische Gastbetreuung im TÜBİTAK-2219-Vorhaben an der University of Surrey dokumentiert. Eine Manuskriptmitwirkung wird auf der Website nicht ausgewiesen.',[ref(r.name,r.url),ref('TÜBİTAK-2219-Antrag','proposal-feedback-fading.html')]);
    if(task)return result(r.contribution?`${r.name}: ${r.contribution}`:`${r.name} wird mit der Rolle „${r.role}“ geführt. Eine detaillierte Zuweisung technischer, analytischer oder methodischer Aufgaben ist im öffentlichen Profil nicht angegeben.`,refs);
